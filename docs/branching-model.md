@@ -1,3 +1,4 @@
+{% include mermaid.html %}
 ## Branching Model
 
 After many years of experience with [GitFlow](http://nvie.com/posts/a-successful-git-branching-model/), we came to the conclusion that we needed a more lightweight workflow. The motivations for this are summarized in [Motivations for a more lightweight workflow](#motivations-for-a-more-lightweight-workflow).
