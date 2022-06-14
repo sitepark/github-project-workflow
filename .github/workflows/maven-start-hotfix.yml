@@ -9,7 +9,7 @@ on:
 jobs:
   start-hotfix:
 
-          #    if: "startsWith(inputs.ref, 'refs/tag/')"
+    if: "startsWith(inputs.ref, 'refs/tags/')"
     runs-on: ubuntu-latest
 
     steps:
