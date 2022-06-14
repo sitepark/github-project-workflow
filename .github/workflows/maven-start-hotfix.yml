@@ -28,26 +28,49 @@ jobs:
         run:
            echo "start hotfix ${{ steps.get-version.outputs.version }}"
 
-      - uses: actions/checkout@v3
+      - name: Checkout release
+        uses: actions/checkout@v3
         with:
            ref: ${{inputs.ref}}
 
 
-      - name: Create branch
+      - name: Create hotifx branch
         uses: peterjgrainger/action-create-branch@v2.2.0
         env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
            branch: "hotfix/${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}.x"
 
-      - uses: actions/checkout@v3
+      - name: Checkout hotifx branch
+        uses: actions/checkout@v3
         with:
            ref: hotfix/${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}.x
 
-      - name: Extract GAV
+      - name: Extract version from pom.xml
         id: extract_gav
         uses: andreacomo/maven-gav-extractor@v1
 
-      - name: Set Version
+      - name: Check if hotfix already started
+        if: "endsWith(steps.extract_gav.outputs.version, '-SNAPSHOT')"
         run:
-           echo "current version ${{ steps.extract_gav.outputs.version }}"
+           echo "hotfix already started"
+           exit 1
+
+      - name: Set next hotfix version
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: 'maven'
+
+      - name: Build and verify with Maven
+        run: mvn versions:seti -DgenerateBackupPoms=false -DnewVersion=${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}.1
+
+      - name: Commit pom.xml
+        uses: EndBug/add-and-commit@v9
+        with:
+           message: "ci(release): set next hotfix version"
+
+
+
+
