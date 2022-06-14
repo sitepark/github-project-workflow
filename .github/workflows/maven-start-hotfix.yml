@@ -64,7 +64,7 @@ jobs:
           cache: 'maven'
 
       - name: Set next hotfix version
-        run: mvn versions:set -DgenerateBackupPoms=false -DnewVersion=${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}.1
+        run: mvn versions:set -DgenerateBackupPoms=false -DnewVersion=${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}.1-SNAPSHOT
 
       - name: Commit pom.xml
         uses: EndBug/add-and-commit@v9
