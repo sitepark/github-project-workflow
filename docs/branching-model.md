@@ -94,8 +94,6 @@ All changes are first made in separate `feature/` branches. When the change is r
 
 Each release is tagged with a version tag according to the rules of [semantic version](https://semver.org/). The patch version of a release is always `0`.
 
-### Hotfix
-
 ```mermaid
 %%{init: { 'gitGraph': {'showCommitLabel': false}} }%%
     gitGraph
