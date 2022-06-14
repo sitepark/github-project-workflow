@@ -69,6 +69,8 @@ All changes are first made in separate `feature/` branches. When the change is r
 
 Each release is tagged with a version tag according to the rules of [semantic version](https://semver.org/). The patch version of a release is always `0`.
 
+### Hotfix
+
 ```mermaid
 %%{init: { 'gitGraph': {'showCommitLabel': false}} }%%
     gitGraph
@@ -91,6 +93,7 @@ Each release is tagged with a version tag according to the rules of [semantic ve
        commit tag:"..."
 
 ```
+
 
 Hotfixes are in our interpretation not necessarily only fixes. They generally serve to provide previous releases with changes. These can be bugfixes, if necessary, but also feature, if for some reason an update to the latest release version is not possible.
 
