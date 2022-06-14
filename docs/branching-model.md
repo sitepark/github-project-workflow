@@ -108,8 +108,6 @@ After completion of the Hotifx release, the branch does **not** have to be delet
 
 ### Support multiple major versions
 
-### Hotfix
-
 ```mermaid
 %%{init: { 'gitGraph': {'showCommitLabel': false}} }%%
     gitGraph
