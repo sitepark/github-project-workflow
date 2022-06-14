@@ -51,7 +51,6 @@ TODO: `merge hotfix/1.0.x -> cherry-pick id:"the fixx"`, see [this pull request]
 In our Branching model, the `main` branch is used to hold all release-enabled features. The `main` branch should be ready for a new release at any time.
 
 ### New feature and changes
-a
 ```mermaid
 %%{init: { 'gitGraph': {'showCommitLabel': false}} }%%
     gitGraph
@@ -63,30 +62,6 @@ a
        commit id:"..."
        commit tag:"2.1.0"
 ```
-b
-```mermaid!
-%%{init: { 'gitGraph': {'showCommitLabel': false}} }%%
-    gitGraph
-       commit tag:"2.0.0"
-       branch feature/my-new-feature order:1
-       commit
-       checkout main
-       merge feature/my-new-feature
-       commit id:"..."
-       commit tag:"2.1.0"
-```
-c
-@startmermaid
-%%{init: { 'gitGraph': {'showCommitLabel': false}} }%%
-    gitGraph
-       commit tag:"2.0.0"
-       branch feature/my-new-feature order:1
-       commit
-       checkout main
-       merge feature/my-new-feature
-       commit id:"..."
-       commit tag:"2.1.0"
-@endmermaid
 
 All changes are first made in separate `feature/` branches. When the change is ready to be included in the `main` branch, a pull request is made. Depending on the scope of the change, various quality checks can be performed here. If the checks are successful, the feature is merged to the `main` branch.
 
