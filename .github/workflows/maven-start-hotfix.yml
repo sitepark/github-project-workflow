@@ -9,13 +9,13 @@ on:
 jobs:
   start-hotfix:
 
-    if: "startsWith(input.ref, 'refs/tag/')"
+    if: "startsWith(inputs.ref, 'refs/tag/')"
     runs-on: ubuntu-latest
 
     steps:
       - id: get-version
         run: |
-          version=$(echo ${{input.ref}} | cut -d/ -f3)
+          version=$(echo ${{inputs.ref}} | cut -d/ -f3)
           echo "::set-output name=version::$version"
 
       - name: Start Hotfix
