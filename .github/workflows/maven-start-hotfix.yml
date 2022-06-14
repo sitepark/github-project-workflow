@@ -1,17 +1,24 @@
 on:
   workflow_call:
     inputs:
-      version:
+      ref:
         required: true
         type: string
 
 
 jobs:
-  build:
+  start-hotfix:
+
+    if: "startsWith(input.ref, 'refs/tag/')"
     runs-on: ubuntu-latest
 
     steps:
+      - id: get-version
+        run: |
+          version=$(echo ${{input.ref}} | cut -d/ -f3)
+          echo "::set-output name=version::$version"
+
       - name: Start Hotfix
         run:
-           echo "start hotfix ${{ inputs.version }}"
+           echo "start hotfix ${{ steps.get-version.outputs.version}}"
 
