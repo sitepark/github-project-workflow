@@ -2,4 +2,6 @@
 
 Describes the recommended way to handle projects from https://github.com/sitepark-com
 
-* [Branching-Model](branching-model.md)
+* [Branching model](branching-model.md)
+* [Commit conventions](commit-conventions.md)
+* [Release process](release-process.md)
