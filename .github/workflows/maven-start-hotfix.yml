@@ -1,0 +1,17 @@
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Start Hotfix
+        run:
+           echo "start hotfix ${{ inputs.version }}"
+
