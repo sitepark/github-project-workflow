@@ -17,7 +17,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: "!startsWith(github.event.head_commit.message, 'ci(release):')"
+    if: "github.ref == 'refs/heads/main' && !startsWith(github.event.head_commit.message, 'ci(release):')"
 
     steps:
       - uses: actions/checkout@v3
