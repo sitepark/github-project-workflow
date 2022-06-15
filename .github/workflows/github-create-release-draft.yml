@@ -3,7 +3,7 @@ name: Create GitHub Release Draft
 on: workflow_call
 
 jobs:
-  deploy:
+  release-draft-with-changelog:
     runs-on: ubuntu-latest
 
     steps:
