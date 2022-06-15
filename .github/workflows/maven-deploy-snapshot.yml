@@ -15,7 +15,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: "github.ref == 'refs/heads/main' && !startsWith(github.event.head_commit.message, 'ci(release):')"
+    if: "!startsWith(github.event.head_commit.message, 'ci(release):')"
 
     steps:
       - uses: actions/checkout@v3
@@ -51,7 +51,7 @@ jobs:
           server-password: MVN_REPO_SERVER_PASSWORD
         env:
            MVN_REPO_SERVER_USERNAME: ${{ secrets.MVN_REPO_SERVER_USERNAME }}
-           MVN_REPO_SERVER_USERNAME: ${{ secrets.MVN_REPO_SERVER_PASSWORD }}
+           MVN_REPO_SERVER_PASSWORD: ${{ secrets.MVN_REPO_SERVER_PASSWORD }}
 
       - name: Build and deploy with Maven
         run: mvn -DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_SNAPSHOT_URL }} --batch-mode deploy
