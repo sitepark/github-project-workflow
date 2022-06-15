@@ -10,10 +10,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Get XML
+        id: getxml
+        uses: mavrosxristoforos/get-xml-info@1.0
+        with:
+        xml-file: 'pom.xml'
+        xpath: '//project/properties/maven.compiler.release'
+
       - name: set java version
         id: java-version
         run: |
           version=11
+          echo "pom.info: ${{ steps.getxml.outputs.info }}"
           echo "::set-output name=version::$version"
 
       - name: Set up JDK 11
