@@ -53,8 +53,6 @@ jobs:
         env:
           JAVA_HOME: /usr/lib/jvm/java-${{ steps.get-java-version.outputs.info }}-openjdk/
         with:
-          git-release-bot-name: "sitepark-bot"
-          git-release-bot-email: "github@sitepark.com"
           release-branch-name: "main"
           version-minor: true
 
