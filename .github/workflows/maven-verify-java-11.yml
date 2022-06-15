@@ -14,8 +14,8 @@ jobs:
         id: getxml
         uses: mavrosxristoforos/get-xml-info@1.0
         with:
-        xml-file: 'pom.xml'
-        xpath: '//project/properties/maven.compiler.release'
+          xml-file: 'pom.xml'
+          xpath: '//project/properties/maven.compiler.release'
 
       - name: set java version
         id: java-version
