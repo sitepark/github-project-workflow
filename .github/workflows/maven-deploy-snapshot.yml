@@ -49,12 +49,12 @@ jobs:
           server-id: ${{ secrets.MVN_REPO_SERVER_ID }}
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
-        env:
-           MAVEN_USERNAME: ${{ secrets.MVN_REPO_SERVER_USERNAME }}
-           MAVEN_PASSWORD: ${{ secrets.MVN_REPO_SERVER_PASSWORD }}
 
       - name: Build and deploy with Maven
         run: mvn -X -DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_SNAPSHOT_URL }} --batch-mode deploy
+        env:
+           MAVEN_USERNAME: ${{ secrets.MVN_REPO_SERVER_USERNAME }}
+           MAVEN_PASSWORD: ${{ secrets.MVN_REPO_SERVER_PASSWORD }}
 
 
 
