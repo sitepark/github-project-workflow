@@ -2,6 +2,11 @@ name: Maven Release
 
 on:
   workflow_call:
+    inputs:
+      botName:
+        required: true
+      botEmail:
+        required: true
     secrets:
       SSH_PRIVATE_KEY:
         required: true
@@ -53,6 +58,8 @@ jobs:
         env:
           JAVA_HOME: /usr/lib/jvm/java-${{ steps.get-java-version.outputs.info }}-openjdk/
         with:
+          git-release-bot-name: ${{ inputs.botName }}
+          git-release-bot-email: ${{ inputs.botEmail }}
           release-branch-name: "main"
           version-minor: true
 
@@ -74,8 +81,8 @@ jobs:
           JAVA_HOME: /usr/lib/jvm/java-${{ steps.get-java-version.outputs.info }}-openjdk/
           SKIP_GIT_SANITY_CHECK: true
         with:
-          git-release-bot-name: "sitepark-bot"
-          git-release-bot-email: "github@sitepark.com"
+          git-release-bot-name: ${{ inputs.botName }}
+          git-release-bot-email: ${{ inputs.botEmail }}
           release-branch-name: "${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}.x"
           version-patch: true
 
@@ -96,8 +103,8 @@ jobs:
           JAVA_HOME: /usr/lib/jvm/java-${{ steps.get-java-version.outputs.info }}-openjdk/
           SKIP_GIT_SANITY_CHECK: true
         with:
-          git-release-bot-name: "sitepark-bot"
-          git-release-bot-email: "github@sitepark.com"
+          git-release-bot-name: ${{ inputs.botName }}
+          git-release-bot-email: ${{ inputs.botEmail }}
           release-branch-name: "${{ steps.semver_parser.outputs.major }}.x"
           version-patch: true
 
