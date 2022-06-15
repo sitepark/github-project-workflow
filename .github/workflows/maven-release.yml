@@ -5,8 +5,10 @@ on:
     inputs:
       botName:
         required: true
+        type: string
       botEmail:
         required: true
+        type: string
     secrets:
       SSH_PRIVATE_KEY:
         required: true
