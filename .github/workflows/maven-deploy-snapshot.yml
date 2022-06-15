@@ -47,8 +47,11 @@ jobs:
           distribution: 'adopt'
           cache: 'maven'
           server-id: ${{ secrets.MVN_REPO_SERVER_ID }}
-          server-username: ${{ secrets.MVN_REPO_SERVER_USERNAME }}
-          server-password: ${{ secrets.MVN_REPO_SERVER_PASSWORD }}
+          server-username: MVN_REPO_SERVER_USERNAME
+          server-password: MVN_REPO_SERVER_PASSWORD
+        env:
+           MVN_REPO_SERVER_USERNAME: ${{ secrets.MVN_REPO_SERVER_USERNAME }}
+           MVN_REPO_SERVER_USERNAME: ${{ secrets.MVN_REPO_SERVER_PASSWORD }}
 
       - name: Build and deploy with Maven
         run: mvn -DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_SNAPSHOT_URL }} --batch-mode deploy
