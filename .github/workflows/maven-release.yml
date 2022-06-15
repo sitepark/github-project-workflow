@@ -72,7 +72,7 @@ jobs:
           version-minor: true
 
           maven-servers: ${{ secrets.MVN_REPO_SERVERS }}
-          maven-args: "-DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_RELEASE_URL }} -DskipTests -DskipITs -Ddockerfile.skip -DdockerCompose.skip -Dmaven.deploy.skip=false"
+          maven-args: "-DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_RELEASE_URL }} -Dgpg.skip=false -DskipTests -DskipITs -Ddockerfile.skip -DdockerCompose.skip -Dmaven.deploy.skip=false"
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
           gpg-enabled: true
