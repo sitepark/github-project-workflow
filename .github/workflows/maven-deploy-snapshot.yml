@@ -3,8 +3,6 @@ name: Maven Deploy Snapshot
 on:
   workflow_call:
     secrets:
-      MVN_REPO_SERVERS:
-        required: true
       MVN_REPO_SERVER_USERNAME:
         required: true
       MVN_REPO_SERVER_PASSWORD:
