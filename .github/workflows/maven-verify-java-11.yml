@@ -10,14 +10,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Get XML
+      - name: Get Java-Version from pom.xml
         id: get-java-version
         uses: mavrosxristoforos/get-xml-info@1.0
         with:
           xml-file: 'pom.xml'
           xpath: '//*[local-name()="maven.compiler.release"]'
 
-      - name: Set up JDK 11
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           java-version: ${{ steps.get-java-version.outputs.info }}
