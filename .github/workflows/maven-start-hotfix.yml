@@ -52,7 +52,6 @@ jobs:
 
       - name: Check if hotfix already started
         if: "endsWith(steps.extract_gav.outputs.version, '-SNAPSHOT')"
-        run: echo "hotfix already started"
         run: exit 1
 
       - name: Setup java
