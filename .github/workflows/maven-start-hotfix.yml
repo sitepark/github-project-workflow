@@ -1,10 +1,29 @@
+#
+# Creates a hotfix branch by passing a tag reference.
+# From this the version is determined and a branch
+# `hotfix/[major][minor].x` is created. If the tag
+# already exists and the `pom.xml` contains a
+# `SNAPSHOT` version, the hotfix is considered as
+# already started.
+#
+# Example:
+#
+# name: Start Maven Hotfix
+# on: workflow_dispatch
+#
+# jobs:
+#  start-hotfix:
+#    uses: sitepark-com/project-workflow/.github/workflows/maven-start-hotfix.yml@main
+#    with:
+#      ref: ${{ github.ref }}
+#
+
 on:
   workflow_call:
     inputs:
       ref:
         required: true
         type: string
-
 
 jobs:
   start-hotfix:
@@ -13,7 +32,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - id: get-version
+      - name: Parse version from ref
+        id: get-version
         run: |
           version=$(echo ${{inputs.ref}} | cut -d/ -f3)
           echo "::set-output name=version::$version"
@@ -24,15 +44,10 @@ jobs:
         with:
           input_string: ${{ steps.get-version.outputs.version }}
 
-      - name: Start Hotfix
-        run:
-           echo "start hotfix ${{ steps.get-version.outputs.version }}"
-
       - name: Checkout release
         uses: actions/checkout@v3
         with:
            ref: ${{inputs.ref}}
-
 
       - name: Create hotifx branch
         uses: peterjgrainger/action-create-branch@v2.2.0
@@ -53,24 +68,21 @@ jobs:
       - name: Check if hotfix already started
         if: "endsWith(steps.extract_gav.outputs.version, '-SNAPSHOT')"
         run: |
-            echo "Hofix already started. Current hotfix version is ${{ steps.extract_gav.outputs.version }}"
+            echo "Hotfix already started. Current hotfix version is ${{ steps.extract_gav.outputs.version }}"
             exit 1
 
       - name: Setup java
         uses: actions/setup-java@v3
-        #        if: success()
         with:
           java-version: '11'
           distribution: 'adopt'
           cache: 'maven'
 
       - name: Set next hotfix version
-        if: success()
         run: mvn versions:set -DgenerateBackupPoms=false -DnewVersion=${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}.1-SNAPSHOT
 
       - name: Commit pom.xml
         uses: EndBug/add-and-commit@v9
-        if: success()
         with:
            message: "ci(release): set next hotfix version"
 
