@@ -54,7 +54,7 @@ jobs:
            MAVEN_PASSWORD: ${{ secrets.MVN_REPO_SERVER_PASSWORD }}
 
       - name: Build and deploy with Maven
-        run: mvn -DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_SNAPSHOT_URL }} --batch-mode deploy
+        run: mvn -X -DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_SNAPSHOT_URL }} --batch-mode deploy
 
 
 
