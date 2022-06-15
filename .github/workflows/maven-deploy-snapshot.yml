@@ -25,7 +25,7 @@ jobs:
         uses: mavrosxristoforos/get-xml-info@1.0
         with:
           xml-file: 'pom.xml'
-          xpath: '//*[local-name()='project']/*[local-name()='version']'
+          xpath: '//*[local-name()="project"]/*[local-name()="version"]'
 
       - name: Check if snapshot
         if: "endsWith(steps.get-project-version.outputs.info, '-SNAPSHOT') == false"
