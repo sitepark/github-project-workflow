@@ -14,7 +14,7 @@ A release is triggered via a GitHub action. The branch that is to be released is
 
 ![GitHub release select branch](assets/images/github-release-select-branch.png)
 
-A release creates a new day. Creating a tag triggers another GitHub action that creates a GitHub release draft.
+A release creates a new tag. Creating a tag triggers another GitHub action that creates a GitHub release draft.
 
 ![GitHub release draft](assets/images/github-release-draft.png)
 
