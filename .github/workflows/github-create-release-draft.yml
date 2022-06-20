@@ -15,7 +15,6 @@ jobs:
       - name: Get previous tag
         id: previousTag
         run: |
-          git --no-pager tag --sort=creatordate --merged ${{ github.ref_name }} | tail -2 | head -1  
           name=$(git --no-pager tag --sort=creatordate --merged ${{ github.ref_name }} | tail -2 | head -1)
           echo "previousTag: $name"
           echo "::set-output name=name::$name"
