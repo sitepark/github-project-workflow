@@ -11,11 +11,18 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Update CHANGELOG
+      - uses: seasonalmatcha/conventional-commit-changelog@latest
         id: changelog
-        uses: Requarks/changelog-action@v1
         with:
-          token: ${{ github.token }}
-          tag: ${{ github.ref_name }}
+          from: 1.25.0
+          to: 1.25.1
+
+#      - name: Update CHANGELOG
+#        id: changelog
+#        uses: Requarks/changelog-action@v1
+#        with:
+#          token: ${{ github.token }}
+#          tag: ${{ github.ref_name }}
 
       - name: Create Release
         uses: ncipollo/release-action@v1
@@ -23,5 +30,6 @@ jobs:
           allowUpdates: true
           draft: true
           name: ${{ github.ref_name }}
-          body: ${{ steps.changelog.outputs.changes }}
+#          body: ${{ steps.changelog.outputs.changes }}
+          body: ${{ steps.changelog.outputs.changelog }}
           token: ${{ secrets.GITHUB_TOKEN }}
