@@ -105,9 +105,9 @@ jobs:
           gpg-key: ${{ secrets.GPG_KEY }}
 
       #
-      # Support-Fix (support/[0-9]+.x branch)
+      # Support-Release (support/[0-9]+.x branch)
       #
-      - name: Support-Fix
+      - name: Support-Release
         uses: qcastel/github-actions-maven-release@master
         if: "startsWith(github.ref, 'refs/heads/support/')"
         env:
