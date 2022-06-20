@@ -1,6 +1,6 @@
 ## Branching model
 
-After many years of experience with [GitFlow](http://nvie.com/posts/a-successful-git-branching-model/), we came to the conclusion that we needed a more lightweight workflow. The motivations for this are summarized in [Motivations for a more lightweight workflow](#motivations-for-a-more-lightweight-workflow).
+Lightweight Branching model with support for hotfixes and support releases.
 
 ```mermaid
     gitGraph
@@ -130,6 +130,8 @@ After completion of the Hotifx release, the branch does **not** have to be delet
 In some cases it is necessary to maintain older major versions. In this case a branch `support/[major].x` is created. The same rules apply to this branch as to the `main` branch. Creating hotfixes for older major versions is no different and can be done as described in section [Hotfix](#hotfix).
 
 ### Motivations for a more lightweight workflow
+
+After many years of experience with [GitFlow](http://nvie.com/posts/a-successful-git-branching-model/), we came to the conclusion that we needed a more lightweight workflow.
 
 When we used GitFlow, the `master` branch always referred to the latest release. From our point of view this purpose was also served by a Git tag.
 
