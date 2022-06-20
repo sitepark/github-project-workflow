@@ -1,1 +1,1 @@
-Lightweight release process with support for hotfixes and support releases. Siee
+Lightweight release process with support for hotfixes and support releases. See https://sitepark-com.github.io/github-project-workflow/
