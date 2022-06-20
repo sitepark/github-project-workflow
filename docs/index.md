@@ -12,15 +12,15 @@ Version numbers are assigned according to the [Semantic Versioning](https://semv
 
 A release is triggered via a GitHub action. The branch that is to be released is selected.
 
-![GitHub release select branch](/docs/assets/images/github-release-select-branch.png)
+![GitHub release select branch](assets/images/github-release-select-branch.png)
 
 A release creates a new day. Creating a tag triggers another GitHub action that creates a GitHub release draft.
 
-![GitHub release draft](/docs/assets/images/github-release-draft.png)
+![GitHub release draft](assets/images/github-release-draft.png)
 
 This draft can be supplemented. Publishing the GitHub release triggers another GitHub action, which performs the necessary steps to publish the release.
 
-![GitHub release publish](/docs/assets/images/github-release-publish.png)
+![GitHub release publish](assets/images/github-release-publish.png)
 
 The creation of the release is now finished.
 

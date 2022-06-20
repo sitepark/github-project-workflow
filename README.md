@@ -1,1 +1,1 @@
-# github-project-workflow
+Lightweight release process with support for hotfixes and support releases.

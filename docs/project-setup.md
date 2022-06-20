@@ -6,7 +6,7 @@ The following are recommended settings of Github projects.
 
 For automated actions, the [`sitepark-com/bots`](https://github.com/orgs/sitepark-com/teams/bots) team must have write access to the project.
 
-![GitHub manage access](/docs/assets/images/github-manage-access.png)
+![GitHub manage access](assets/images/github-manage-access.png)
 
 
 ## `main`-Branch settings
@@ -20,7 +20,7 @@ In the `main` branch should not be committed directly but always via a pull requ
 
 For automated actions, an exception must be defined to be able to execute a release process, for example. For this the team [`sitepark-com/bots`](https://github.com/orgs/sitepark-com/teams/bots) is added as an exception.
 
-![GitHub main branch protection](/docs/assets/images/github-main-branch-protection.png)
+![GitHub main branch protection](assets/images/github-main-branch-protection.png)
 
 
 ## GitHub Pages
@@ -28,7 +28,7 @@ For automated actions, an exception must be defined to be able to execute a rele
 The git pages should use the `main` branch and be placed in the `/docs` folder.
 Images inside the folder `/docs/assets/images`.
 
-![GitHub Pages Settings](/docs/assets/images/github-pages-settings.png)
+![GitHub Pages Settings](assets/images/github-pages-settings.png)
 
 
 ## GitHub Actions
