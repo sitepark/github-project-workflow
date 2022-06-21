@@ -21,7 +21,7 @@ jobs:
 
       - name: Update CHANGELOG
         id: changelog
-        uses: sitepark-com/changelog-action@main
+        uses: sitepark-com/changelog-action@v1
         with:
           token: ${{ github.token }}
           fromTag: ${{ github.ref_name }}
