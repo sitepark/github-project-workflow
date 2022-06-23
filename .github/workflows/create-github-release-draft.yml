@@ -15,7 +15,8 @@ jobs:
       - name: Get previous tag
         id: previousTag
         run: |
-          name=$(git --no-pager tag --sort=creatordate --merged ${{ github.ref_name }} | tail -2 | head -1)
+          name=$(git --no-pager tag --sort=creatordate --merged ${{ github.ref_name }} | sed -n 2,2p)
+          name=${name:=$(git rev-list --max-parents=0 HEAD)}
           echo "previousTag: $name"
           echo "::set-output name=name::$name"
 
