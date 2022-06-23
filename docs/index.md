@@ -43,3 +43,13 @@ All changes committed in a `hotfix` or `support` branch are **not** automaticall
 It is important that there is **no** merge from the `hotix` branch to the `main` branch, as it is provided in other branching models.
 
 ---
+
+### Setup Project
+
+To use this workflow, the project must be set up accordingly. Depending on the project type, the corresponding Git actions are provided. The Git actions are available for the following project types.
+
+* Maven projects
+* (NPM projects are still to come)
+* (Composer projects still to come)
+
+The setup of the projects is described in [Project setup](project-setup.md).
