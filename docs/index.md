@@ -33,5 +33,13 @@ The main release must always be created with the `main` branch. A main release c
 
 To create a hotfix release, a hotfix branch must first be created. This can also be done via a provided GibHub Action. A Hotifx release always only increases the patch level of a previously released version.
 
-To create a support release, a support branch must first be created. This is always created manually. A support release always only increases the mino level of a previously released version. A hotfix can be created from a support release in the same way as from a main release.
+To create a support release, a support branch must first be created. This is always created manually. A support release always only increases the minor level of a previously released version. A hotfix can be created from a support release in the same way as from a main release.
 
+---
+**NOTE**
+
+All changes committed in a `hotfix` or `support` branch are **not** automatically applied to other branches such as the `main` branch, but must be applied with a `cherry-pick`.
+
+It is important that there is **no** merge from the `hotix` branch to the `main` branch, as it is provided in other branching models.
+
+---
