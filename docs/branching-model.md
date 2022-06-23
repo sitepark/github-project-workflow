@@ -16,34 +16,28 @@ Lightweight Branching model with support for hotfixes and support releases.
        branch feature/my-new-feature order:1
        branch hotfix/2.0.x order:2
        checkout feature/my-new-feature
-       commit
+       commit id: "feature-1"
        checkout main
        merge feature/my-new-feature
        checkout support/1.x
-       merge feature/my-new-feature
+       cherry-pick id:"feature-1"
        checkout main
        checkout hotfix/2.0.x
-       commit id:"set 2.0.1--SNAPSHOT"
-       commit id:"fix" type: HIGHLIGHT tag: "2.0.1"
+       commit id:"fix-1" tag: "2.0.1"
        checkout main
-       merge hotfix/2.0.x
+       cherry-pick id:"fix-1"
        checkout hotfix/2.0.x
-       commit id:"set 2.0.2-SNAPSHOT"
        checkout main
        commit tag: "2.1.0"
        checkout hotfix/1.0.x
-       commit id:"set 1.5.1"
-       checkout hotfix/1.0.x
-       commit type: HIGHLIGHT tag: "1.5.1"
+       commit id:"fix-2" tag: "1.5.1"
        checkout support/1.x
-       merge hotfix/1.0.x
+       cherry-pick id:"fix-2"
        checkout hotfix/1.0.x
-       commit id:"set 1.5.2-SNAPSHOT"
        checkout support/1.x
+
        commit tag: "1.7.0"
 ```
-
-TODO: `merge hotfix/1.0.x -> cherry-pick id:"the fixx"`, see [this pull request](https://github.com/mermaid-js/mermaid/pull/3115)
 
 ### `main`-branch
 
@@ -61,6 +55,8 @@ In our Branching model, the `main` branch is used to hold all release-enabled fe
        commit id:"..."
        commit tag:"2.1.0"
 ```
+
+
 
 All changes are first made in separate `feature/` branches. When the change is ready to be included in the `main` branch, a pull request is made. Depending on the scope of the change, various quality checks can be performed here. If the checks are successful, the feature is merged to the `main` branch.
 
@@ -107,6 +103,30 @@ git branch hotfix/2.1.x 2.1.0
 After the hotfix branch is created, the changes can be made. Two ways are possible here. Either changes are taken over from the `main` branch via `cherry-pick` or the changes are created via a feature branch, which is then taken over into the hotfix branch and also into the `main` branch according to the rules described above.
 
 After completion of the Hotifx release, the branch does **not** have to be deleted, but can be kept for further hotfixes. It can also be deleted, because via the Git tag of the hotfix the branch can be created again at any time. Hotfixes can thus also be created from existing hotfix versions.
+
+All changes committed in a `hotfix` or `support` branch are **not** automatically applied to other branches such as the `main` branch, but must be applied with a `cherry-pick`.
+
+It is important that there is **no** merge from the `hotix` branch to the `main` branch, as it is provided in other branching models.
+
+```mermaid
+    gitGraph
+       commit tag:"1.0.0"
+       commit tag:"..."
+       commit tag:"2.0.0"
+       branch hotfix/2.1.x order:1
+       commit id:"fix-1"
+       checkout main
+       cherry-pick id:"fix-1"
+       checkout hotfix/2.1.x
+       commit tag:"2.1.1"
+       commit id:"fix-2"
+       checkout main
+       cherry-pick id:"fix-2"
+       checkout hotfix/2.1.x
+       commit tag:"2.1.2"
+
+```
+
 
 ### Support multiple major versions
 
