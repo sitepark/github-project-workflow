@@ -36,14 +36,8 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
-      - name: Generate JaCoCo Badge
-        uses: cicirello/jacoco-badge-generator@v2
+      - uses: codecov/codecov-action@v1
         with:
-          generate-branches-badge: true
-          badges-directory: target/site/jacoco/badges
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: jacoco
-          path: target/site/jacoco/
+          file: target/site/jacoco/jacoco.xml
+          name: codecov
 
