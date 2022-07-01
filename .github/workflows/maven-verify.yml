@@ -36,20 +36,30 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action/composite@v1
+        if: always()
+        with:
+          files: "target/surefire-reports/**/*.xml"
+
       - uses: codecov/codecov-action@v1
+        if: always()
         with:
           file: target/site/jacoco/jacoco.xml
           name: codecov
 
       - uses: jwgmeligmeyling/pmd-github-action@master
+        if: always()
         with:
           path: 'target/pmd.xml'
 
       - uses: jwgmeligmeyling/checkstyle-github-action@master
+        if: always()
         with:
           path: 'target/checkstyle-result.xml'
 
       - uses: jwgmeligmeyling/spotbugs-github-action@master
+        if: always()
         with:
           path: 'target/spotbugsXml.xml'
 
