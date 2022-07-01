@@ -109,4 +109,12 @@ For the different project types, the corresponding action must be used:
 - [Maven Projects](https://github.com/sitepark-com/github-maven-release-test/blob/main/.github/workflows/verify.yml)
 
 
+## Dependabot
 
+Use [Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/about-dependabot-version-updates) to keep the packages you use updated to the latest versions.
+
+For the different project types, the corresponding `.github/dependabot.yml` must be used:
+
+- [Maven Projects](https://github.com/sitepark-com/github-maven-release-test/blob/main/.github/dependabot.yml)
+
+Configure Dependabot "Settings -> Code security and analysis -> Dependabot"
