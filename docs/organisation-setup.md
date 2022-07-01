@@ -39,3 +39,12 @@ When all points are executed, the organization should contain the following sett
 ### Actions secrets
 
 ![GitHub release draft](assets/images/github-organisation-setup-secrets.png)
+
+
+## Integrate Codecov GitHub App
+
+For a good integration of the code coverage test, the Codecov GitHub app is set up. See https://github.com/marketplace/codecov
+
+## Integarate Snyk GitHub App
+
+To check the dependencies for vulnerabilities, the Snyk GitHub app is integrated. See https://github.com/marketplace/snyk
