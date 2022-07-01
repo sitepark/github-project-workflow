@@ -45,3 +45,11 @@ jobs:
         with:
           path: 'target/pmd.xml'
 
+      - uses: jwgmeligmeyling/checkstyle-github-action@master
+        with:
+          path: 'target/checkstyle-result.xml'
+
+      - uses: jwgmeligmeyling/spotbugs-github-action@master
+        with:
+          path: 'target/spotbugsXml.xml'
+
