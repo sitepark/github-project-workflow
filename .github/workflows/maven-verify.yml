@@ -31,7 +31,7 @@ jobs:
           languages: java
 
       - name: Build and verify with Maven
-        run: mvn --batch-mode --update-snapshots verify
+        run: mvn --batch-mode --fail-at-end --update-snapshots verify
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
