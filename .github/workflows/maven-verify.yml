@@ -41,3 +41,7 @@ jobs:
           file: target/site/jacoco/jacoco.xml
           name: codecov
 
+      - uses: jwgmeligmeyling/pmd-github-action@master
+        with:
+          path: 'target/pmd.xml'
+
