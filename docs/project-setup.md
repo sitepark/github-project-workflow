@@ -67,7 +67,7 @@ For the different project types, the corresponding action must be used:
 
 ### (📡) Create GitHub Release Draft
 
-When a new tag of the form `[0-9]+\.[0-9]+\.[0-9]+` has been created, this action is triggered automatically. It creates a new GitLab release as a draft and sets the changelog based on the Git commits.
+When a new tag of the form `[0-9]+\.[0-9]+\.[0-9]+` has been created, this action is triggered automatically. It creates a new GitHub release as a draft and sets the changelog based on the Git commits.
 
 To create this action for the project the file `.github/workflow/create-github-release-draft.yml` must be created in the project.
 
@@ -89,7 +89,7 @@ For the different project types, the corresponding action must be used:
 
 ### (📡) Publish Release
 
-This action is started automatically when the GitLab release is published. This action is project type specific. For example, for a Maven project, the artifact is deployed to the central Maven repository.
+This action is started automatically when the GitHub release is published. This action is project type specific. For example, for a Maven project, the artifact is deployed to the central Maven repository.
 
 To create this action for the project the file `.github/workflow/publish-release.yml` must be created in the project.
 
