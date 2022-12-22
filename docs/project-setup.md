@@ -10,7 +10,7 @@ If this concerns only a single project, follow the instructions under [Organizat
 
 ## Manage access
 
-For automated actions, the [`sitepark/bots`](https://github.com/orgs/sitepark/teams/bots) team must have write access to the project.
+For automated actions, the [`sitepark-bot`](https://github.com/sitepark-bot) must have write access to the project.
 
 ![GitHub manage access](assets/images/github-manage-access.png)
 
@@ -24,7 +24,7 @@ The default branch should be `main`.
 
 In the `main` branch should not be committed directly but always via a pull request. For this "Require a pull request before merging" should be set in the "Branch protection rules" to enforce this rule.
 
-For automated actions, an exception must be defined to be able to execute a release process, for example. For this the team [`sitepark/bots`](https://github.com/orgs/sitepark/teams/bots) is added as an exception.
+For automated actions, an exception must be defined to be able to execute a release process, for example. For this [`sitepark/bot`](https://github.com/sitepark-bot) is added as an exception.
 
 ![GitHub main branch protection](assets/images/github-main-branch-protection.png)
 
