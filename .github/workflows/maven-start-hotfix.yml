@@ -13,7 +13,7 @@
 #
 # jobs:
 #  start-hotfix:
-#    uses: sitepark-com/project-workflow/.github/workflows/maven-start-hotfix.yml@main
+#    uses: sitepark/project-workflow/.github/workflows/maven-start-hotfix.yml@main
 #    with:
 #      ref: ${{ github.ref }}
 #

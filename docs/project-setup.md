@@ -10,7 +10,7 @@ If this concerns only a single project, follow the instructions under [Organizat
 
 ## Manage access
 
-For automated actions, the [`sitepark-com/bots`](https://github.com/orgs/sitepark-com/teams/bots) team must have write access to the project.
+For automated actions, the [`sitepark/bots`](https://github.com/orgs/sitepark/teams/bots) team must have write access to the project.
 
 ![GitHub manage access](assets/images/github-manage-access.png)
 
@@ -24,7 +24,7 @@ The default branch should be `main`.
 
 In the `main` branch should not be committed directly but always via a pull request. For this "Require a pull request before merging" should be set in the "Branch protection rules" to enforce this rule.
 
-For automated actions, an exception must be defined to be able to execute a release process, for example. For this the team [`sitepark-com/bots`](https://github.com/orgs/sitepark-com/teams/bots) is added as an exception.
+For automated actions, an exception must be defined to be able to execute a release process, for example. For this the team [`sitepark/bots`](https://github.com/orgs/sitepark/teams/bots) is added as an exception.
 
 ![GitHub main branch protection](assets/images/github-main-branch-protection.png)
 
@@ -52,7 +52,7 @@ To create this action for the project the file `.github/workflow/create-release.
 
 For the different project types, the corresponding action must be used:
 
-- [Maven Projects](https://github.com/sitepark-com/github-maven-release-test/blob/main/.github/workflows/create-release.yml)
+- [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/create-release.yml)
 
 ### (▶) Start Hotfix
 
@@ -62,7 +62,7 @@ To create this action for the project the file `.github/workflow/start-hotfix.ym
 
 For the different project types, the corresponding action must be used:
 
-- [Maven Projects](https://github.com/sitepark-com/github-maven-release-test/blob/main/.github/workflows/start-hotfix.yml)
+- [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/start-hotfix.yml)
 
 
 ### (📡) Create GitHub Release Draft
@@ -73,7 +73,7 @@ To create this action for the project the file `.github/workflow/create-github-r
 
 For the different project types, the corresponding action must be used:
 
-- [Maven Projects](https://github.com/sitepark-com/github-maven-release-test/blob/main/.github/workflows/create-github-release-draft.yml)
+- [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/create-github-release-draft.yml)
 
 
 ### (📡) Deploy Snapshot
@@ -84,7 +84,7 @@ To create this action for the project the file `.github/workflow/deploy-snapshot
 
 For the different project types, the corresponding action must be used:
 
-- [Maven Projects](https://github.com/sitepark-com/github-maven-release-test/blob/main/.github/workflows/deploy-snapshot.yml)
+- [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/deploy-snapshot.yml)
 
 
 ### (📡) Publish Release
@@ -95,7 +95,7 @@ To create this action for the project the file `.github/workflow/publish-release
 
 For the different project types, the corresponding action must be used:
 
-- [Maven Projects](https://github.com/sitepark-com/github-maven-release-test/blob/main/.github/workflows/publish-release.yml)
+- [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/publish-release.yml)
 
 
 ### (📡) Verify
@@ -106,7 +106,7 @@ To create this action for the project the file `.github/workflow/verify.yml` mus
 
 For the different project types, the corresponding action must be used:
 
-- [Maven Projects](https://github.com/sitepark-com/github-maven-release-test/blob/main/.github/workflows/verify.yml)
+- [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/verify.yml)
 
 
 ## Dependabot
@@ -115,6 +115,6 @@ Use [Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-
 
 For the different project types, the corresponding `.github/dependabot.yml` must be used:
 
-- [Maven Projects](https://github.com/sitepark-com/github-maven-release-test/blob/main/.github/dependabot.yml)
+- [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/dependabot.yml)
 
 Configure Dependabot "Settings -> Code security and analysis -> Dependabot"
