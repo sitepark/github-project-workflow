@@ -1,5 +1,9 @@
 # Project setup
 
+Depending on the project type, corresponding configurations within the project files are still necessary:
+
+* [Setup for maven projects](project-setup-maven.md)
+
 Below are the recommended settings for Github projects that are required to use this Github workflow.
 
 ## Secrets
