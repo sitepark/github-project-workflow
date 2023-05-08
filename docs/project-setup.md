@@ -4,6 +4,8 @@ Depending on the project type, corresponding configurations within the project f
 
 * [Setup for maven projects](project-setup-maven.md)
 
+* [Setup for composer projects](project-setup-composer.md)
+
 Below are the recommended settings for Github projects that are required to use this Github workflow.
 
 ## Secrets
