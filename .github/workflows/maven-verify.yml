@@ -45,9 +45,6 @@ jobs:
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         if: always()
-        #with:
-        #  file: target/site/jacoco/jacoco.xml
-        #  name: codecov
 
       - uses: jwgmeligmeyling/pmd-github-action@master
         if: always()
