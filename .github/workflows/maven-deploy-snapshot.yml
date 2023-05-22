@@ -56,5 +56,9 @@ jobs:
            MAVEN_USERNAME: ${{ secrets.MVN_REPO_SERVER_USERNAME }}
            MAVEN_PASSWORD: ${{ secrets.MVN_REPO_SERVER_PASSWORD }}
 
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        if: always()
+
 
 
