@@ -27,6 +27,7 @@ jobs:
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
+        if: github.event_name == 'pull_request'
         with:
           languages: java
 
@@ -35,6 +36,7 @@ jobs:
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
+        if: github.event_name == 'pull_request'
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action/composite@v1
