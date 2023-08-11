@@ -87,7 +87,7 @@ jobs:
       #
       - name: Hotfix
         uses: qcastel/github-actions-maven-release@master
-        if: "startsWith(github.ref, 'refs/heads/hotfix/')"
+        if: ${{ startsWith(github.ref, 'refs/heads/hotfix/') }}
         env:
           JAVA_HOME: /usr/lib/jvm/java-${{ steps.get-java-version.outputs.info }}-openjdk/
           SKIP_GIT_SANITY_CHECK: true
@@ -109,7 +109,7 @@ jobs:
       #
       - name: Support-Release
         uses: qcastel/github-actions-maven-release@master
-        if: "startsWith(github.ref, 'refs/heads/support/')"
+        if: ${{ startsWith(github.ref, 'refs/heads/support/') }}
         env:
           JAVA_HOME: /usr/lib/jvm/java-${{ steps.get-java-version.outputs.info }}-openjdk/
           SKIP_GIT_SANITY_CHECK: true

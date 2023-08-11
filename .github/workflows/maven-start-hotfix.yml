@@ -31,7 +31,7 @@ on:
 jobs:
   start-hotfix:
 
-    if: "startsWith(inputs.ref, 'refs/tags/')"
+    if: ${{ startsWith(inputs.ref, 'refs/tags/') }}
     runs-on: ubuntu-latest
 
     steps:
@@ -69,7 +69,7 @@ jobs:
         uses: andreacomo/maven-gav-extractor@v1
 
       - name: Check if hotfix already started
-        if: "endsWith(steps.extract_gav.outputs.version, '-SNAPSHOT')"
+        if: ${{ endsWith(steps.extract_gav.outputs.version, '-SNAPSHOT') }}
         run: |
             echo "Hotfix already started. Current hotfix version is ${{ steps.extract_gav.outputs.version }}"
             exit 1
