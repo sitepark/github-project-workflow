@@ -28,7 +28,7 @@ jobs:
           xpath: '//*[local-name()="project"]/*[local-name()="version"]'
 
       - name: Check if snapshot
-        if: 'endsWith(steps.get-project-version.outputs.info, "-SNAPSHOT") == false'
+        if: ${{ endsWith(steps.get-project-version.outputs.info, '-SNAPSHOT') == false }}
         run: |
             echo "Not a snapshot-version: ${{ steps.get-project-version.outputs.info }}"
             exit 1
