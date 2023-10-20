@@ -1,0 +1,42 @@
+name: Composer Verify
+
+on: workflow_call
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    if: ${{ !startsWith(github.event.head_commit.message, 'ci(release):') }}
+
+    permissions: write-all
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: php-actions/composer@v6
+
+      - name: composer_install
+        run: composer install
+
+      - name: phpstan
+        run: tools/phpstan analyse --memory-limit=512M --no-progress --no-interaction || true
+
+      - name: phpcs
+        run: |
+          if [ -f tools/phpcs ]; then
+            PHPCS_BIN=tools/phpcs
+          elif [ -f vendor/bin/phpcs ]; then
+            PHPCS_BIN=vendor/bin/phpcs
+          fi
+          $PHPCS_BIN ---colors -report=full
+
+      - name: phplint
+        run: tools/phplint --no-progress
+
+      - name: phpunit
+        run: tools/phpunit.phar -c phpunit.xml --log-junit var/log/phpunit-test-report.xml --coverage-cobertura phpunit-coverage.xml --coverage-text --colors=never
+
+      - name: Upload to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODE_COV_TOKEN }}
+          files: ./target/clover/clover.xml
+          verbose: true
