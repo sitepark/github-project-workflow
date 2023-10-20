@@ -116,3 +116,4 @@ jobs:
 
           composer project:verifyRelease
           composer project:release
+          git push --tags
