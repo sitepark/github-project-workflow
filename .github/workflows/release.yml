@@ -13,7 +13,7 @@ jobs:
       # Release (main branch)
       #
       - name: Release
-        if: ${{ github.ref == 'refs/heads/support' || startsWith(github.ref, 'refs/heads/support/') }}
+        if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/support/') }}
         run: |
                 git checkout -B "$GITHUB_HEAD_REF"
 
