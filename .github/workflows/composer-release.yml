@@ -1,7 +1,18 @@
 name: Composer Verify
 
-on: workflow_call
-
+on:
+  workflow_call:
+    inputs:
+      botName:
+        required: true
+        type: string
+      botEmail:
+        required: true
+        type: string
+    secrets:
+      SSH_PRIVATE_KEY:
+        required: true
+    
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -97,5 +108,11 @@ jobs:
   
       - name: Release
         run: |
+
+          git config --global user.email ${{ inputs.botEmail }}
+          git config --global user.name ${{ inputs.botName }}
+      
+          ssh -i ${{ secrets.SSH_PRIVATE_KEY }}
+
           composer project:verifyRelease
           composer project:release
