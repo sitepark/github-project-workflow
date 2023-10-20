@@ -112,7 +112,7 @@ jobs:
           git config --global user.email ${{ inputs.botEmail }}
           git config --global user.name ${{ inputs.botName }}
       
-          ssh -i ${{ secrets.SSH_PRIVATE_KEY }}
+          #ssh -i ${{ secrets.SSH_PRIVATE_KEY }}
 
           composer project:verifyRelease
           composer project:release
