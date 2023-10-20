@@ -17,18 +17,20 @@ jobs:
         run: |
                 env
 
-                git checkout -B "$GITHUB_REF"
+                BRANCH=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+
+                git checkout -B "$BRANCH"
 
                 git fetch --tags -f
 
-                if [[ $GITHUB_REF = refs/heads/support/ ]]; then
-                SUPPORT_MAJOR=$(echo $GITHUB_REF | sed -e 's#refs/heads/support/\([0-9]\+\).x#\1#g')
+                if [[ $BRANCH = support/ ]]; then
+                    SUPPORT_MAJOR=$(echo $BRANCH | sed -e 's#support/\([0-9]\+\).x#\1#g')
                     LAST_VERSION_IN_BRANCH=$(git tag -l --sort=-v:refname "$SUPPORT_MAJOR"'.[0-9]*.[0-9]*' | head -n 1)
                 else
                     LAST_VERSION_IN_BRANCH=$(git tag -l --sort=-v:refname '[0-9]*.[0-9]*.[0-9]*' | head -n 1)
                 fi
         
-                LAST_COMMIT_IN_BRANCH=$(git rev-parse $GITHUB_REF)
+                LAST_COMMIT_IN_BRANCH=$(git rev-parse $BRANCH)
 
                 # validat is last commit in branch
                 if [ "$LAST_COMMIT_IN_BRANCH" != "$GITHUB_SHA" ]; then
