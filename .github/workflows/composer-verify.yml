@@ -2,8 +2,6 @@ name: Composer Verify
 
 on: workflow_call
 
-env:
-
 jobs:
   verify:
     runs-on: ubuntu-latest
