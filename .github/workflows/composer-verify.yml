@@ -15,12 +15,14 @@ jobs:
       - name: "Cache tools installed with PHIVE"
         uses: "actions/cache@v3"
         with:
-          path: "${{ runner.temp }}/.phive"
+          path: |
+            "${{ runner.temp }}/.phive"
+            "${{ env.HOME }}/.phive"
           key: "php-phive-${{ hashFiles('.phive/phars.xml') }}"
           restore-keys: "php-phive-"
 
       - name: "Install PHIVE"
-        uses: "szepeviktor/phive@v1"
+        uses: "szepevihktor/pive@v1"
         with:
           home: "${{ runner.temp }}/.phive"
           binPath: "/usr/local/bin/phive"
@@ -40,9 +42,6 @@ jobs:
       # Then only with the second composer install call also the post-install-cmd are executed.
       - name: composer_install
         run: |
-          ls -la
-          id
-          env
           sudo chown -R $UID:$UID vendor
           composer install
 
