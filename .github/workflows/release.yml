@@ -16,22 +16,22 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/support/') }}
         run: |
                 env
-                
-                git checkout -B "$GITHUB_HEAD_REF"
+
+                git checkout -B "$GITHUB_REF"
 
                 git fetch --tags -f
 
-                if [[ $CI_COMMIT_BRANCH = support/ ]]; then
-                SUPPORT_MAJOR=$(echo $CI_COMMIT_BRANCH | sed -e 's#support/\([0-9]\+\).x#\1#g')
+                if [[ $GITHUB_REF = refs/heads/support/ ]]; then
+                SUPPORT_MAJOR=$(echo $GITHUB_REF | sed -e 's#refs/heads/support/\([0-9]\+\).x#\1#g')
                     LAST_VERSION_IN_BRANCH=$(git tag -l --sort=-v:refname "$SUPPORT_MAJOR"'.[0-9]*.[0-9]*' | head -n 1)
                 else
                     LAST_VERSION_IN_BRANCH=$(git tag -l --sort=-v:refname '[0-9]*.[0-9]*.[0-9]*' | head -n 1)
                 fi
         
-                LAST_COMMIT_IN_BRANCH=$(git rev-parse $GITHUB_HEAD_REF)
+                LAST_COMMIT_IN_BRANCH=$(git rev-parse $GITHUB_REF)
 
                 # validat is last commit in branch
-                if [ "$LAST_COMMIT_IN_BRANCH" != "$CI_COMMIT_SHA" ]; then
+                if [ "$LAST_COMMIT_IN_BRANCH" != "$GITHUB_SHA" ]; then
                     echo -e "\e[31mA release can only be made for the last commit in the branch.\e[0m"
                     exit 1;
                 fi
