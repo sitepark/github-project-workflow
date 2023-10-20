@@ -22,6 +22,9 @@ jobs:
             PHPCS_BIN=tools/phpcs
           elif [ -f vendor/bin/phpcs ]; then
             PHPCS_BIN=vendor/bin/phpcs
+          else
+            echo "phpcs not found"
+            exit 1
           fi
           $PHPCS_BIN ---colors -report=full
 
