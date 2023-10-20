@@ -40,13 +40,6 @@ jobs:
           sudo chown -R $UID:$UID vendor
           composer install
 
-      - name: test
-        run: |
-          composer --version
-          ls -la
-          ls -la vendor/bin
-          ls -la tools
-
       - name: phpstan
         run: tools/phpstan analyse --memory-limit=512M --no-progress --no-interaction || true
 
@@ -67,7 +60,9 @@ jobs:
         run: tools/phplint --no-progress
 
       - name: phpunit
-        run: tools/phpunit.phar -c phpunit.xml --log-junit var/log/phpunit-test-report.xml --coverage-cobertura phpunit-coverage.xml --coverage-text --colors=never
+        run: |
+          export XDEBUG_MODE=coverage
+          tools/phpunit.phar -c phpunit.xml --log-junit var/log/phpunit-test-report.xml --coverage-cobertura phpunit-coverage.xml --coverage-text --colors=never
 
       - name: Upload to Codecov
         uses: codecov/codecov-action@v2
