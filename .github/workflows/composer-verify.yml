@@ -60,6 +60,7 @@ jobs:
             echo "phpcs not found"
             exit 1
           fi
+          mkdir target
           $PHPCS_BIN --colors --report=full
 
       - name: phplint
@@ -72,5 +73,5 @@ jobs:
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODE_COV_TOKEN }}
-          files: ./target/clover/clover.xml
+          files: ./var/log/clover/clover.xml
           verbose: true
