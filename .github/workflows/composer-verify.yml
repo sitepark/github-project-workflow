@@ -16,9 +16,10 @@ jobs:
 
       - name: test
         run: |
+          composer --version
           ls -la
-          ls -la tools
           ls -la vendor/bin
+          ls -la tools
 
       - name: phpstan
         run: tools/phpstan analyse --memory-limit=512M --no-progress --no-interaction || true
