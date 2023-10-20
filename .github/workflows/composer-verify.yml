@@ -22,7 +22,7 @@ jobs:
           restore-keys: "php-phive-"
 
       - name: "Install PHIVE"
-        uses: "szepevihktor/pive@v1"
+        uses: "szepeviktor/phive@v1"
         with:
           home: "${{ runner.temp }}/.phive"
           binPath: "/usr/local/bin/phive"
