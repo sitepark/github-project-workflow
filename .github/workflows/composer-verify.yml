@@ -23,7 +23,7 @@ jobs:
         uses: "szepeviktor/phive@v1"
         with:
           home: "${{ runner.temp }}/.phive"
-          binPath: "/usr/local/bin"
+          binPath: "/usr/local/bin/phive"
   
       - uses: php-actions/composer@v6
 
