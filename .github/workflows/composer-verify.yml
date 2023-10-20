@@ -11,11 +11,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      
+
       - uses: php-actions/composer@v6
 
-      - name: composer_install
-        run: composer install
+      - name: test
+        run: |
+          ls -la
+          ls -la tools
+          ls -la vendor/bin
 
       - name: phpstan
         run: tools/phpstan analyse --memory-limit=512M --no-progress --no-interaction || true
