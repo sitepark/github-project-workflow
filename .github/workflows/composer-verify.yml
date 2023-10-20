@@ -21,7 +21,7 @@ jobs:
       # Then only with the second composer install call also the post-install-cmd are executed.
       - name: composer_install
         run: |
-          sudo chown -r $UID.$GID vendor
+          sudo chown -R $UID.$GID vendor
           composer install
 
       - name: test
