@@ -57,5 +57,9 @@ jobs:
         
                 echo NEXT_VERSION $NEXT_VERSION
                 MAJOR=$(echo $NEXT_VERSION | sed 's/^\([0-9]\+\)\.[0-9]\+\.[0-9]\+.*/\1/g')
-                echo MAJOR $MAJOR
-        
+
+                echo "Next Version $NEXT_VERSION, major:$MAJOR"
+                git tag $NEXT_VERSION
+                git branch --force release/$MAJOR.x
+                git push --force --set-upstream origin release/$MAJOR.x
+                git push --tags --force
