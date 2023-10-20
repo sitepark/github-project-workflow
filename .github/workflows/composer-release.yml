@@ -11,5 +11,5 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: ./actions/php-build-environment.yml
-      - uses: ./actions/php-verify.yml
+      - uses: ./.github/workflow/actions/php-build-environment.yml
+      - uses: ./.github/workflow/actions/php-verify.yml
