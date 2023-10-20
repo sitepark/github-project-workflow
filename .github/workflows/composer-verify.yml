@@ -12,8 +12,19 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: "szepeviktor/phive@v1"
-      
+      - name: "Cache tools installed with PHIVE"
+        uses: "actions/cache@v2.1.2"
+        with:
+          path: "${{ runner.temp }}/.phive"
+          key: "php-phive-${{ hashFiles('.phive/phars.xml') }}"
+          restore-keys: "php-phive-"
+
+      - name: "Install PHIVE"
+        uses: "szepeviktor/phive@v1"
+        with:
+          home: "${{ runner.temp }}/.phive"
+          binPath: "/usr/local/bin"
+  
       - uses: php-actions/composer@v6
 
       # composer install is already executed by php-actions/composer@v6 but in composer.json post-install-cmd can be defined.
