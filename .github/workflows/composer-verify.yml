@@ -31,7 +31,7 @@ jobs:
           path: /tmp/composer-cache
           key: ${{ runner.os }}-${{ hashFiles('**/composer.lock', '**/composer.json') }}
     
-      - uses: php-actions/composer@v4
+      - uses: php-actions/composer@v6
 
       # composer install is already executed by php-actions/composer@v6 but in composer.json post-install-cmd can be defined.
       # But these are only executed if a composer.lock exists.
