@@ -23,7 +23,8 @@ jobs:
         run: |
           ls -la
           id
-          sudo chown -R $UID:$UID vendor/composer
+          env
+          sudo chown -R $UID:$UID vendor
           composer install
 
       - name: test
