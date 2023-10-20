@@ -48,8 +48,8 @@ jobs:
           composer validate
           composer install
 
-          - name: phpstan
-          run: tools/phpstan analyse --memory-limit=512M --no-progress --no-interaction || true
+      - name: phpstan
+        run: tools/phpstan analyse --memory-limit=512M --no-progress --no-interaction || true
     
       - name: phpcs
         run: |
