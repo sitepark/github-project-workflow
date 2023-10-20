@@ -13,9 +13,6 @@ jobs:
       - uses: actions/checkout@v3
       - uses: php-actions/composer@v6
 
-      - name: composer_install
-        run: composer install
-
       - name: phpstan
         run: tools/phpstan analyse --memory-limit=512M --no-progress --no-interaction || true
 
