@@ -13,48 +13,47 @@ jobs:
       # Release (main branch)
       #
       - name: Release
-      if: ${{ github.ref == 'refs/heads/support' || startsWith(github.ref, 'refs/heads/support/') }}
-      run: |
+        if: ${{ github.ref == 'refs/heads/support' || startsWith(github.ref, 'refs/heads/support/') }}
+        run: |
+                git checkout -B "$GITHUB_HEAD_REF"
 
-            git checkout -B "$GITHUB_HEAD_REF"
+                git fetch --tags -f
 
-            git fetch --tags -f
-
-            if [[ $CI_COMMIT_BRANCH = support/ ]]; then
-              SUPPORT_MAJOR=$(echo $CI_COMMIT_BRANCH | sed -e 's#support/\([0-9]\+\).x#\1#g')
-                LAST_VERSION_IN_BRANCH=$(git tag -l --sort=-v:refname "$SUPPORT_MAJOR"'.[0-9]*.[0-9]*' | head -n 1)
-            else
-                LAST_VERSION_IN_BRANCH=$(git tag -l --sort=-v:refname '[0-9]*.[0-9]*.[0-9]*' | head -n 1)
-            fi
-    
-            LAST_COMMIT_IN_BRANCH=$(git rev-parse $GITHUB_HEAD_REF)
-
-            # validat is last commit in branch
-            if [ "$LAST_COMMIT_IN_BRANCH" != "$CI_COMMIT_SHA" ]; then
-                echo -e "\e[31mA release can only be made for the last commit in the branch.\e[0m"
-                exit 1;
-            fi
-
-            echo LAST_VERSION_IN_BRANCH $LAST_VERSION_IN_BRANCH 
-            
-            if [ -z "$LAST_VERSION_IN_BRANCH" ]; then
-            NEXT_VERSION=1.0.0
-            else
-                MAJOR=$(echo $LAST_VERSION_IN_BRANCH | sed 's/^\([0-9]\+\)\.[0-9]\+\.[0-9]\+.*/\1/g')
-                MINOR=$(echo $LAST_VERSION_IN_BRANCH | sed 's/^[0-9]\+\.\([0-9]\+\)\.[0-9]\+.*/\1/g')
-                if [ "$NEW_MAJOR" == "true" ]; then
-                    NEXT_VERSION=$((MAJOR+=1)).0.0
+                if [[ $CI_COMMIT_BRANCH = support/ ]]; then
+                SUPPORT_MAJOR=$(echo $CI_COMMIT_BRANCH | sed -e 's#support/\([0-9]\+\).x#\1#g')
+                    LAST_VERSION_IN_BRANCH=$(git tag -l --sort=-v:refname "$SUPPORT_MAJOR"'.[0-9]*.[0-9]*' | head -n 1)
                 else
-                    NEXT_VERSION=$MAJOR.$((MINOR+=1)).0
+                    LAST_VERSION_IN_BRANCH=$(git tag -l --sort=-v:refname '[0-9]*.[0-9]*.[0-9]*' | head -n 1)
                 fi
-            fi
+        
+                LAST_COMMIT_IN_BRANCH=$(git rev-parse $GITHUB_HEAD_REF)
 
-            if [ "$LAST_VERSION_IN_BRANCH" == "$NEXT_VERSION" ]; then
-                echo "Tag $NEXT_VERSION for next release already exists"
-                exit 1;
-            fi
-    
-            echo NEXT_VERSION $NEXT_VERSION
-            MAJOR=$(echo $NEXT_VERSION | sed 's/^\([0-9]\+\)\.[0-9]\+\.[0-9]\+.*/\1/g')
-            echo MAJOR $MAJOR
+                # validat is last commit in branch
+                if [ "$LAST_COMMIT_IN_BRANCH" != "$CI_COMMIT_SHA" ]; then
+                    echo -e "\e[31mA release can only be made for the last commit in the branch.\e[0m"
+                    exit 1;
+                fi
+
+                echo LAST_VERSION_IN_BRANCH $LAST_VERSION_IN_BRANCH 
+                
+                if [ -z "$LAST_VERSION_IN_BRANCH" ]; then
+                NEXT_VERSION=1.0.0
+                else
+                    MAJOR=$(echo $LAST_VERSION_IN_BRANCH | sed 's/^\([0-9]\+\)\.[0-9]\+\.[0-9]\+.*/\1/g')
+                    MINOR=$(echo $LAST_VERSION_IN_BRANCH | sed 's/^[0-9]\+\.\([0-9]\+\)\.[0-9]\+.*/\1/g')
+                    if [ "$NEW_MAJOR" == "true" ]; then
+                        NEXT_VERSION=$((MAJOR+=1)).0.0
+                    else
+                        NEXT_VERSION=$MAJOR.$((MINOR+=1)).0
+                    fi
+                fi
+
+                if [ "$LAST_VERSION_IN_BRANCH" == "$NEXT_VERSION" ]; then
+                    echo "Tag $NEXT_VERSION for next release already exists"
+                    exit 1;
+                fi
+        
+                echo NEXT_VERSION $NEXT_VERSION
+                MAJOR=$(echo $NEXT_VERSION | sed 's/^\([0-9]\+\)\.[0-9]\+\.[0-9]\+.*/\1/g')
+                echo MAJOR $MAJOR
         
