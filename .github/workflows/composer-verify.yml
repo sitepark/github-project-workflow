@@ -17,10 +17,12 @@ jobs:
       # composer install is already executed by php-actions/composer@v6 but in composer.json post-install-cmd can be defined.
       # But these are only executed if a composer.lock exists.
       # See https://getcomposer.org/doc/articles/scripts.md#command-events
-      # For libraries the composer.lock is not checked and is not present at the first composer install call.
+      # For libraries the composer.lock is not checked in and is not present at the first composer install call.
       # Then only with the second composer install call also the post-install-cmd are executed.
       - name: composer_install
-        run: composer install
+        run: |
+          sudo chown -r $UID.$GID vendor
+          composer install
 
       - name: test
         run: |
