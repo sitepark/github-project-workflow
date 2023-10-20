@@ -1,0 +1,14 @@
+name: 'Install Composer'
+description: 'Install Composer'
+runs:
+  using: "composit"
+  steps:
+    - name: composer_install
+      env:
+        PHIVE_HOME: "${{ runner.temp }}/.phive"
+      run: |
+        sudo chown -R $UID:$UID vendor
+        composer --no-interaction global config --no-plugins allow-plugins.sitepark/composer-project true
+        composer --no-interaction global require --dev "sitepark/composer-project:dev-main"
+        composer validate
+        composer install
