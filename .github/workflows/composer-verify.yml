@@ -45,7 +45,10 @@ jobs:
           PHIVE_HOME: "${{ runner.temp }}/.phive"
         run: |
           sudo chown -R $UID:$UID vendor
-          composer install
+          - composer --no-interaction global config --no-plugins allow-plugins.sitepark/composer-project true
+          - composer --no-interaction global require --dev "sitepark/composer-project:dev-main"
+          - composer validate
+            composer install
 
       - name: phpstan
         run: tools/phpstan analyse --memory-limit=512M --no-progress --no-interaction || true
