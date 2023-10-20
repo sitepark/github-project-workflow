@@ -60,7 +60,7 @@ jobs:
             echo "phpcs not found"
             exit 1
           fi
-          $PHPCS_BIN --colors -report=full
+          $PHPCS_BIN --colors --report=full
 
       - name: phplint
         run: tools/phplint --no-progress
