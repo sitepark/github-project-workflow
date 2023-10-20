@@ -1,4 +1,4 @@
-name: Composer Verify
+name: Composer Release
 
 on: workflow_call
 
