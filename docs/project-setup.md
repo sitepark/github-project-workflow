@@ -58,7 +58,8 @@ To create this action for the project the file `.github/workflow/create-release.
 
 For the different project types, the corresponding action must be used:
 
-- [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/create-release.yml)
+- [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/maven-create-release.yml)
+- [Composer Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/composer-create-release.yml)
 
 ### (▶) Start Hotfix
 
@@ -68,7 +69,7 @@ To create this action for the project the file `.github/workflow/start-hotfix.ym
 
 For the different project types, the corresponding action must be used:
 
-- [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/start-hotfix.yml)
+- [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/maven-start-hotfix.yml)
 
 
 ### (📡) Create GitHub Release Draft
@@ -79,7 +80,7 @@ To create this action for the project the file `.github/workflow/create-github-r
 
 For the different project types, the corresponding action must be used:
 
-- [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/create-github-release-draft.yml)
+- [All Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/create-github-release-draft.yml)
 
 
 ### (📡) Deploy Snapshot
@@ -90,7 +91,7 @@ To create this action for the project the file `.github/workflow/deploy-snapshot
 
 For the different project types, the corresponding action must be used:
 
-- [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/deploy-snapshot.yml)
+- [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/maven-deploy-snapshot.yml)
 
 
 ### (📡) Publish Release
@@ -101,7 +102,7 @@ To create this action for the project the file `.github/workflow/publish-release
 
 For the different project types, the corresponding action must be used:
 
-- [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/publish-release.yml)
+- [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/maven-publish-release.yml)
 
 
 ### (📡) Verify
@@ -112,7 +113,8 @@ To create this action for the project the file `.github/workflow/verify.yml` mus
 
 For the different project types, the corresponding action must be used:
 
-- [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/verify.yml)
+- [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/maven-verify.yml)
+- [Coomposer Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/composer-verify.yml)
 
 
 ## Dependabot
@@ -122,5 +124,6 @@ Use [Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-
 For the different project types, the corresponding `.github/dependabot.yml` must be used:
 
 - [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/dependabot.yml)
+- [Composer Projects](https://github.com/sitepark/github-composer-release-test/blob/main/.github/dependabot.yml)
 
 Configure Dependabot "Settings -> Code security and analysis -> Dependabot"
