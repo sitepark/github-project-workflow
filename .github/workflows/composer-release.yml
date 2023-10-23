@@ -28,7 +28,7 @@ jobs:
       - name: convert private key
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/key.priv.decoded
-          tail /tmp/key.priv.decoded
+          cat /tmp/key.priv.decoded | base64
           ls -la /tmp
           echo "abc" | base64
           base64 -d /tmp/key.priv.decoded > /tmp/key.priv
