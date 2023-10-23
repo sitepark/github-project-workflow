@@ -9,11 +9,14 @@ Important points here are
 * [Setup with SSH](https://github.com/qcastel/github-actions-maven-release#setup-with-ssh)
 * [Setup a GPG key](https://github.com/qcastel/github-actions-maven-release#setup-a-gpg-key)
 
+Create [Create Personal Access-Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) with name `BOT_PAT`
+
 After everything has been set up as described, the following Actions-Secrets should be set on the organization.
 
 - `GPG_KEY`
 - `GPG_KEY_ID`
 - `SSH_PRIVATE_KEY`
+- `BOT_PAT`
 
 ## Create account to deploy Maven artifacts to the central Maven repository
 
