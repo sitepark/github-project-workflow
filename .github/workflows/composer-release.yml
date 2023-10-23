@@ -151,11 +151,13 @@ jobs:
           git config --global user.email ${{ inputs.botEmail }}
           git config --global user.name ${{ inputs.botName }}
 
-          cat <<EOT >> ~/.ssh/config
+          cat <<EOF >> ~/.ssh/config
           Host github.com
             HostName github.com
             IdentityFile /tmp/key.priv
           EOF
+
+          cat ~/.ssh/config
       
           #ssh -i ${{ secrets.SSH_PRIVATE_KEY }}
 
