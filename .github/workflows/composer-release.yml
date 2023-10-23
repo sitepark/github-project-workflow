@@ -22,11 +22,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          ssh-key: "${{ secrets.SSH_PRIVATE_KEY }}"
-#      - uses: webfactory/ssh-agent@v0.7.0
 #        with:
-#          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+#          ssh-key: "${{ secrets.SSH_PRIVATE_KEY }}"
+
+      - name: convert private key
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/key.priv
+          echo >> /tmp/key.priv
+          chmod 600 /tmp/key.priv
+          ssh-keygen -p -f /tmp/key.priv -m pem 
+
+      - uses: webfactory/ssh-agent@v0.7.0
+        with:
+          #ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: /tmp/key.priv
       - name: "Cache tools installed with PHIVE"
         uses: "actions/cache@v3"
         with:
