@@ -34,10 +34,10 @@ jobs:
           ssh-keygen -l -f /tmp/key.priv
           #ssh-keygen -p -f /tmp/key.priv -m pem 
 
-      - uses: webfactory/ssh-agent@v0.7.0
-        with:
-          #ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          ssh-private-key: /tmp/key.priv
+#      - uses: webfactory/ssh-agent@v0.7.0
+#        with:
+#          #ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+#          ssh-private-key: /tmp/key.priv
       - name: "Cache tools installed with PHIVE"
         uses: "actions/cache@v3"
         with:
@@ -138,6 +138,14 @@ jobs:
           #chmod 600 /tmp/key.priv
           #ssh-keygen -p -f /tmp/key.priv -m pem 
           #ssh-add - < /tmp/key.priv
+
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | sed 's/ /\n/g' > /tmp/key.priv.decoded
+          cat /tmp/key.priv.decoded | base64
+          base64 -d /tmp/key.priv.decoded > /tmp/key.priv
+          chmod 600 /tmp/key.priv
+
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add - < /tmp/key.priv
 
           git config --global user.email ${{ inputs.botEmail }}
           git config --global user.name ${{ inputs.botName }}
