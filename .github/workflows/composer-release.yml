@@ -24,6 +24,9 @@ jobs:
       - uses: actions/checkout@v4
 #        with:
 #          ssh-key: "${{ secrets.SSH_PRIVATE_KEY }}"
+      - uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: "Cache tools installed with PHIVE"
         uses: "actions/cache@v3"
         with:
@@ -110,8 +113,8 @@ jobs:
       - name: Release
         run: |
 
-          eval "$(ssh-agent -s)"
-          ssh-add -K "${{ secrets.SSH_PRIVATE_KEY }}"
+          #eval "$(ssh-agent -s)"
+          #ssh-add -K "${{ secrets.SSH_PRIVATE_KEY }}"
           git config --global user.email ${{ inputs.botEmail }}
           git config --global user.name ${{ inputs.botName }}
       
