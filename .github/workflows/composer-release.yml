@@ -22,8 +22,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          ssh-key: "${{ secrets.SSH_PRIVATE_KEY }}"
+#        with:
+#          ssh-key: "${{ secrets.SSH_PRIVATE_KEY }}"
       - name: "Cache tools installed with PHIVE"
         uses: "actions/cache@v3"
         with:
@@ -110,6 +110,7 @@ jobs:
       - name: Release
         run: |
 
+          ssh-add -K "${{ secrets.SSH_PRIVATE_KEY }}"
           git config --global user.email ${{ inputs.botEmail }}
           git config --global user.name ${{ inputs.botName }}
       
