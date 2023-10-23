@@ -22,8 +22,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-#        with:
-#          ssh-key: "${{ secrets.SSH_PRIVATE_KEY }}"
+        with:
+          ssh-key: "${{ secrets.SSH_PRIVATE_KEY }}"
 #      - uses: webfactory/ssh-agent@v0.7.0
 #        with:
 #          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -120,15 +120,13 @@ jobs:
           #ssh-add -K "${{ secrets.SSH_PRIVATE_KEY }}"
           #ssh-add "${{ secrets.SSH_PRIVATE_KEY }}"
 
-          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/key.priv
-          echo >> /tmp/key.priv
-          cat /tmp/key.priv
-          chmod 600 /tmp/key.priv
-          ssh-keygen -p -f /tmp/key.priv -m pem 
-
-          ssh-add - < /tmp/key.priv
+          #ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          #echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/key.priv
+          #echo >> /tmp/key.priv
+          #cat /tmp/key.priv
+          #chmod 600 /tmp/key.priv
+          #ssh-keygen -p -f /tmp/key.priv -m pem 
+          #ssh-add - < /tmp/key.priv
 
           git config --global user.email ${{ inputs.botEmail }}
           git config --global user.name ${{ inputs.botName }}
