@@ -22,22 +22,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-#        with:
-#          ssh-key: "${{ secrets.SSH_PRIVATE_KEY }}"
 
-      - name: convert private key
-        run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | sed 's/ /\n/g' > /tmp/key.priv.decoded
-          cat /tmp/key.priv.decoded | base64
-          base64 -d /tmp/key.priv.decoded > /tmp/key.priv
-          chmod 600 /tmp/key.priv
-          ssh-keygen -l -f /tmp/key.priv
-          #ssh-keygen -p -f /tmp/key.priv -m pem 
-
-#      - uses: webfactory/ssh-agent@v0.7.0
-#        with:
-#          #ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-#          ssh-private-key: /tmp/key.priv
       - name: "Cache tools installed with PHIVE"
         uses: "actions/cache@v3"
         with:
@@ -125,41 +110,23 @@ jobs:
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
-          #export SSH_AUTH_SOCK=/tmp/ssh_agent.sock
-          #ssh-agent -a $SSH_AUTH_SOCK
-          #eval "$(ssh-agent -s)"
-          #ssh-add -K "${{ secrets.SSH_PRIVATE_KEY }}"
-          #ssh-add "${{ secrets.SSH_PRIVATE_KEY }}"
 
-          #ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-          #echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/key.priv
-          #echo >> /tmp/key.priv
-          #cat /tmp/key.priv
+          #echo "${{ secrets.SSH_PRIVATE_KEY }}" | sed 's/ /\n/g' > /tmp/key.priv.decoded
+          #cat /tmp/key.priv.decoded | base64
+          #base64 -d /tmp/key.priv.decoded > /tmp/key.priv
           #chmod 600 /tmp/key.priv
-          #ssh-keygen -p -f /tmp/key.priv -m pem 
-          #ssh-add - < /tmp/key.priv
 
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | sed 's/ /\n/g' > /tmp/key.priv.decoded
-          cat /tmp/key.priv.decoded | base64
-          base64 -d /tmp/key.priv.decoded > /tmp/key.priv
-          chmod 600 /tmp/key.priv
-
-          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-          ssh-add - < /tmp/key.priv
-
-          git config core.sshCommand "ssh -i /tmp/key.privx"
-          git config --global user.email ${{ inputs.botEmail }}
-          git config --global user.name ${{ inputs.botName }}
-
-          cat <<EOF >> ~/.ssh/config
-          Host github.com
-            HostName github.com
-            IdentityFile /tmp/key.priv
-          EOF
-
-          cat ~/.ssh/config
+          #git config --global user.email ${{ inputs.botEmail }}
+          #git config --global user.name ${{ inputs.botName }}
+          #cat <<EOF >> ~/.ssh/config
+          #Host github.com
+          #  HostName github.com
+          #  IdentityFile /tmp/key.priv
+          #EOF
       
           #ssh -i ${{ secrets.SSH_PRIVATE_KEY }}
+
+          ssh -v git@github.com
 
           composer project:verifyRelease
           composer project:release
