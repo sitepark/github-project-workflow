@@ -22,7 +22,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
+        with:
+          token: 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
+          
       - name: "Cache tools installed with PHIVE"
         uses: "actions/cache@v3"
         with:
@@ -107,8 +109,6 @@ jobs:
           verbose: true
   
       - name: Release
-        env:
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
 
           #echo "${{ secrets.SSH_PRIVATE_KEY }}" | sed 's/ /\n/g' > /tmp/key.priv.decoded
@@ -117,7 +117,7 @@ jobs:
           #chmod 600 /tmp/key.priv
 
           env
-          
+
           git config --global user.email ${{ inputs.botEmail }}
           git config --global user.name ${{ inputs.botName }}
           #cat <<EOF >> ~/.ssh/config
