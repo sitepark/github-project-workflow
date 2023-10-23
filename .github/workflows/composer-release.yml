@@ -150,6 +150,12 @@ jobs:
           git config core.sshCommand "ssh -i /tmp/key.privx"
           git config --global user.email ${{ inputs.botEmail }}
           git config --global user.name ${{ inputs.botName }}
+
+          cat <<EOT >> ~/.ssh/config
+          Host github.com
+            HostName github.com
+            IdentityFile /tmp/key.priv
+          EOF
       
           #ssh -i ${{ secrets.SSH_PRIVATE_KEY }}
 
