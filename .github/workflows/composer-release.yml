@@ -123,6 +123,7 @@ jobs:
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
 
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/key.priv
+          chmod 600 /tmp/key.priv
           ssh-keygen -p -f /tmp/key.priv -m pem 
 
           ssh-add - < /tmp/key.priv
