@@ -111,12 +111,17 @@ jobs:
           verbose: true
   
       - name: Release
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
-          export SSH_AUTH_SOCK=/tmp/ssh_agent.sock
-          ssh-agent -a $SSH_AUTH_SOCK
+          #export SSH_AUTH_SOCK=/tmp/ssh_agent.sock
+          #ssh-agent -a $SSH_AUTH_SOCK
           #eval "$(ssh-agent -s)"
           #ssh-add -K "${{ secrets.SSH_PRIVATE_KEY }}"
-          ssh-add "${{ secrets.SSH_PRIVATE_KEY }}"
+          #ssh-add "${{ secrets.SSH_PRIVATE_KEY }}"
+
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
 
           git config --global user.email ${{ inputs.botEmail }}
           git config --global user.name ${{ inputs.botName }}
