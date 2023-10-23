@@ -28,6 +28,8 @@ jobs:
       - name: convert private key
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/key.priv
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ssh-keygen -l
+          ssh-keygen -l -f /tmp/key.priv
           echo >> /tmp/key.priv
           chmod 600 /tmp/key.priv
           ssh-keygen -p -f /tmp/key.priv -m pem 
