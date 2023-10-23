@@ -23,8 +23,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          token: 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
-          
+          token: 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
+
       - name: "Cache tools installed with PHIVE"
         uses: "actions/cache@v3"
         with:
