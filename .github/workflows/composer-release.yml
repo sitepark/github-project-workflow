@@ -121,7 +121,11 @@ jobs:
           #ssh-add "${{ secrets.SSH_PRIVATE_KEY }}"
 
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-          ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/key.priv
+          ssh-keygen -p -f /tmp/key.priv -m pem 
+
+          ssh-add - < /tmp/key.priv
 
           git config --global user.email ${{ inputs.botEmail }}
           git config --global user.name ${{ inputs.botName }}
