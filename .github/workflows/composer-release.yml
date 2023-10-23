@@ -10,11 +10,9 @@ on:
         required: true
         type: string
     secrets:
-      SSH_PRIVATE_KEY:
+      BOT_PAT:
         required: true
-      RELEASE_HELPER_TOKEN:
-          required: true
-      
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -25,7 +23,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.RELEASE_HELPER_TOKEN }}
+          # There is a limitation of workflow: An action in a workflow
+          # run can’t trigger a new workflow run.
+          # But this is needed here so that the created tag can trigger
+          # the create-github-release-draft that is triggered on every new tag.
+          # Solution is a explizit token: https://github.com/orgs/community/discussions/25617
+          token: ${{ secrets.BOT_PAT }}
       
       - name: "Cache tools installed with PHIVE"
         uses: "actions/cache@v3"
@@ -113,26 +116,8 @@ jobs:
       - name: Release
         run: |
 
-          #echo "${{ secrets.SSH_PRIVATE_KEY }}" | sed 's/ /\n/g' > /tmp/key.priv.decoded
-          #cat /tmp/key.priv.decoded | base64
-          #base64 -d /tmp/key.priv.decoded > /tmp/key.priv
-          #chmod 600 /tmp/key.priv
-
-
-          git config --global credential.https://github.com.username git
-          git config --global credential.https://github.com.password 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
-
           git config --global user.email ${{ inputs.botEmail }}
           git config --global user.name ${{ inputs.botName }}
-          #cat <<EOF >> ~/.ssh/config
-          #Host github.com
-          #  HostName github.com
-          #  IdentityFile /tmp/key.priv
-          #EOF
-      
-          #ssh -i ${{ secrets.SSH_PRIVATE_KEY }}
-
-          #ssh -v git@github.com
 
           composer project:verifyRelease
           composer project:release
