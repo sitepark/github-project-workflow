@@ -28,6 +28,8 @@ jobs:
       - name: convert private key
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/key.priv.decoded
+          ls -la /tmp
+          echo "abc" | base64
           base64 -d /tmp/key.priv.decoded > /tmp/key.priv
           chmod 600 /tmp/key.priv
           ssh-keygen -l -f /tmp/key.priv
