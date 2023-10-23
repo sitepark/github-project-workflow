@@ -126,7 +126,7 @@ jobs:
       
           #ssh -i ${{ secrets.SSH_PRIVATE_KEY }}
 
-          ssh -v git@github.com
+          #ssh -v git@github.com
 
           composer project:verifyRelease
           composer project:release
