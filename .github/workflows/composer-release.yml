@@ -116,8 +116,10 @@ jobs:
           #base64 -d /tmp/key.priv.decoded > /tmp/key.priv
           #chmod 600 /tmp/key.priv
 
-          #git config --global user.email ${{ inputs.botEmail }}
-          #git config --global user.name ${{ inputs.botName }}
+          env
+          
+          git config --global user.email ${{ inputs.botEmail }}
+          git config --global user.name ${{ inputs.botName }}
           #cat <<EOF >> ~/.ssh/config
           #Host github.com
           #  HostName github.com
