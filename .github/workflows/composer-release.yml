@@ -12,7 +12,9 @@ on:
     secrets:
       SSH_PRIVATE_KEY:
         required: true
-    
+      RELEASE_HELPER_TOKEN:
+          required: true
+      
 jobs:
   release:
     runs-on: ubuntu-latest
