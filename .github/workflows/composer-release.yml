@@ -27,10 +27,10 @@ jobs:
 
       - name: convert private key
         run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | base64 -d > /tmp/key.priv
-          ssh-keygen -l -f /tmp/key.priv
-          echo >> /tmp/key.priv
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/key.priv.decoded
+          base64 -d /tmp/key.priv.decoded > /tmp/key.priv
           chmod 600 /tmp/key.priv
+          ssh-keygen -l -f /tmp/key.priv
           #ssh-keygen -p -f /tmp/key.priv -m pem 
 
       - uses: webfactory/ssh-agent@v0.7.0
