@@ -44,6 +44,8 @@ jobs:
         env:
           PHIVE_HOME: "${{ runner.temp }}/.phive"
         run: |
+          type -p phive
+          echo $PATH
           sudo chown -R $UID:$UID vendor
           composer --no-interaction global config --no-plugins allow-plugins.sitepark/composer-project true
           composer --no-interaction global require --dev "sitepark/composer-project:dev-main"
