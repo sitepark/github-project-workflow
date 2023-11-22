@@ -34,12 +34,6 @@ jobs:
           path: /tmp/composer-cache
           key: ${{ runner.os }}-${{ hashFiles('**/composer.lock', '**/composer.json') }}
 
-      - name: Debug output
-        run: |
-          type -p phive
-          echo $PATH
-          phive version
-
       - uses: php-actions/composer@v6
 
       # composer install is already executed by php-actions/composer@v6 but in composer.json post-install-cmd can be defined.
