@@ -33,6 +33,12 @@ jobs:
           path: /tmp/composer-cache
           key: ${{ runner.os }}-${{ hashFiles('**/composer.lock', '**/composer.json') }}
 
+      - name: Debug output
+        run: |
+          type -p phive
+          echo $PATH
+          phive version
+
       - uses: php-actions/composer@v6
 
       # composer install is already executed by php-actions/composer@v6 but in composer.json post-install-cmd can be defined.
@@ -44,8 +50,6 @@ jobs:
         env:
           PHIVE_HOME: "${{ runner.temp }}/.phive"
         run: |
-          type -p phive
-          echo $PATH
           sudo chown -R $UID:$UID vendor
           composer --no-interaction global config --no-plugins allow-plugins.sitepark/composer-project true
           composer --no-interaction global require --dev "sitepark/composer-project:dev-main"
