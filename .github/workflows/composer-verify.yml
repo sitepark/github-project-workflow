@@ -30,6 +30,7 @@ jobs:
         env:
           PHIVE_HOME: "${{ runner.temp }}/.phive"
         with:
+          args: --no-scripts # if composer.lock exists phive would not be found
           path: /tmp/composer-cache
           key: ${{ runner.os }}-${{ hashFiles('**/composer.lock', '**/composer.json') }}
 
