@@ -41,7 +41,7 @@ jobs:
       - uses: php-actions/composer@v6
         with:
           php_version: ${{ inputs.phpVersion }}
-          args: --no-scripts # if composer.lock exists phive would not be found
+          args: --no-scripts --vvv # if composer.lock exists phive would not be found
 
       # composer install is already executed by php-actions/composer@v6 but in composer.json post-install-cmd can be defined.
       # But these are only executed if a composer.lock exists.
