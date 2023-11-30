@@ -48,6 +48,12 @@ jobs:
       # See https://getcomposer.org/doc/articles/scripts.md#command-events
       # For libraries the composer.lock is not checked in and is not present at the first composer install call.
       # Then only with the second composer install call also the post-install-cmd are executed.
+
+      - uses: php-actions/composer@v6
+        with:
+          php_version: ${{ inputs.phpVersion }}
+          command: --no-interaction global config --no-plugins allow-plugins.sitepark/composer-project true
+
       - name: composer_install
         env:
           PHIVE_HOME: "${{ runner.temp }}/.phive"
