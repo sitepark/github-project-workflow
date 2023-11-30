@@ -42,29 +42,35 @@ jobs:
         with:
           php_version: ${{ inputs.phpVersion }}
           args: --no-scripts -vvv # if composer.lock exists phive would not be found
-
-      # composer install is already executed by php-actions/composer@v6 but in composer.json post-install-cmd can be defined.
-      # But these are only executed if a composer.lock exists.
-      # See https://getcomposer.org/doc/articles/scripts.md#command-events
-      # For libraries the composer.lock is not checked in and is not present at the first composer install call.
-      # Then only with the second composer install call also the post-install-cmd are executed.
+        env:
+          PHIVE_HOME: "${{ runner.temp }}/.phive"
 
       - uses: php-actions/composer@v6
         with:
           php_version: ${{ inputs.phpVersion }}
           command: --no-interaction global config --no-plugins allow-plugins.sitepark/composer-project true
 
-      - name: composer_install
+      - uses: php-actions/composer@v6
+        with:
+          php_version: ${{ inputs.phpVersion }}
+          command: --no-interaction global require --dev "sitepark/composer-project:dev-main"
+  
+      - uses: php-actions/composer@v6
+        with:
+          php_version: ${{ inputs.phpVersion }}
+          command: validate
+    
+      # composer install is already executed by php-actions/composer@v6 but in composer.json post-install-cmd can be defined.
+      # But these are only executed if a composer.lock exists.
+      # See https://getcomposer.org/doc/articles/scripts.md#command-events
+      # For libraries the composer.lock is not checked in and is not present at the first composer install call.
+      # Then only with the second composer install call also the post-install-cmd are executed.
+      - uses: php-actions/composer@v6
+        with:
+          php_version: ${{ inputs.phpVersion }}
         env:
           PHIVE_HOME: "${{ runner.temp }}/.phive"
-        run: |
-          sudo chown -R $UID:$UID vendor
-          composer -vvv about
-          composer --no-interaction global config --no-plugins allow-plugins.sitepark/composer-project true
-          composer --no-interaction global require --dev "sitepark/composer-project:dev-main"
-          composer validate
-          composer install
-
+    
       - name: phpstan
         run: tools/phpstan analyse --memory-limit=512M --no-progress --no-interaction || true
     
