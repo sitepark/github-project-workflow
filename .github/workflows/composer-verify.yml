@@ -53,7 +53,7 @@ jobs:
       - uses: php-actions/composer@v6
         with:
           php_version: ${{ inputs.phpVersion }}
-          command: --no-interaction global require --dev "sitepark/composer-project:dev-main"
+          command: --no-interaction global require --dev sitepark/composer-project:dev-main
   
       - uses: php-actions/composer@v6
         with:
