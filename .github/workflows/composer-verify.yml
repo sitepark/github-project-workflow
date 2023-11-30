@@ -1,6 +1,12 @@
 name: Composer Verify
 
-on: workflow_call
+on:
+  workflow_call:
+    inputs:
+      phpVersion:
+        required: true
+        default: '8.3'
+        type: string
 
 jobs:
   verify:
@@ -35,6 +41,7 @@ jobs:
 
       - uses: php-actions/composer@v6
         with:
+          php_version: ${{ inputs.phpVersion }}
           args: --no-scripts # if composer.lock exists phive would not be found
 
       # composer install is already executed by php-actions/composer@v6 but in composer.json post-install-cmd can be defined.
