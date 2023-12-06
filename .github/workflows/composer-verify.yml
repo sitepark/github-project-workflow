@@ -22,19 +22,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup PHP with PECL extension
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ inputs.phpVersion }}
+          coverage: xdebug
+          toos: phive
+          #extensions: imagick, swoole
+
       - name: "Cache tools installed with PHIVE"
         uses: "actions/cache@v3"
         with:
           path: "${{ runner.temp }}/.phive"
           key: "php-phive-${{ hashFiles('.phive/phars.xml') }}"
           restore-keys: "php-phive-"
-
-      - name: "Install PHIVE"
-        uses: "szepeviktor/phive@v1"
-        with:
-          home: "${{ runner.temp }}/.phive"
-          binPath: "/usr/local/bin/phive"
-
+  
       - name: Cache Composer dependencies
         uses: actions/cache@v3
         env:
@@ -43,54 +45,21 @@ jobs:
           path: /tmp/composer-cache
           key: ${{ runner.os }}-${{ hashFiles('**/composer.lock', '**/composer.json') }}
 
-      - name: Composer validate
-        uses: php-actions/composer@v6
-        with:
-          php_version: ${{ inputs.phpVersion }}
-          command: validate
-  
-      - name: Composer allow plugin sitepark/composer-project
-        uses: php-actions/composer@v6
-        with:
-          php_version: ${{ inputs.phpVersion }}
-          command: --no-interaction global config --no-plugins allow-plugins.sitepark/composer-project true
-
-      - name : test
+      - name: Composer install
         run: |
-          ls -la .
-          ls -la .composer
-          cat .composer/composer.json
+          composer --no-interaction global config --no-plugins allow-plugins.sitepark/composer-project true
+          composer --no-interaction global require --dev sitepark/composer-project:dev-main
 
-      - name: Composer add sitepark/composer-project
-        uses: php-actions/composer@v6
-        with:
-          php_version: ${{ inputs.phpVersion }}
-          command: --no-interaction global require --dev sitepark/composer-project:dev-main
+          # if composer.lock exists phive would not be found
+          composer install --no-scripts
 
-      - name : test
-        run: |
-          ls -la .
-          ls -la .composer
-          cat .composer/composer.json
-  
-      - name: Composer install (no scripts)
-        uses: php-actions/composer@v6
-        with:
-          php_version: ${{ inputs.phpVersion }}
-          args: --no-scripts -vvv # if composer.lock exists phive would not be found
+          # composer install is already executed by php-actions/composer@v6 but in composer.json post-install-cmd can be defined.
+          # But these are only executed if a composer.lock exists.
+          # See https://getcomposer.org/doc/articles/scripts.md#command-events
+          # For libraries the composer.lock is not checked in and is not present at the first composer install call.
+          # Then only with the second composer install call also the post-install-cmd are executed.
+          composer install --no-scripts
 
-      # composer install is already executed by php-actions/composer@v6 but in composer.json post-install-cmd can be defined.
-      # But these are only executed if a composer.lock exists.
-      # See https://getcomposer.org/doc/articles/scripts.md#command-events
-      # For libraries the composer.lock is not checked in and is not present at the first composer install call.
-      # Then only with the second composer install call also the post-install-cmd are executed.
-      - name: Composer install (with scripts)
-        uses: php-actions/composer@v6
-        with:
-          php_version: ${{ inputs.phpVersion }}
-        env:
-          PHIVE_HOME: "/app/.phive"
-    
       - name: phpstan
         run: tools/phpstan analyse --memory-limit=512M --no-progress --no-interaction || true
     
