@@ -38,34 +38,39 @@ jobs:
           path: /tmp/composer-cache
           key: ${{ runner.os }}-${{ hashFiles('**/composer.lock', '**/composer.json') }}
 
-      - uses: php-actions/composer@v6
+      - name: Composer validate
+        uses: php-actions/composer@v6
+        with:
+          php_version: ${{ inputs.phpVersion }}
+          command: validate
+  
+      - name: Composer allow plugin sitepark/composer-project
+        uses: php-actions/composer@v6
+        with:
+          php_version: ${{ inputs.phpVersion }}
+          command: --no-interaction global config --no-plugins allow-plugins.sitepark/composer-project true
+
+      - name: Composer add sitepark/composer-project
+        uses: php-actions/composer@v6
+        with:
+          php_version: ${{ inputs.phpVersion }}
+          command: --no-interaction global require --dev sitepark/composer-project:dev-main
+   
+      - name: Composer install (no scripts)
+        uses: php-actions/composer@v6
         with:
           php_version: ${{ inputs.phpVersion }}
           args: --no-scripts -vvv # if composer.lock exists phive would not be found
         env:
           PHIVE_HOME: "${{ runner.temp }}/.phive"
 
-      - uses: php-actions/composer@v6
-        with:
-          php_version: ${{ inputs.phpVersion }}
-          command: --no-interaction global config --no-plugins allow-plugins.sitepark/composer-project true
-
-      - uses: php-actions/composer@v6
-        with:
-          php_version: ${{ inputs.phpVersion }}
-          command: --no-interaction global require --dev sitepark/composer-project:dev-main
-  
-      - uses: php-actions/composer@v6
-        with:
-          php_version: ${{ inputs.phpVersion }}
-          command: validate
-    
       # composer install is already executed by php-actions/composer@v6 but in composer.json post-install-cmd can be defined.
       # But these are only executed if a composer.lock exists.
       # See https://getcomposer.org/doc/articles/scripts.md#command-events
       # For libraries the composer.lock is not checked in and is not present at the first composer install call.
       # Then only with the second composer install call also the post-install-cmd are executed.
-      - uses: php-actions/composer@v6
+      - name: Composer install (with scripts)
+        uses: php-actions/composer@v6
         with:
           php_version: ${{ inputs.phpVersion }}
         env:
