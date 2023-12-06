@@ -46,14 +46,16 @@ jobs:
           composer --no-interaction global require --dev sitepark/composer-project:dev-main
 
           # if composer.lock exists phive would not be found
-          composer install --no-scripts
+          if [ ! -f composer.lock ]; then
+            composer install --no-scripts
+          fi
 
           # composer install is already executed by php-actions/composer@v6 but in composer.json post-install-cmd can be defined.
           # But these are only executed if a composer.lock exists.
           # See https://getcomposer.org/doc/articles/scripts.md#command-events
           # For libraries the composer.lock is not checked in and is not present at the first composer install call.
           # Then only with the second composer install call also the post-install-cmd are executed.
-          composer install --no-scripts
+          composer install
 
       - name: phpstan
         run: tools/phpstan analyse --memory-limit=512M --no-progress --no-interaction || true
