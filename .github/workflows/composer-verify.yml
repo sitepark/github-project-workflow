@@ -52,12 +52,24 @@ jobs:
           php_version: ${{ inputs.phpVersion }}
           command: --no-interaction global config --no-plugins allow-plugins.sitepark/composer-project true
 
+      - name : test
+        run: |
+          ls -la .
+          ls -la .composer
+          cat .composer/composer.json
+
       - name: Composer add sitepark/composer-project
         uses: php-actions/composer@v6
         with:
           php_version: ${{ inputs.phpVersion }}
           command: --no-interaction global require --dev sitepark/composer-project:dev-main
-   
+
+      - name : test
+        run: |
+          ls -la .
+          ls -la .composer
+          cat .composer/composer.json
+  
       - name: Composer install (no scripts)
         uses: php-actions/composer@v6
         with:
