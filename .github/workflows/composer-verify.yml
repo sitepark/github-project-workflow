@@ -42,6 +42,7 @@ jobs:
 
       - name: Composer install
         run: |
+          composer verify
           composer --no-interaction global config --no-plugins allow-plugins.sitepark/composer-project true
           composer --no-interaction global require --dev sitepark/composer-project:dev-main
 
