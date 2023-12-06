@@ -49,6 +49,8 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/composer.lock', '**/composer.json') }}
 
       - name: Composer install
+        env:
+          PHIVE_HOME: "${{ runner.temp }}/.phive"
         run: |
           composer validate
           composer --no-interaction global config --no-plugins allow-plugins.sitepark/composer-project true
