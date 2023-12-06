@@ -22,14 +22,14 @@ jobs:
         with:
           php-version: ${{ inputs.phpVersion }}
           coverage: xdebug
-          toos: composer, phive
+          tools: composer, phive
           #extensions: imagick, swoole
 
-      - name: "Install PHIVE"
-        uses: "szepeviktor/phive@v1"
-        with:
-          home: "${{ runner.temp }}/.phive"
-          binPath: "/usr/local/bin/phive"
+#      - name: "Install PHIVE"
+#        uses: "szepeviktor/phive@v1"
+#        with:
+#          home: "${{ runner.temp }}/.phive"
+#          binPath: "/usr/local/bin/phive"
   
       - name: "Cache tools installed with PHIVE"
         uses: "actions/cache@v3"
