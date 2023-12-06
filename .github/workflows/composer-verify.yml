@@ -7,11 +7,6 @@ on:
         default: '8.3'
         type: string
 
-env:
-  # /app is the mounted path to repo-dir that uses the php-actions/composer@v6 action.
-  # See https://github.com/php-actions/composer/blob/v6/composer-action.bash#L209
-  COMPOSER_HOME: /app/.composer
-
 jobs:
   verify:
     runs-on: ubuntu-latest
