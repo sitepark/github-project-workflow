@@ -75,8 +75,6 @@ jobs:
         with:
           php_version: ${{ inputs.phpVersion }}
           args: --no-scripts -vvv # if composer.lock exists phive would not be found
-        env:
-          PHIVE_HOME: "${{ runner.temp }}/.phive"
 
       # composer install is already executed by php-actions/composer@v6 but in composer.json post-install-cmd can be defined.
       # But these are only executed if a composer.lock exists.
@@ -88,7 +86,7 @@ jobs:
         with:
           php_version: ${{ inputs.phpVersion }}
         env:
-          PHIVE_HOME: "${{ runner.temp }}/.phive"
+          PHIVE_HOME: "/app/.phive"
     
       - name: phpstan
         run: tools/phpstan analyse --memory-limit=512M --no-progress --no-interaction || true
