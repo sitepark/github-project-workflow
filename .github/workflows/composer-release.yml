@@ -29,7 +29,7 @@ jobs:
           # the create-github-release-draft that is triggered on every new tag.
           # Solution is a explizit token: https://github.com/orgs/community/discussions/25617
           token: ${{ secrets.BOT_PAT }}
-      
+
       - name: "Cache tools installed with PHIVE"
         uses: "actions/cache@v3"
         with:
@@ -49,7 +49,7 @@ jobs:
           PHIVE_HOME: "${{ runner.temp }}/.phive"
         with:
           path: /tmp/composer-cache
-          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock', '**/composer.json') }}
+          key: ${{ runner.os }}-${{ hashFiles('composer.lock', 'composer.json') }}
 
       - uses: php-actions/composer@v6
 
@@ -70,7 +70,7 @@ jobs:
 
       - name: phpstan
         run: tools/phpstan analyse --memory-limit=512M --no-progress --no-interaction || true
-    
+
       - name: phpcs
         run: |
           if [ -f tools/phpcs ]; then
@@ -82,7 +82,7 @@ jobs:
               exit 1
           fi
           $PHPCS_BIN --colors --report=full
-  
+
       - name: phpcs_compatibilitycheck
         run: |
           if [ -f tools/phpcs ]; then
@@ -94,25 +94,25 @@ jobs:
               exit 1
           fi
           $PHPCS_BIN --standard=./phpcs.compatibilitycheck.xml --colors --report=full
-  
+
       - name: phplint
         run: tools/phplint --no-progress
-  
+
       - name: phpunit
         run: |
           export XDEBUG_MODE=coverage
           tools/phpunit.phar -c phpunit.xml --log-junit var/log/phpunit-test-report.xml --coverage-cobertura phpunit-coverage.xml --coverage-text --colors=never
-  
+
       - name: composer_audit
         run: composer audit
-  
+
       - name: Upload to Codecov
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODE_COV_TOKEN }}
           files: ./var/log/clover/clover.xml
           verbose: true
-  
+
       - name: Release
         run: |
 
