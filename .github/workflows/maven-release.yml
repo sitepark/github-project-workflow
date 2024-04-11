@@ -36,16 +36,16 @@ jobs:
         id: get-java-version
         uses: mavrosxristoforos/get-xml-info@1.0
         with:
-          xml-file: 'pom.xml'
+          xml-file: "pom.xml"
           xpath: '//*[local-name()="maven.compiler.release"]'
 
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           java-version: ${{ steps.get-java-version.outputs.info }}
-          distribution: 'adopt'
-          cache: 'maven'
-          
+          distribution: "adopt"
+          cache: "maven"
+
       - name: Build and verify with Maven
         run: mvn --batch-mode --update-snapshots verify
 
@@ -74,14 +74,13 @@ jobs:
           version-minor: true
 
           maven-servers: '[{"id": "${{ secrets.MVN_REPO_SERVER_ID }}", "username": "${{ secrets.MVN_REPO_SERVER_USERNAME }}", "password": "${{ secrets.MVN_REPO_SERVER_PASSWORD }}"}]'
-          maven-args: '-DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_RELEASE_URL }} -Dgpg.skip=false -DskipTests -DskipITs -Ddockerfile.skip -DdockerCompose.skip -Dmaven.deploy.skip=false -DpreparationGoals=clean\ spotless:apply\ verify -DcompletionGoals=spotless:apply'
-   
+          maven-args: "-DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_RELEASE_URL }} -Dgpg.skip=false -DskipTests -DskipITs -Ddockerfile.skip -DdockerCompose.skip -Dmaven.deploy.skip=false -DcompletionGoals=spotless:apply"
+
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
           gpg-enabled: true
           gpg-key-id: ${{ secrets.GPG_KEY_ID }}
           gpg-key: ${{ secrets.GPG_KEY }}
-
 
       #
       # Hotfix (hotfix/[0-9]i+.[0-9]+.x branch)

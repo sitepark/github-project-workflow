@@ -7,8 +7,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Publish Maven Artifact
+      - name: Get project-version from pom.xml
+        id: get-project-version
+        uses: mavrosxristoforos/get-xml-info@1.0
+        with:
+          xml-file: "pom.xml"
+          xpath: '//*[local-name()="project"]/*[local-name()="version"]'
+
+      - name: Check if snapshot
+        if: ${{ endsWith(steps.get-project-version.outputs.info, '-SNAPSHOT') == true }}
         run: |
-           echo "Manually publish from staging repository https://s01.oss.sonatype.org/#stagingRepositories"
-           echo "See: https://central.sonatype.org/publish/release/#nexus-staging-maven-plugin-for-deployment-and-release for details."
-           echo "TODO: https://central.sonatype.org/publish/publish-maven/#nexus-staging-maven-plugin-for-deployment-and-release"
+          echo "A snapshot-version: ${{ steps.get-project-version.outputs.info }}"
+          exit 1
+
+      - name: Get java-version from pom.xml
+        id: get-java-version
+        uses: mavrosxristoforos/get-xml-info@1.0
+        with:
+          xml-file: "pom.xml"
+          xpath: '//*[local-name()="maven.compiler.release"]'
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ steps.get-java-version.outputs.info }}
+          distribution: "adopt"
+          cache: "maven"
+          server-id: ${{ secrets.MVN_REPO_SERVER_ID }}
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+
+      - name: Build and deploy with Maven
+        run: mvn --activate-profiles nexus-staging-release -DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_SNAPSHOT_URL }} --batch-mode nexus-staging:release
+        env:
+          MAVEN_USERNAME: ${{ secrets.MVN_REPO_SERVER_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MVN_REPO_SERVER_PASSWORD }}
