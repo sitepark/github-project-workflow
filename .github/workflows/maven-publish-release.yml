@@ -7,6 +7,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v3
+
       - name: Get project-version from pom.xml
         id: get-project-version
         uses: mavrosxristoforos/get-xml-info@1.0
