@@ -1,6 +1,16 @@
 name: Publish Maven Release
 
-on: workflow_call
+on:
+  workflow_call:
+    secrets:
+      MVN_REPO_SERVER_USERNAME:
+        required: true
+      MVN_REPO_SERVER_PASSWORD:
+        required: true
+      MVN_REPO_SERVER_ID:
+        required: true
+      MVN_REPO_SERVER_SNAPSHOT_URL:
+        required: true
 
 jobs:
   publish-release:
