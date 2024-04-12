@@ -50,7 +50,7 @@ jobs:
           server-password: MAVEN_PASSWORD
 
       - name: Publish Release
-        run: mvn --activate-profiles=nexus-staging-release -DstagingRepositoryId=${{ secrets.MVN_REPO_SERVER_ID }} -DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_SNAPSHOT_URL }} --batch-mode nexus-staging:release
+        run: mvn --activate-profiles=nexus-staging-release --batch-mode nexus-staging:release
         env:
           MAVEN_USERNAME: ${{ secrets.MVN_REPO_SERVER_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MVN_REPO_SERVER_PASSWORD }}
