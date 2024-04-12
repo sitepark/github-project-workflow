@@ -42,7 +42,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: ${{ steps.get-java-version.outputs.info }}
+          java-version: "11"
           distribution: "adopt"
           cache: "maven"
           server-id: ${{ secrets.MVN_REPO_SERVER_ID }}
