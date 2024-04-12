@@ -74,7 +74,7 @@ jobs:
           version-minor: true
 
           maven-servers: '[{"id": "${{ secrets.MVN_REPO_SERVER_ID }}", "username": "${{ secrets.MVN_REPO_SERVER_USERNAME }}", "password": "${{ secrets.MVN_REPO_SERVER_PASSWORD }}"}]'
-          maven-args: "--activate-profiles=nexus-staging-release -DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_RELEASE_URL }} -Dgpg.skip=false -DskipTests -DskipITs -Ddockerfile.skip -DdockerCompose.skip -Dmaven.deploy.skip=false -Dspotless.check.skip=true -DcompletionGoals=spotless:apply"
+          maven-args: "--activate-profiles=nexus-staging-release -DstagingRepositoryId=${{ secrets.MVN_REPO_SERVER_ID }} -DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_RELEASE_URL }} -Dgpg.skip=false -DskipTests -DskipITs -Ddockerfile.skip -DdockerCompose.skip -Dmaven.deploy.skip=false -Dspotless.check.skip=true -DcompletionGoals=spotless:apply"
 
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
