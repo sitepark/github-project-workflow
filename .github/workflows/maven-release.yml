@@ -89,7 +89,7 @@ jobs:
       #
       - name: Release
         uses: qcastel/github-actions-maven-release@master
-        if: github.ref == 'refs/heads/main-disabled'
+        if: github.ref == 'refs/heads/main'
         env:
           JAVA_HOME: /usr/lib/jvm/java-${{ steps.get-java-version.outputs.info }}-openjdk/
         with:
