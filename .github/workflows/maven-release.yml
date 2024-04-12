@@ -81,7 +81,7 @@ jobs:
       # run: |
       #    git config --global user.email "${{ inputs.botEmail }}"
       #    git config --global user.name "${{ inputs.botName }}"
-      #    mvn -Dgpg.skip=false --activate-profiles=nexus-staging-release deploy
+      #    mvn -DstagingProgressTimeoutMinutes=60 -Dspotless.check.skip=true -Dgpg.skip=false --activate-profiles=nexus-staging-release deploy
       #    -Dgpg.skip=false -DskipTests -DskipITs -Ddockerfile.skip -DdockerCompose.skip -Dmaven.deploy.skip=false -Dspotless.check.skip=true -DcompletionGoals=spotless:apply deploy
 
       #
@@ -99,7 +99,7 @@ jobs:
           version-minor: true
 
           maven-servers: '[{"id": "${{ secrets.MVN_REPO_SERVER_ID }}", "username": "${{ secrets.MVN_REPO_SERVER_USERNAME }}", "password": "${{ secrets.MVN_REPO_SERVER_PASSWORD }}"}]'
-          maven-args: "--activate-profiles=nexus-staging-release -DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_RELEASE_URL }} -Dgpg.skip=false -DskipTests -DskipITs -Ddockerfile.skip -DdockerCompose.skip -Dmaven.deploy.skip=false -Dspotless.check.skip=true -DcompletionGoals=spotless:apply"
+          maven-args: "--activate-profiles=nexus-staging-release -DstagingProgressTimeoutMinutes=60 -DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_RELEASE_URL }} -Dgpg.skip=false -DskipTests -DskipITs -Ddockerfile.skip -DdockerCompose.skip -Dmaven.deploy.skip=false -Dspotless.check.skip=true -DcompletionGoals=spotless:apply"
 
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
