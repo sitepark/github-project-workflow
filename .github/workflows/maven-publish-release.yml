@@ -42,8 +42,13 @@ jobs:
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
 
+      - name: Setup settings.xml
+        uses: s4u/maven-settings-action@v3.0.0
+        with:
+          servers: '[{"id": "${{ secrets.MVN_REPO_SERVER_ID }}", "username": "${{ secrets.MVN_REPO_SERVER_USERNAME }}", "password": "${{ secrets.MVN_REPO_SERVER_PASSWORD }}"}]'
+
       - name: Publish Release
-        run: mvn --activate-profiles=nexus-staging-release --batch-mode nexus-staging:release
+        run: mvn -DstagingRepositoryId= --activate-profiles=nexus-staging-release --batch-mode nexus-staging:release
         env:
           MAVEN_USERNAME: ${{ secrets.MVN_REPO_SERVER_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MVN_REPO_SERVER_PASSWORD }}
