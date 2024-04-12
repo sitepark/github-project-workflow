@@ -9,7 +9,7 @@ on:
         required: true
       MVN_REPO_SERVER_ID:
         required: true
-      MVN_REPO_SERVER_SNAPSHOT_URL:
+      MVN_REPO_SERVER_RELEASE_URL:
         required: true
 
 jobs:
