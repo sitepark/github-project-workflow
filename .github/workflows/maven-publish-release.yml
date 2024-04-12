@@ -49,12 +49,6 @@ jobs:
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
 
-      - name: Build and deploy with Maven
-        run: mvn -DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_SNAPSHOT_URL }} --batch-mode package
-        env:
-          MAVEN_USERNAME: ${{ secrets.MVN_REPO_SERVER_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.MVN_REPO_SERVER_PASSWORD }}
-
       - name: Publish Release
         run: mvn --activate-profiles nexus-staging-release -DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_SNAPSHOT_URL }} --batch-mode nexus-staging:release
         env:
