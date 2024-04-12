@@ -59,6 +59,9 @@ jobs:
         with:
           input_string: ${{ steps.extract_gav.outputs.version }}
 
+      #- run: git config --global user.email "${{ inputs.botEmail }}"
+      #- run: git config --global user.name "${{ inputs.botName }}"
+
       #
       # Release (main branch)
       #

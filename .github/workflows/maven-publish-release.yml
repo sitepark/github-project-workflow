@@ -48,7 +48,7 @@ jobs:
       - name: Publish Release
         run: |
           cat ~/.m2/settings.xml
-          mvn --activate-profiles=nexus-staging-release --batch-mode nexus-staging:release
+          mvn --activate-profiles=nexus-staging-release -DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_RELEASE_URL }} --batch-mode nexus-staging:release
         env:
           MAVEN_USERNAME: ${{ secrets.MVN_REPO_SERVER_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MVN_REPO_SERVER_PASSWORD }}
