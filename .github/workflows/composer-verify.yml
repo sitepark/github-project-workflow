@@ -6,6 +6,9 @@ on:
       phpVersion:
         default: "8.3"
         type: string
+    secrets:
+      CODECOV_TOKEN:
+        required: true
 
 jobs:
   verify:
