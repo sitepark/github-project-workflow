@@ -44,10 +44,6 @@ jobs:
           distribution: "adopt"
           cache: "maven"
 
-      - name: Debug
-        run: |
-          echo "server: ${{ secrets.MVN_REPO_RELEASE_SERVER_ID }}"
-
       - name: Build and verify with Maven
         run: mvn --batch-mode --update-snapshots verify
 
