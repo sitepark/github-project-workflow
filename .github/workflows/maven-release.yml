@@ -98,8 +98,8 @@ jobs:
           release-branch-name: "main"
           version-minor: true
 
-          maven-servers: '[{"id": "${{ secrets.MVN_REPO_SERVER_ID }}", "username": "${{ secrets.MVN_REPO_SERVER_USERNAME }}", "password": "${{ secrets.MVN_REPO_SERVER_PASSWORD }}"}]'
-          maven-args: "--activate-profiles=nexus-staging-release -DstagingProgressTimeoutMinutes=60 -DaltDeploymentRepository=${{ secrets.MVN_REPO_SERVER_ID }}::default::${{ secrets.MVN_REPO_SERVER_RELEASE_URL }} -Dgpg.skip=false -DskipTests -DskipITs -Ddockerfile.skip -DdockerCompose.skip -Dmaven.deploy.skip=false -Dspotless.check.skip=true -DcompletionGoals=spotless:apply"
+          maven-servers: '[{"id": "${{ secrets.MVN_REPO_RELEASE_SERVER_ID }}", "username": "${{ secrets.MVN_REPO_RELEASE_SERVER_USERNAME }}", "password": "${{ secrets.MVN_REPO_RELEASE_SERVER_PASSWORD }}"}]'
+          maven-args: "--activate-profiles=publish-release -Dgpg.skip=false -DskipTests -DskipITs -Ddockerfile.skip -DdockerCompose.skip -Dmaven.deploy.skip=false -Dspotless.check.skip=true -DcompletionGoals=spotless:apply"
 
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
