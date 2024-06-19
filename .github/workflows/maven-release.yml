@@ -16,13 +16,11 @@ on:
         required: true
       GPG_KEY:
         required: true
-      MVN_REPO_SERVER_USERNAME:
+      MVN_REPO_RELEASE_SERVER_ID:
         required: true
-      MVN_REPO_SERVER_PASSWORD:
+      MVN_REPO_RELEASE_SERVER_USERNAME:
         required: true
-      MVN_REPO_SERVER_ID:
-        required: true
-      MVN_REPO_SERVER_RELEASE_URL:
+      MVN_REPO_RELEASE_SERVER_PASSWORD:
         required: true
 
 jobs:
