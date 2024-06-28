@@ -124,6 +124,8 @@ jobs:
           restore-keys: "php-phive-"
 
       - name: Release
+        env:
+          COMPOSER_HOME: "${{ runner.temp }}/.composer"
         run: |
 
           git config --global user.email ${{ inputs.botEmail }}
