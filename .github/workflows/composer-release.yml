@@ -57,6 +57,7 @@ jobs:
           composer validate
           composer --no-interaction global config --no-plugins allow-plugins.sitepark/composer-project true
           composer --no-interaction global require --dev sitepark/composer-project:dev-main
+          composer list
 
           # if composer.lock exists phive would not be found
           if [ ! -f composer.lock ]; then
@@ -127,6 +128,8 @@ jobs:
 
           git config --global user.email ${{ inputs.botEmail }}
           git config --global user.name ${{ inputs.botName }}
+
+          composer list
 
           composer project:verifyRelease
           composer project:release
