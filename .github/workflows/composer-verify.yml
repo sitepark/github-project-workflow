@@ -71,7 +71,21 @@ jobs:
       - name: phpstan
         run: tools/phpstan analyse --memory-limit=512M --no-progress --no-interaction || true
 
+      - name: phpcsfixer
+        if: ${{ hashFiles('.php-cs-fixer.dist.php') != '' }}
+        run: |
+          if [ -f tools/php-cs-fixer ]; then
+              PHPCSFIXER_BIN=tools/php-cs-fixer
+          elif [ -f vendor/bin/php-cs-fixer ]; then
+              PHPCSFIXER_BIN=vendor/bin/php-cs-fixer
+          else
+              echo "php-cs-fixer not found"
+              exit 1
+          fi
+          $PHPCSFIXER_BIN check --diff
+
       - name: phpcs
+        if: ${{ hashFiles('phpcs.xml.dist') != '' }}
         run: |
           if [ -f tools/phpcs ]; then
               PHPCS_BIN=tools/phpcs
