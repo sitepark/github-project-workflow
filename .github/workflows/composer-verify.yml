@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup PHP with PECL extension
+      - name: Setup PHP ${{ matrix.phpVersions }} with PECL extension
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.phpVersions }}
@@ -39,7 +39,7 @@ jobs:
       #          home: "${{ runner.temp }}/.phive"
       #          binPath: "/usr/local/bin/phive"
 
-      - name: "Cache tools installed with PHIVE"
+      - name: "Cache tools installed with PHIVE (PHP ${{ matrix.phpVersions }})"
         uses: "actions/cache@v3"
         with:
           path: "${{ runner.temp }}/.phive"
@@ -52,7 +52,7 @@ jobs:
           path: "${{ runner.temp }}/.composer/cache"
           key: ${{ runner.os }}-${{ hashFiles('composer.lock', 'composer.json') }}
 
-      - name: Composer install
+      - name: Composer install (PHP ${{ matrix.phpVersions }})
         env:
           COMPOSER_HOME: "${{ runner.temp }}/.composer"
           PHIVE_HOME: "${{ runner.temp }}/.phive"
@@ -73,10 +73,10 @@ jobs:
           # Then only with the second composer install call also the post-install-cmd are executed.
           composer install
 
-      - name: phpstan
+      - name: phpstan (PHP ${{ matrix.phpVersions }})
         run: tools/phpstan analyse --memory-limit=512M --no-progress --no-interaction || true
 
-      - name: phpcsfixer
+      - name: phpcsfixer (PHP ${{ matrix.phpVersions }})
         if: ${{ hashFiles('.php-cs-fixer.dist.php') != '' }}
         run: |
           if [ -f tools/php-cs-fixer ]; then
@@ -89,7 +89,7 @@ jobs:
           fi
           $PHPCSFIXER_BIN check --diff --show-progress none
 
-      - name: phpcs
+      - name: phpcs (PHP ${{ matrix.phpVersions }})
         if: ${{ hashFiles('phpcs.xml.dist') != '' }}
         run: |
           if [ -f tools/phpcs ]; then
@@ -102,7 +102,7 @@ jobs:
           fi
           $PHPCS_BIN --colors --report=full
 
-      - name: phpcs_compatibilitycheck
+      - name: phpcs_compatibilitycheck (PHP ${{ matrix.phpVersions }})
         run: |
           if [ -f tools/phpcs ]; then
           PHPCS_BIN=tools/phpcs
@@ -114,15 +114,15 @@ jobs:
           fi
           $PHPCS_BIN --standard=./phpcs.compatibilitycheck.xml --colors --report=full
 
-      - name: phplint
+      - name: phplint (PHP ${{ matrix.phpVersions }})
         run: tools/phplint --no-progress
 
-      - name: phpunit
+      - name: phpunit (PHP ${{ matrix.phpVersions }})
         run: |
           export XDEBUG_MODE=coverage
           tools/phpunit.phar -c phpunit.xml --log-junit var/log/phpunit-test-report.xml --coverage-cobertura phpunit-coverage.xml --coverage-text --colors=never
 
-      - name: composer_audit
+      - name: composer_audit (PHP ${{ matrix.phpVersions }})
         run: composer audit
 
       - name: Run for PHP ${{ matrix.phpVersions }}
@@ -132,7 +132,7 @@ jobs:
           echo "inputs.phpVersions: ${{ inputs.phpVersions }}"
           echo "last version: ${{ fromJson(inputs.phpVersions)[fromJson(inputs.phpVersions).length-1] }}"
 
-      - name: Upload to Codecov
+      - name: Upload to Codecov (PHP ${{ matrix.phpVersions }})
         if: ${{ matrix.phpVersions == fromJson(inputs.phpVersions)[fromJson(inputs.phpVersions).length-1] }}
         uses: codecov/codecov-action@v5
         with:
