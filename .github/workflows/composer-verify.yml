@@ -3,8 +3,8 @@ name: Composer Verify
 on:
   workflow_call:
     inputs:
-      phpVersion:
-        default: "8.3"
+      phpVersions:
+        default: '["8.1", "8.2", "8.3", "8.4"]'
         type: string
     secrets:
       CODECOV_TOKEN:
@@ -17,13 +17,18 @@ jobs:
 
     permissions: write-all
 
+    strategy:
+      matrix:
+          phpVersions: ${{ fromJSON(inputs.phpVersions) }}
+    name: Composer Verify (PHP ${{ matrix.phpVersions }})
+
     steps:
       - uses: actions/checkout@v4
 
       - name: Setup PHP with PECL extension
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ inputs.phpVersion }}
+          php-version: ${{ matrix.phpVersions }}
           coverage: xdebug
           tools: composer, phive
           #extensions: imagick, swoole
