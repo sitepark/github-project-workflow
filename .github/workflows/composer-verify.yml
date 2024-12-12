@@ -119,11 +119,12 @@ jobs:
       #   run: composer audit
 
       - name: Run for PHP ${{ matrix.phpVersions }}
+        if: ${{ endsWith(inputs.phpVersions, format('"{0}"]', matrix.phpVersions)) }}
         run: |
-          echo "matrix.phpVersions: ${{ matrix.phpVersions }}"
-          echo "inputs.phpVersions: ${{ inputs.phpVersions }}"
-          echo "length: ${{ fromJson(inputs.phpVersions).length }}"
-          echo "last version: ${{ fromJson(inputs.phpVersions)[fromJson(inputs.phpVersions).length-1] }}"
+            echo "matrix.phpVersions: ${{ matrix.phpVersions }}"
+            echo "inputs.phpVersions: ${{ inputs.phpVersions }}"
+            echo "length: ${{ fromJson(inputs.phpVersions).length }}"
+            echo "last version: ${{ fromJson(inputs.phpVersions)[fromJson(inputs.phpVersions).length-1] }}"
 
       - name: Upload to Codecov (PHP ${{ matrix.phpVersions }})
         if: ${{ matrix.phpVersions == fromJson(inputs.phpVersions)[fromJson(inputs.phpVersions).length-1] }}
