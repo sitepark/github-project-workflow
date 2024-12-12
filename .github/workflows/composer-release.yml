@@ -84,7 +84,7 @@ jobs:
               echo "php-cs-fixer not found"
               exit 1
           fi
-          $PHPCSFIXER_BIN check --diff --show-progress none
+          PHP_CS_FIXER_IGNORE_ENV=1 $PHPCSFIXER_BIN check --diff --show-progress none
 
       - name: phpcs
         if: ${{ hashFiles('phpcs.xml.dist') != '' }}
