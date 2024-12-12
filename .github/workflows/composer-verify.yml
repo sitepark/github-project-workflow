@@ -122,6 +122,8 @@ jobs:
         if: ${{ endsWith(inputs.phpVersions, format('"{0}"]', matrix.phpVersions)) }}
         run: |
             echo "matrix.phpVersions: ${{ matrix.phpVersions }}"
+            echo "format: ${{ format('"{0}"]', matrix.phpVersions) }}"
+            echo ${{ endsWith(inputs.phpVersions, format('"{0}"]', matrix.phpVersions)) }}
             echo "inputs.phpVersions: ${{ inputs.phpVersions }}"
             echo "length: ${{ fromJson(inputs.phpVersions).length }}"
             echo "last version: ${{ fromJson(inputs.phpVersions)[fromJson(inputs.phpVersions).length-1] }}"
