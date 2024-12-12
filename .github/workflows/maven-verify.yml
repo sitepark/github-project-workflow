@@ -16,16 +16,16 @@ jobs:
         id: get-java-version
         uses: mavrosxristoforos/get-xml-info@1.0
         with:
-          xml-file: 'pom.xml'
+          xml-file: "pom.xml"
           xpath: '//*[local-name()="maven.compiler.release"]'
 
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           java-version: ${{ steps.get-java-version.outputs.info }}
-          distribution: 'adopt'
-          cache: 'maven'
-          
+          distribution: "adopt"
+          cache: "maven"
+
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
@@ -47,21 +47,22 @@ jobs:
           files: "target/surefire-reports/**/*.xml"
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         if: always()
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - uses: jwgmeligmeyling/pmd-github-action@master
         if: always()
         with:
-          path: 'target/pmd.xml'
+          path: "target/pmd.xml"
 
       - uses: jwgmeligmeyling/checkstyle-github-action@master
         if: always()
         with:
-          path: 'target/checkstyle-result.xml'
+          path: "target/checkstyle-result.xml"
 
       - uses: jwgmeligmeyling/spotbugs-github-action@master
         if: always()
         with:
-          path: 'target/spotbugsXml.xml'
-
+          path: "target/spotbugsXml.xml"
