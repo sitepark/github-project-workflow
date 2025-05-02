@@ -112,11 +112,17 @@ For the different project types, the corresponding action must be used:
 
 ### (📡) Auto-Merge Dependabot Minor Updates
 
-This action is triggered automatically when a pull request from Dependabot is created. It automatically merges minor updates to the `main` branch, if the verification action was successful.
+This action is triggered automatically when a pull request from Dependabot is created. It automatically merges minor updates into the `main` branch if the verification action succeeds.
 
-To create this action for the project the file `.github/workflow/dependabot-automerge-minor.yml` must be created in the project.
+To enable this action in the project, create the file .github/workflow/dependabot-automerge-minor.yml.
 
-It is also important that the "Allow auto-merge" option is activated in the project settings under "Settings -> General -> Pull Requests".
+The following repository settings must be configured:
+
+- In _Settings → General → Pull Requests_, enable **"Allow auto-merge"**.
+
+- In _Settings → Branches → Branch protection rules_, enable **"Require status checks to pass before merging"**.
+
+- Also under _Branch protection rules_, disable **"Require approvals to merge"**.
 
 ## Dependabot
 
