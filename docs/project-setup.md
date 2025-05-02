@@ -2,9 +2,9 @@
 
 Depending on the project type, corresponding configurations within the project files are still necessary:
 
-* [Setup for maven projects](project-setup-maven.md)
+- [Setup for maven projects](project-setup-maven.md)
 
-* [Setup for composer projects](project-setup-composer.md)
+- [Setup for composer projects](project-setup-composer.md)
 
 Below are the recommended settings for Github projects that are required to use this Github workflow.
 
@@ -20,11 +20,9 @@ For automated actions, the [`sitepark-bot`](https://github.com/sitepark-bot) mus
 
 ![GitHub manage access](assets/images/github-manage-access.png)
 
-
 ## `main`-Branch settings
 
 The default branch should be `main`.
-
 
 ### Branch protection
 
@@ -71,7 +69,6 @@ For the different project types, the corresponding action must be used:
 
 - [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/maven-start-hotfix.yml)
 
-
 ### (📡) Create GitHub Release Draft
 
 When a new tag of the form `[0-9]+\.[0-9]+\.[0-9]+` has been created, this action is triggered automatically. It creates a new GitHub release as a draft and sets the changelog based on the Git commits.
@@ -81,7 +78,6 @@ To create this action for the project the file `.github/workflow/create-github-r
 For the different project types, the corresponding action must be used:
 
 - [All Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/create-github-release-draft.yml)
-
 
 ### (📡) Deploy Snapshot
 
@@ -93,7 +89,6 @@ For the different project types, the corresponding action must be used:
 
 - [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/maven-deploy-snapshot.yml)
 
-
 ### (📡) Publish Release
 
 This action is started automatically when the GitHub release is published. This action is project type specific. For example, for a Maven project, the artifact is deployed to the central Maven repository.
@@ -103,7 +98,6 @@ To create this action for the project the file `.github/workflow/publish-release
 For the different project types, the corresponding action must be used:
 
 - [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/maven-publish-release.yml)
-
 
 ### (📡) Verify
 
@@ -116,6 +110,13 @@ For the different project types, the corresponding action must be used:
 - [Maven Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/maven-verify.yml)
 - [Coomposer Projects](https://github.com/sitepark/github-maven-release-test/blob/main/.github/workflows/composer-verify.yml)
 
+### (📡) Auto-Merge Dependabot Minor Updates
+
+This action is triggered automatically when a pull request from Dependabot is created. It automatically merges minor updates to the `main` branch, if the verification action was successful.
+
+To create this action for the project the file `.github/workflow/dependabot-automerge-minor.yml` must be created in the project.
+
+It is also important that the "Allow auto-merge" option is activated in the project settings under "Settings -> General -> Pull Requests".
 
 ## Dependabot
 
