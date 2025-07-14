@@ -112,7 +112,16 @@ jobs:
           $PHPCS_BIN --standard=./phpcs.compatibilitycheck.xml --colors --report=full
 
       - name: phplint
-        run: tools/phplint --no-progress
+        run: |
+          if [ -f tools/phplint ]; then
+          PHPLINT_BIN=tools/phplint
+          elif [ -f vendor/bin/phplint ]; then
+              PHPLINT_BIN=vendor/bin/phplint
+          else
+              echo "phplint not found"
+              exit 1
+          fi
+          $PHPLINT_BIN --no-progress
 
       - name: phpunit
         run: |
