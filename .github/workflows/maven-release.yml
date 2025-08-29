@@ -140,7 +140,7 @@ jobs:
           git-release-bot-name: ${{ inputs.botName }}
           git-release-bot-email: ${{ inputs.botEmail }}
           release-branch-name: "${{ steps.semver_parser.outputs.major }}.x"
-          version-patch: true
+          version-minor: true
 
           maven-args: "--activate-profiles=publish-release -Dgpg.skip=false -DskipTests -DskipITs -Ddockerfile.skip -DdockerCompose.skip -Dmaven.deploy.skip=false -Dspotless.check.skip=true -DcompletionGoals=spotless:apply"
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
