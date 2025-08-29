@@ -120,7 +120,9 @@ jobs:
           release-branch-name: "${{ steps.semver_parser.outputs.major }}.${{ steps.semver_parser.outputs.minor }}.x"
           version-patch: true
 
+          maven-servers: '[{"id": "${{ secrets.MVN_REPO_RELEASE_SERVER_ID }}", "username": "${{ secrets.MVN_REPO_RELEASE_SERVER_USERNAME }}", "password": "${{ secrets.MVN_REPO_RELEASE_SERVER_PASSWORD }}"}]'
           maven-args: "--activate-profiles=publish-release -Dgpg.skip=false -DskipTests -DskipITs -Ddockerfile.skip -DdockerCompose.skip -Dmaven.deploy.skip=false -Dspotless.check.skip=true -DcompletionGoals=spotless:apply"
+
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
           gpg-enabled: true
@@ -142,7 +144,9 @@ jobs:
           release-branch-name: "${{ steps.semver_parser.outputs.major }}.x"
           version-minor: true
 
+          maven-servers: '[{"id": "${{ secrets.MVN_REPO_RELEASE_SERVER_ID }}", "username": "${{ secrets.MVN_REPO_RELEASE_SERVER_USERNAME }}", "password": "${{ secrets.MVN_REPO_RELEASE_SERVER_PASSWORD }}"}]'
           maven-args: "--activate-profiles=publish-release -Dgpg.skip=false -DskipTests -DskipITs -Ddockerfile.skip -DdockerCompose.skip -Dmaven.deploy.skip=false -Dspotless.check.skip=true -DcompletionGoals=spotless:apply"
+
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
           gpg-enabled: true
