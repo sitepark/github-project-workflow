@@ -24,7 +24,6 @@ This draft can be supplemented. Publishing the GitHub release triggers another G
 
 The creation of the release is now finished.
 
-
 ### Create a main, hotfix and support-release
 
 There are three types of releases. A main release, a hotifx release or a support release.
@@ -36,6 +35,7 @@ To create a hotfix release, a hotfix branch must first be created. This can also
 To create a support release, a support branch must first be created. This is always created manually. A support release always only increases the minor level of a previously released version. A hotfix can be created from a support release in the same way as from a main release.
 
 ---
+
 **NOTE**
 
 All changes committed in a `hotfix` or `support` branch are **not** automatically applied to other branches such as the `main` branch, but must be applied with a `cherry-pick`.
@@ -48,8 +48,8 @@ It is important that there is **no** merge from the `hotix` branch to the `main`
 
 To use this workflow, the project must be set up accordingly. Depending on the project type, the corresponding Git actions are provided. The Git actions are available for the following project types.
 
-* Maven projects
-* (NPM projects are still to come)
-* (Composer projects still to come)
+- [Maven projects](project-setup-maven.md)
+- [Composer projects](project-setup-composer.md)
+- (NPM projects are still to come)
 
 The setup of the projects is described in [Project setup](project-setup.md).
