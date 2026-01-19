@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
         with:
           # There is a limitation of workflow: An action in a workflow
           # run can’t trigger a new workflow run.
