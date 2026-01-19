@@ -118,7 +118,7 @@ jobs:
               exit 1
           fi
 
-          phpdismod redis
+          sudo phpdismod redis
           php -m | grep -i redis || echo "Redis disabled successfully"
 
           $PHPLINT_BIN --no-progress
