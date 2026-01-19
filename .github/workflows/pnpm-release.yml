@@ -18,9 +18,9 @@ on:
       CODECOV_TOKEN:
         required: true
 
-permissions:
-  id-token: write # Required for OIDC
-  contents: write
+#permissions:
+#  id-token: write # Required for OIDC
+#  contents: write
 
 jobs:
   release:
