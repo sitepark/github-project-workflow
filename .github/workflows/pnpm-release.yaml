@@ -1,0 +1,56 @@
+name: (▶) Create Release
+
+on:
+  workflow_call:
+    inputs:
+      botName:
+        required: true
+        type: string
+      botEmail:
+        required: true
+        type: string
+    secrets:
+      BOT_PAT:
+        required: true
+      CODECOV_TOKEN:
+        required: true
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # There is a limitation of workflow: An action in a workflow
+          # run can’t trigger a new workflow run.
+          # But this is needed here so that the created tag can trigger
+          # the create-github-release-draft that is triggered on every new tag.
+          # Solution is a explizit token: https://github.com/orgs/community/discussions/25617
+          token: ${{ secrets.BOT_PAT }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+          cache: "pnpm"
+
+      - name: Release
+        run: |
+
+          git config --global user.email ${{ inputs.botEmail }}
+          git config --global user.name ${{ inputs.botName }}
+
+          pnpm install
+          pnpm install -g @sitepark/js-project
+          JS_PROJECT_BIN=$(pnpm bin -g)/js-projekt
+
+          $JS_PROJECT_BIN release --package-manager pnpm
