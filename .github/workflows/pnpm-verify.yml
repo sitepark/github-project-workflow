@@ -2,6 +2,10 @@ name: Composer Verify
 
 on:
   workflow_call:
+    inputs:
+      nodeVersions:
+        default: "24"
+        type: string
     secrets:
       CODECOV_TOKEN:
         required: true
@@ -19,7 +23,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: "24"
+          node-version: ${{ inputs.nodeVersions }}
           registry-url: "https://registry.npmjs.org"
           cache: "pnpm"
 
