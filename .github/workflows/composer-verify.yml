@@ -19,7 +19,7 @@ jobs:
 
     strategy:
       matrix:
-          phpVersions: ${{ fromJSON(inputs.phpVersions) }}
+        phpVersions: ${{ fromJSON(inputs.phpVersions) }}
     name: Composer Verify (PHP ${{ matrix.phpVersions }})
 
     steps:
@@ -117,6 +117,10 @@ jobs:
               echo "phplint not found"
               exit 1
           fi
+
+          phpdismod redis
+          php -m | grep -i redis || echo "Redis disabled successfully"
+
           $PHPLINT_BIN --no-progress
 
       - name: phpunit (PHP ${{ matrix.phpVersions }})
