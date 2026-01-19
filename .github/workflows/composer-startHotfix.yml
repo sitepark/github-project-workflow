@@ -1,0 +1,67 @@
+name: Composer Start Hotfix
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        required: true
+        type: string
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(inputs.ref, 'refs/tags/') }}
+
+    permissions: write-all
+
+    steps:
+      - name: Checkout release
+        uses: actions/checkout@v3
+        with:
+          ref: ${{inputs.ref}}
+
+      - name: Setup PHP with PECL extension
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ inputs.phpVersion }}
+          coverage: xdebug
+          tools: composer, phive
+          #extensions: imagick, swoole
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: "${{ runner.temp }}/.composer/cache"
+          key: ${{ runner.os }}-${{ hashFiles('composer.lock', 'composer.json') }}
+
+      - name: Composer install
+        env:
+          COMPOSER_HOME: "${{ runner.temp }}/.composer"
+          PHIVE_HOME: "${{ runner.temp }}/.phive"
+        run: |
+          composer validate
+          composer --no-interaction global config --no-plugins allow-plugins.sitepark/composer-project true
+          composer --no-interaction global require --dev sitepark/composer-project:dev-main
+
+          # if composer.lock exists phive would not be found
+          if [ ! -f composer.lock ]; then
+            composer install --no-scripts
+          fi
+
+          # composer install is already executed by php-actions/composer@v6 but in composer.json post-install-cmd can be defined.
+          # But these are only executed if a composer.lock exists.
+          # See https://getcomposer.org/doc/articles/scripts.md#command-events
+          # For libraries the composer.lock is not checked in and is not present at the first composer install call.
+          # Then only with the second composer install call also the post-install-cmd are executed.
+          composer install
+
+      - name: Start Hotifx
+        env:
+          COMPOSER_HOME: "${{ runner.temp }}/.composer"
+        run: |
+
+          git config --global user.email ${{ inputs.botEmail }}
+          git config --global user.name ${{ inputs.botName }}
+
+          composer project:startHotfix
+          git push
