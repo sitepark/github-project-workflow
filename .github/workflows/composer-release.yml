@@ -41,7 +41,7 @@ jobs:
           php-version: ${{ inputs.phpVersion }}
           coverage: xdebug
           tools: composer, phive
-          #extensions: imagick, swoole
+          extensions: :redis # exclude redis: don't work with phplint
 
       - name: Cache Composer dependencies
         uses: actions/cache@v3
@@ -121,9 +121,6 @@ jobs:
               echo "phplint not found"
               exit 1
           fi
-
-          phpdismod redis
-          php -m | grep -i redis || echo "Redis disabled successfully"
 
           $PHPLINT_BIN --no-progress
 
