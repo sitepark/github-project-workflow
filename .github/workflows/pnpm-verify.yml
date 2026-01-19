@@ -3,7 +3,7 @@ name: Composer Verify
 on:
   workflow_call:
     inputs:
-      nodeVersions:
+      nodeVersion:
         default: "24"
         type: string
     secrets:
@@ -23,7 +23,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: ${{ inputs.nodeVersions }}
+          node-version: ${{ inputs.nodeVersion }}
           registry-url: "https://registry.npmjs.org"
           cache: "pnpm"
 
