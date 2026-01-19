@@ -121,6 +121,10 @@ jobs:
               echo "phplint not found"
               exit 1
           fi
+
+          phpdismod redis
+          php -m | grep -i redis || echo "Redis disabled successfully"
+
           $PHPLINT_BIN --no-progress
 
       - name: phpunit
