@@ -57,3 +57,4 @@ jobs:
           JS_PROJECT_BIN=$(pnpm bin -g)/js-projekt
 
           $JS_PROJECT_BIN release --package-manager pnpm
+          git push --tags
