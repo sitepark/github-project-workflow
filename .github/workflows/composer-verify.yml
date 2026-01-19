@@ -118,6 +118,7 @@ jobs:
               exit 1
           fi
 
+          php -m
           sudo phpdismod redis
           php -m | grep -i redis || echo "Redis disabled successfully"
 
