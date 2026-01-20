@@ -63,9 +63,9 @@ jobs:
           pnpm install -g @sitepark/js-project
           JS_PROJECT_BIN=$(pnpm bin -g)/js-projekt
 
-          #$JS_PROJECT_BIN release --package-manager pnpm
+          $JS_PROJECT_BIN release --package-manager pnpm
 
-          git tag -a 1.100.0 -m "Test Tag"
+          #git tag -a 1.100.0 -m "Test Tag"
 
           echo "User: $GITHUB_ACTOR"
           echo "Token: $GIT_TOKEN"
