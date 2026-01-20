@@ -31,7 +31,7 @@ jobs:
           php-version: ${{ matrix.phpVersions }}
           coverage: xdebug
           tools: composer, phive
-          extensions: :redis # exclude redis: don't work with phplint
+          extensions: :redis # exclude redis: don't work with phplint 9.7.1
 
       - name: "Cache tools installed with PHIVE (PHP ${{ matrix.phpVersions }})"
         uses: "actions/cache@v3"

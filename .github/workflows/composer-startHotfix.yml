@@ -26,7 +26,7 @@ jobs:
           php-version: ${{ inputs.phpVersion }}
           coverage: xdebug
           tools: composer, phive
-          #extensions: imagick, swoole
+          extensions: :redis # exclude redis: don't work with phplint 9.7.1
 
       - name: Cache Composer dependencies
         uses: actions/cache@v3
