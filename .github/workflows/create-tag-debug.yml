@@ -9,6 +9,11 @@ on:
       botEmail:
         required: true
         type: string
+    secrets:
+      BOT_PAT:
+        required: true
+      CODECOV_TOKEN:
+        required: true
   workflow_dispatch:
 
 jobs:
