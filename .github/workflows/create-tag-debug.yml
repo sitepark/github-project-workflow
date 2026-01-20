@@ -33,6 +33,8 @@ jobs:
           token: ${{ secrets.BOT_PAT }}
 
       - name: Create Tag
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PAT }}
         run: |
           echo "create tag"
           git config --global user.email ${{ inputs.botEmail }}
