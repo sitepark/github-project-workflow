@@ -44,10 +44,14 @@ jobs:
           echo "Token: $GH_TOKEN"
           git remote get-url origin
 
-          git commit --allow-empty -m "Test Commit"
-          git push
+          git commit --allow-empty -m "Test Commit A"
 
           git tag -a 1.100.0 -m "Test Tag"
+
+          git commit --allow-empty -m "Test Commit B"
+
+          git push
+
 
           #GIT_TRACE=1 GIT_CURL_VERBOSE=1 git push --tags
           git push --tags
