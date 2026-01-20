@@ -65,9 +65,9 @@ jobs:
 
           $JS_PROJECT_BIN release --package-manager pnpm
 
-          git commit --allow-empty -m "Test Commit"
-          git push
-          git tag -a 1.100.0 -m "Test Tag"
+          #git commit --allow-empty -m "Test Commit"
+          #git push
+          #git tag -a 1.100.0 -m "Test Tag"
 
           echo "User: $GITHUB_ACTOR"
           echo "Token: $GIT_TOKEN"
