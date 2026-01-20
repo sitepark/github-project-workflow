@@ -44,4 +44,4 @@ jobs:
       - name: Start Hotfix
         run: |
 
-          $JS_PROJECT_BIN startHotfix --package-manager pnpm
+          $JS_PROJECT_BIN startHotfix --package-manager pnpm ${{inputs.ref}}
