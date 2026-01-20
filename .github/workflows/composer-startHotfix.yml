@@ -8,7 +8,7 @@ on:
         type: string
 
 jobs:
-  release:
+  start-hotfix:
     runs-on: ubuntu-latest
     if: ${{ startsWith(inputs.ref, 'refs/tags/') }}
 

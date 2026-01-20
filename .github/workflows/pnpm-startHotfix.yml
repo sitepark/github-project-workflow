@@ -1,0 +1,49 @@
+name: PNPM Start Hotfix
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        required: true
+        type: string
+
+jobs:
+  start-hotfix:
+    runs-on: ubuntu-latest
+
+    permissions: write-all
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.BOT_PAT }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ inputs.nodeVersion }}
+          registry-url: "https://registry.npmjs.org"
+          cache: "pnpm"
+
+      - name: Prepare
+        run: |
+
+          git config --global user.email sitepark-bot
+          git config --global user.name opensource@sitepark.com
+
+          pnpm install -g @sitepark/js-project
+
+          JS_PROJECT_BIN=$(pnpm bin -g)/js-projekt
+
+          echo "JS_PROJECT_BIN=$JS_PROJECT_BIN" >> $GITHUB_ENV
+
+      - name: Start Hotfix
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PAT }}
+        run: |
+
+          $JS_PROJECT_BIN startHotfix --package-manager pnpm
