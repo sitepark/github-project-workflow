@@ -60,8 +60,5 @@ jobs:
           COMPOSER_HOME: "${{ runner.temp }}/.composer"
         run: |
 
-          git config --global user.email ${{ inputs.botEmail }}
-          git config --global user.name ${{ inputs.botName }}
-
           composer project:startHotfix
           git push
