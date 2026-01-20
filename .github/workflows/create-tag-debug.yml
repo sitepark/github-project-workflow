@@ -1,6 +1,14 @@
 name: Create Tag debug
 
 on:
+  workflow_call:
+    inputs:
+      botName:
+        required: true
+        type: string
+      botEmail:
+        required: true
+        type: string
   workflow_dispatch:
 
 jobs:
@@ -22,8 +30,8 @@ jobs:
       - name: Create Tag
         run: |
           echo "create tag"
-          git config --global user.email "opensource@sitepark.com"
-          git config --global user.name "sitepark-bot"
+          git config --global user.email ${{ inputs.botEmail }}
+          git config --global user.name ${{ inputs.botName }}
 
           git tag -a 1.100.0 -m "Test Tag"
 
