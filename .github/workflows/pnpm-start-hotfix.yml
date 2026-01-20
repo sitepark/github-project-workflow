@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          token: ${{ secrets.BOT_PAT }}
+          ref: ${{inputs.ref}}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -25,7 +25,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: ${{ inputs.nodeVersion }}
+          node-version: "24"
           registry-url: "https://registry.npmjs.org"
           cache: "pnpm"
 
@@ -42,8 +42,6 @@ jobs:
           echo "JS_PROJECT_BIN=$JS_PROJECT_BIN" >> $GITHUB_ENV
 
       - name: Start Hotfix
-        env:
-          GH_TOKEN: ${{ secrets.BOT_PAT }}
         run: |
 
           $JS_PROJECT_BIN startHotfix --package-manager pnpm
