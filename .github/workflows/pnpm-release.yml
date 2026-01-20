@@ -64,4 +64,6 @@ jobs:
           git status
 
           echo "push tags"
+          git tag -a 1.50.0 -m "Test Tag"
+
           git push --tags
