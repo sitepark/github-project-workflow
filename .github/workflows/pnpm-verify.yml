@@ -1,4 +1,4 @@
-name: Composer Verify
+name: PNPM Verify
 
 on:
   workflow_call:
