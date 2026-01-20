@@ -1,0 +1,30 @@
+name: Create Tag debug
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    permissions: write-all
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # There is a limitation of workflow: An action in a workflow
+          # run can’t trigger a new workflow run.
+          # But this is needed here so that the created tag can trigger
+          # the create-github-release-draft that is triggered on every new tag.
+          # Solution is a explizit token: https://github.com/orgs/community/discussions/25617
+          token: ${{ secrets.BOT_PAT }}
+
+      - name: Create Tag
+        run: |
+          echo "create tag"
+          git config --global user.email "opensource@sitepark.com"
+          git config --global user.name "sitepark-bot"
+
+          git tag -a 1.100.0 -m "Test Tag"
+
+          git push --tags
