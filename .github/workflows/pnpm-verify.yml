@@ -34,9 +34,15 @@ jobs:
           pnpm verify
           pnpm test
 
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action/composite@v1
+        if: always()
+        with:
+          files: "reports/junit-report.xml"
+
       - name: Upload to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: coverage/coverage-final.json
+          files: reports/coverage/coverage-final.json
           verbose: true

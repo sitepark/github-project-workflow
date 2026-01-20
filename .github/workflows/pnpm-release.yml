@@ -71,5 +71,5 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: coverage/coverage-final.json
+          files: reports/coverage/coverage-final.json
           verbose: true
