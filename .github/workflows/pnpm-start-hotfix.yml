@@ -10,6 +10,7 @@ on:
 jobs:
   start-hotfix:
     runs-on: ubuntu-latest
+    if: ${{ startsWith(inputs.ref, 'refs/tags/') }}
 
     permissions: write-all
 
@@ -43,5 +44,5 @@ jobs:
 
       - name: Start Hotfix
         run: |
-
-          $JS_PROJECT_BIN startHotfix --package-manager pnpm ${{inputs.ref}}
+          version=$(echo ${{inputs.ref}} | cut -d/ -f3)
+          $JS_PROJECT_BIN startHotfix --package-manager pnpm $version
