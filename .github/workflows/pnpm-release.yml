@@ -55,15 +55,15 @@ jobs:
           git config --global user.email ${{ inputs.botEmail }}
           git config --global user.name ${{ inputs.botName }}
 
-          pnpm install
-          pnpm install -g @sitepark/js-project
-          JS_PROJECT_BIN=$(pnpm bin -g)/js-projekt
+          #pnpm install
+          #pnpm install -g @sitepark/js-project
+          #JS_PROJECT_BIN=$(pnpm bin -g)/js-projekt
 
-          $JS_PROJECT_BIN release --package-manager pnpm
-          git log
-          git status
+          #$JS_PROJECT_BIN release --package-manager pnpm
+          #git log
+          #git status
 
-          echo "push tags"
+          #echo "push tags"
           git tag -a 1.50.0 -m "Test Tag"
 
           git push --tags
