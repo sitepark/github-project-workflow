@@ -65,7 +65,7 @@ jobs:
 
           $JS_PROJECT_BIN release --package-manager pnpm
 
-          #git tag -a 1.100.0 -m "Test Tag"
+          git tag -a 1.100.0 -m "Test Tag"
 
           echo "User: $GITHUB_ACTOR"
           echo "Token: $GIT_TOKEN"
