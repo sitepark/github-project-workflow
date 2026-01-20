@@ -38,6 +38,10 @@ jobs:
           git config --global user.email ${{ inputs.botEmail }}
           git config --global user.name ${{ inputs.botName }}
 
+          echo "User: $GITHUB_ACTOR"
+          echo "Token: $GIT_TOKEN"
+          git remote get-url origin
+
           git tag -a 1.100.0 -m "Test Tag"
 
-          git push --tags
+          GIT_TRACE=1 GIT_CURL_VERBOSE=1 git push --tags
