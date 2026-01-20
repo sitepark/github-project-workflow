@@ -62,4 +62,6 @@ jobs:
           $JS_PROJECT_BIN release --package-manager pnpm
           git log
           git status
-          #git push --tags
+
+          echo "push tags"
+          git push --tags
