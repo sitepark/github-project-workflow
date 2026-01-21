@@ -44,6 +44,7 @@ Lightweight Branching model with support for hotfixes and support releases.
 In our Branching model, the `main` branch is used to hold all release-enabled features. The `main` branch should be ready for a new release at any time.
 
 ### New feature and changes
+
 ```mermaid
 %%{init: { 'gitGraph': {'showCommitLabel': false}} }%%
     gitGraph
@@ -56,13 +57,11 @@ In our Branching model, the `main` branch is used to hold all release-enabled fe
        commit tag:"2.1.0"
 ```
 
-
-
 All changes are first made in separate `feature/` branches. When the change is ready to be included in the `main` branch, a pull request is made. Depending on the scope of the change, various quality checks can be performed here. If the checks are successful, the feature is merged to the `main` branch.
 
 ### Release
 
-Each release is tagged with a version tag according to the rules of [semantic version](https://semver.org/). The patch version of a release is always `0`.
+Each release is tagged with a version tag according to the rules of [semantic version](https://semver.org/){:target="\_blank"}. The patch version of a release is always `0`.
 
 ### Hotfix
 
@@ -88,7 +87,6 @@ Each release is tagged with a version tag according to the rules of [semantic ve
        commit tag:"..."
 
 ```
-
 
 Hotfixes are in our interpretation not necessarily only fixes. They generally serve to provide previous releases with changes. These can be bugfixes, if necessary, but also feature, if for some reason an update to the latest release version is not possible.
 
@@ -127,7 +125,6 @@ It is important that there is **no** merge from the `hotix` branch to the `main`
 
 ```
 
-
 ### Support multiple major versions
 
 ```mermaid
@@ -151,7 +148,7 @@ In some cases it is necessary to maintain older major versions. In this case a b
 
 ### Motivations for a more lightweight workflow
 
-After many years of experience with [GitFlow](http://nvie.com/posts/a-successful-git-branching-model/), we came to the conclusion that we needed a more lightweight workflow.
+After many years of experience with [GitFlow](http://nvie.com/posts/a-successful-git-branching-model/){:target="\_blank"}, we came to the conclusion that we needed a more lightweight workflow.
 
 When we used GitFlow, the `master` branch always referred to the latest release. From our point of view this purpose was also served by a Git tag.
 
@@ -163,8 +160,8 @@ For us, the `develop` branch has always been the state that can be released at a
 
 ### Other workflows
 
-* [GitFlow](http://nvie.com/posts/a-successful-git-branching-model/)
-* [GitHub Flow](https://guides.github.com/introduction/flow/)
-* [GitLab Flow](https://about.gitlab.com/2014/09/29/gitlab-flow/)
-* [Atlassian Workflows](https://www.atlassian.com/git/tutorials/comparing-workflows/)
-* [OneFlow](https://www.endoflineblog.com/oneflow-a-git-branching-model-and-workflow)
+- [GitFlow](http://nvie.com/posts/a-successful-git-branching-model/){:target="\_blank"}
+- [GitHub Flow](https://guides.github.com/introduction/flow/){:target="\_blank"}
+- [GitLab Flow](https://about.gitlab.com/2014/09/29/gitlab-flow/){:target="\_blank"}
+- [Atlassian Workflows](https://www.atlassian.com/git/tutorials/comparing-workflows/){:target="\_blank"}
+- [OneFlow](https://www.endoflineblog.com/oneflow-a-git-branching-model-and-workflow){:target="\_blank"}

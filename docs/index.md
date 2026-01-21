@@ -6,7 +6,7 @@ Releases and hotfixes should be created as easily as possible. The starting poin
 
 The changelogs are created based on the commits. The commits must adhere to the [commit-conventions](commit-conventions.md).
 
-Version numbers are assigned according to the [Semantic Versioning](https://semver.org/) scheme.
+Version numbers are assigned according to the [Semantic Versioning](https://semver.org/){:target="\_blank"} scheme.
 
 ### Create a release
 

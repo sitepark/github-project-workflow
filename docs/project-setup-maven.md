@@ -1,7 +1,7 @@
 # Setup for maven projects
 
-Maven projects are initially deployed to the staging area of the [OSS Repository](https://s01.oss.sonatype.org/) with the release process.
-See also: [Publish Guide](https://central.sonatype.org/publish/publish-guide/)
+Maven projects are initially deployed to the staging area of the [OSS Repository](https://s01.oss.sonatype.org/){:target="\_blank"} with the release process.
+See also: [Publish Guide](https://central.sonatype.org/publish/publish-guide/){:target="\_blank"}
 
 From there, they can be transferred to the central maven repository and finally released. Here some rules are checked. To comply with all rules the `pom.xml` must contain the following:
 
@@ -84,3 +84,14 @@ Furthermore the following plugins should be configured as follows:
     </build>
 </project>
 ```
+
+## Register to app.snyk.io
+
+[https://app.snyk.io/](https://app.snyk.io/){:target="\_blank"}
+
+Log in with a user who has administration rights for the Github Sitepark organization.
+Add the project.
+
+## GitHub Actions
+
+The following GitHub Actions are available for Maven projects. The corresponding workflow files can be found here: [GitHub Workflows for Maven Projects](https://github.com/sitepark/github-project-workflow/tree/main/.github/workflows){:target="\_blank"}

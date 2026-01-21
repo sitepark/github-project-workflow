@@ -2,14 +2,14 @@
 
 ## Create a CI Bot
 
-The CI bot is necessary to be able to create a Maven release. The section [Setup a CI bot with GPG signature](https://github.com/gh-a-sample/github-actions-maven-release-sample#setup-a-ci-bot-with-gpg-signature) describes how to create the CI bot.
+The CI bot is necessary to be able to create a Maven release. The section [Setup a CI bot with GPG signature](https://github.com/gh-a-sample/github-actions-maven-release-sample#setup-a-ci-bot-with-gpg-signature){:target="\_blank"} describes how to create the CI bot.
 
 Important points here are
 
-- [Setup with SSH](https://github.com/qcastel/github-actions-maven-release#setup-with-ssh)
-- [Setup a GPG key](https://github.com/qcastel/github-actions-maven-release#setup-a-gpg-key)
+- [Setup with SSH](https://github.com/qcastel/github-actions-maven-release#setup-with-ssh){:target="\_blank"}
+- [Setup a GPG key](https://github.com/qcastel/github-actions-maven-release#setup-a-gpg-key){:target="\_blank"}
 
-Create [Create Personal Access-Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) with name `BOT_PAT`
+Create [Create Personal Access-Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens){:target="\_blank"} with name `BOT_PAT`
 
 After everything has been set up as described, the following Actions-Secrets should be set on the organization.
 
@@ -33,11 +33,11 @@ MVN_REPO_SNAPSHOT_SERVER_URL=https://nexus.sitepark.com/nexus/content/repositori
 
 The following pages describe how to register an account.
 
-- https://central.sonatype.org/register/central-portal/
+- [https://central.sonatype.org/register/central-portal/](https://central.sonatype.org/register/central-portal/){:target="\_blank"}
 
 A token must then be generated:
 
-- https://central.sonatype.org/publish/generate-portal-token/
+- [https://central.sonatype.org/publish/generate-portal-token/](https://central.sonatype.org/publish/generate-portal-token/){:target="\_blank"}
 
 Once the token has been created, the following action secrets must be set:
 
@@ -57,8 +57,8 @@ When all points are executed, the organization should contain the following sett
 
 ## Integrate Codecov GitHub App
 
-For a good integration of the code coverage test, the Codecov GitHub app is set up. See https://github.com/marketplace/codecov
+For a good integration of the code coverage test, the Codecov GitHub app is set up. See [https://github.com/marketplace/codecov](https://github.com/marketplace/codecov){:target="\_blank"}
 
 ## Integarate Snyk GitHub App
 
-To check the dependencies for vulnerabilities, the Snyk GitHub app is integrated. See https://github.com/marketplace/snyk
+To check the dependencies for vulnerabilities, the Snyk GitHub app is integrated. See [https://github.com/marketplace/snyk](https://github.com/marketplace/snyk){:target="\_blank"}
