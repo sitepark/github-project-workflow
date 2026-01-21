@@ -63,5 +63,5 @@ jobs:
           COMPOSER_HOME: "${{ runner.temp }}/.composer"
         run: |
 
-          composer project:startHotfix
+          composer project:startHotfix ${{inputs.ref}}
           git push
