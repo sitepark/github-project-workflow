@@ -63,5 +63,6 @@ jobs:
           COMPOSER_HOME: "${{ runner.temp }}/.composer"
         run: |
 
-          composer project:startHotfix ${{inputs.ref}}
+          version=$(echo ${{inputs.ref}} | cut -d/ -f3)
+          composer project:startHotfix $version
           git push
