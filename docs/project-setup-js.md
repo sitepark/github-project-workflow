@@ -1,5 +1,7 @@
 # Setup for JS projects
 
+See [github-js-release-test](https://github.com/sitepark/github-js-release-test){:target="\_blank"} as an example project.
+
 ## Register to www.npmjs.com
 
 An account with access to the Sitepark organization is required.

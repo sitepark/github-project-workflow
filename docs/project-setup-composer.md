@@ -1,5 +1,7 @@
 # Setup for composer projects
 
+See [github-composer-release-test](https://github.com/sitepark/github-composer-release-test){:target="\_blank"} as an example project.
+
 ## Manage access
 
 In [packagist.org](https://packagist.org/){:target="\_blank"} a user `sitepark` is created. This is linked to the `sitepark-bot` user of GitLab to manage the webhooks for packagist.org. See also: [How to update packages?](https://packagist.org/about#how-to-update-packages){:target="\_blank"}

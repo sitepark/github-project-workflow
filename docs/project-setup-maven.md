@@ -1,5 +1,7 @@
 # Setup for maven projects
 
+See [github-maven-release-test](https://github.com/sitepark/github-maven-release-test){:target="\_blank"} as an example project.
+
 Maven projects are initially deployed to the staging area of the [OSS Repository](https://s01.oss.sonatype.org/){:target="\_blank"} with the release process.
 See also: [Publish Guide](https://central.sonatype.org/publish/publish-guide/){:target="\_blank"}
 
