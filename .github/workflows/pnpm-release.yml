@@ -65,8 +65,6 @@ jobs:
 
           $JS_PROJECT_BIN release --package-manager pnpm
 
-          gh workflow run create-github-release.yml --ref $RELEASE_VERSION
-
       - name: Upload to Codecov
         uses: codecov/codecov-action@v5
         with:
