@@ -50,7 +50,7 @@ jobs:
           pnpm install -g @sitepark/js-project
           pnpm package
 
-          JS_PROJECT_BIN=$(pnpm bin -g)/js-projekt
+          JS_PROJECT_BIN=$(pnpm bin -g)/js-project
           RELEASE_VERSION=$($JS_PROJECT_BIN releaseVersion)
 
           echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
