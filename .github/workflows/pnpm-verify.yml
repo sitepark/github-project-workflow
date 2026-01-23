@@ -31,8 +31,8 @@ jobs:
       - name: Verify
         run: |
           pnpm install
-          pnpm verify
           pnpm test
+          pnpm verify
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action/composite@v1

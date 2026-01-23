@@ -48,7 +48,6 @@ jobs:
 
           pnpm install
           pnpm install -g @sitepark/js-project
-          pnpm package
 
           JS_PROJECT_BIN=$(pnpm bin -g)/js-project
           RELEASE_VERSION=$($JS_PROJECT_BIN releaseVersion)
