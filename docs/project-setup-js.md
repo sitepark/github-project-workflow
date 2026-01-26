@@ -43,7 +43,7 @@ export default defineConfig({
 
 The `reports` directory should also be added to the `.gitignore`.
 
-The [SNAPSHOT](https://github.com/sitepark/js-project?tab=readme-ov-file#snapshot-versions) versions and release versions are published for the standard away with `pnpm publish`.
+The releases are published for the standard away with `pnpm publish`.
 
 It is important that no `publishConfig` is defined in the `package.json`, as this is controlled via the pipeline.
 
