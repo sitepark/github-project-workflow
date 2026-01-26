@@ -6,6 +6,8 @@ Depending on the project type, corresponding configurations within the project f
 
 - [Setup for composer projects](project-setup-composer.md)
 
+- [Setup for js projects](project-setup-js.md)
+
 Below are the recommended settings for Github projects that are required to use this Github workflow.
 
 ## Secrets
