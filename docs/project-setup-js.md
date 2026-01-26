@@ -49,7 +49,7 @@ It is important that no `publishConfig` is defined in the `package.json`, as thi
 
 The release process and other functions of the branching model are provided by the script `js-project`.
 
-See: https://github.com/sitepark/js-project
+See: [https://github.com/sitepark/js-project](https://github.com/sitepark/js-project){:target="\_blank"}
 
 ## Register to www.npmjs.com
 
