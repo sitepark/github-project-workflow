@@ -18,7 +18,7 @@ The project must contain the following scripts in the `package.json`:
 
 Optionally, a `format:package-json` script can be added to format the `package.json`. This is used for the release process when the version is reset.
 
-In order for unit test and code coverage results to be processed by GitHub, it is necessary that the unit tests are output in the `junit` format in the `reports/junit-report.xml` file and the code coverage in the `cobertura` format in the `reports/coverage` directory.
+In order for unit test and code coverage results to be processed by GitHub, it is necessary that the unit tests are output in the `junit` format in the `build/junit-report.xml` file and the code coverage in the `cobertura` format in the `build/coverage` directory.
 
 Example configuration for `vite.config.ts`
 
@@ -30,12 +30,12 @@ export default defineConfig({
     // ...
     reporters: ["junit"],
     outputFile: {
-      junit: "./reports/junit-report.xml",
+      junit: "./build/junit-report.xml",
     },
     coverage: {
       // ...
       reporter: [/* ... , */ "cobertura"],
-      reportsDirectory: "./reports/coverage",
+      reportsDirectory: "./build/coverage",
     },
   },
 });
