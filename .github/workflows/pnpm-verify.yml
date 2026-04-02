@@ -6,6 +6,11 @@ on:
       nodeVersion:
         default: "24"
         type: string
+      pre-build-script:
+        description: 'Shell script to run before the build (e.g. install system packages)'
+        required: false
+        default: ''
+        type: string
     secrets:
       CODECOV_TOKEN:
         required: true
@@ -16,6 +21,11 @@ jobs:
     permissions: write-all
     steps:
       - uses: actions/checkout@v6
+
+      - name: Pre-build setup
+        if: inputs.pre-build-script != ''
+        shell: bash
+        run: ${{ inputs.pre-build-script }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4

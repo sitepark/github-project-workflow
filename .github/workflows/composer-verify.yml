@@ -6,6 +6,11 @@ on:
       phpVersions:
         default: '["8.3"]'
         type: string
+      pre-build-script:
+        description: 'Shell script to run before the build (e.g. install system packages)'
+        required: false
+        default: ''
+        type: string
     secrets:
       CODECOV_TOKEN:
         required: true
@@ -24,6 +29,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Pre-build setup
+        if: inputs.pre-build-script != ''
+        shell: bash
+        run: ${{ inputs.pre-build-script }}
 
       - name: Setup PHP ${{ matrix.phpVersions }} with PECL extension
         uses: shivammathur/setup-php@v2

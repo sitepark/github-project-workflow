@@ -12,6 +12,11 @@ on:
       nodeVersion:
         default: "24"
         type: string
+      pre-build-script:
+        description: 'Shell script to run before the build (e.g. install system packages)'
+        required: false
+        default: ''
+        type: string
     secrets:
       BOT_PAT:
         required: true
@@ -28,6 +33,11 @@ jobs:
       - uses: actions/checkout@v6
         with:
           token: ${{ secrets.BOT_PAT }}
+
+      - name: Pre-build setup
+        if: inputs.pre-build-script != ''
+        shell: bash
+        run: ${{ inputs.pre-build-script }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4

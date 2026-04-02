@@ -12,6 +12,11 @@ on:
       phpVersion:
         default: "8.3"
         type: string
+      pre-build-script:
+        description: 'Shell script to run before the build (e.g. install system packages)'
+        required: false
+        default: ''
+        type: string
     secrets:
       BOT_PAT:
         required: true
@@ -34,6 +39,11 @@ jobs:
           # the create-github-release-draft that is triggered on every new tag.
           # Solution is a explizit token: https://github.com/orgs/community/discussions/25617
           token: ${{ secrets.BOT_PAT }}
+
+      - name: Pre-build setup
+        if: inputs.pre-build-script != ‘’
+        shell: bash
+        run: ${{ inputs.pre-build-script }}
 
       - name: Setup PHP with PECL extension
         uses: shivammathur/setup-php@v2

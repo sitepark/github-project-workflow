@@ -2,6 +2,12 @@ name: Maven Deploy Snapshot
 
 on:
   workflow_call:
+    inputs:
+      pre-build-script:
+        description: 'Shell script to run before the build (e.g. install system packages)'
+        required: false
+        default: ''
+        type: string
     secrets:
       MVN_REPO_SNAPSHOT_SERVER_ID:
         required: true
@@ -19,6 +25,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Pre-build setup
+        if: inputs.pre-build-script != ''
+        shell: bash
+        run: ${{ inputs.pre-build-script }}
 
       - name: Get project-version from pom.xml
         id: get-project-version
