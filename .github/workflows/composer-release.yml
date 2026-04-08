@@ -41,7 +41,7 @@ jobs:
           token: ${{ secrets.BOT_PAT }}
 
       - name: Pre-build setup
-        if: inputs.pre-build-script != ‘’
+        if: inputs.pre-build-script != ''
         shell: bash
         run: ${{ inputs.pre-build-script }}
 
