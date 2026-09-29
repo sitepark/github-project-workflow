@@ -2,61 +2,222 @@
 
 See [github-maven-release-test](https://github.com/sitepark/github-maven-release-test){:target="\_blank"} as an example project.
 
-Maven projects are initially deployed to the staging area of the [OSS Repository](https://s01.oss.sonatype.org/){:target="\_blank"} with the release process.
-See also: [Publish Guide](https://central.sonatype.org/publish/publish-guide/){:target="\_blank"}
+## Requirements of Maven Central
 
-From there, they can be transferred to the central maven repository and finally released. Here some rules are checked. To comply with all rules the `pom.xml` must contain the following:
+Releases are published to Maven Central via the [Central Portal](https://central.sonatype.org/publish/publish-portal-maven/){:target="\_blank"}. Some rules are checked there. To comply with them, the `pom.xml` must contain:
 
-`<url>`- A URL for the project must be specified. This can be the URL to the github project.
+- `<url>`: a URL for the project, e.g. the URL of the GitHub project.
+- `<licenses>`, `<scm>` and at least one `<developers><developer>`.
+- Sources and Javadoc artifacts and a signature for every artifact.
 
-`<developers><developer>` - At least one development must be specified.
-
-The artifacts must be signed.
-Everything is already prepared for this in the release action and also the pgp keys are stored. Nevertheless the following must still be entered in the `pom.xml`:
+The release action provides the GPG key and activates the profile `publish-release`. Signing is skipped for local builds with `gpg.skip`:
 
 ```xml
-<project ...>
+<properties>
+    <gpg.skip>true</gpg.skip>
+</properties>
 
-    <properties>
-        <gpg.skip>true</gpg.skip>
-    <properties>
+<profiles>
+    <profile>
+        <id>publish-release</id>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.sonatype.central</groupId>
+                    <artifactId>central-publishing-maven-plugin</artifactId>
+                    <version>0.11.0</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <autoPublish>true</autoPublish>
+                        <publishingServerId>central</publishingServerId>
+                        <waitUntil>published</waitUntil>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </build>
+    </profile>
+</profiles>
+```
 
+## Quality assurance
+
+All Maven projects use the same QA tools. The action [(📡) Verify](project-setup.md#verify) runs `mvn verify`, which executes all of them. A violation fails the build.
+
+| Tool                                                                                  | Purpose                      | Configuration                                                         |
+| ------------------------------------------------------------------------------------- | ---------------------------- | --------------------------------------------------------------------- |
+| [Error Prone](https://errorprone.info/){:target="\_blank"}                            | bug patterns at compile time | `-Werror` for the main code: every warning is an error                |
+| [NullAway](https://github.com/uber/NullAway){:target="\_blank"}                       | null safety at compile time  | JSpecify mode, annotated packages `com.sitepark`, off for test code   |
+| [JSpecify](https://jspecify.dev/){:target="\_blank"}                                  | null annotations             | the code is `@NullMarked`, nullable points use `@Nullable`            |
+| [PMD](https://pmd.github.io/){:target="\_blank"}                                      | static analysis              | `pmd-ruleset.xml` of the project, `failurePriority` 5, includes tests |
+| [Spotless](https://github.com/diffplug/spotless){:target="\_blank"}                   | formatting                   | google-java-format, sorted `pom.xml`                                  |
+| [JaCoCo](https://www.jacoco.org/){:target="\_blank"}                                  | test coverage                | whole project: 85 % lines, 80 % branches                              |
+| [Maven Enforcer](https://maven.apache.org/enforcer/){:target="\_blank"}               | build environment            | Java 25, Maven 3.8, no duplicate dependencies                         |
+
+SpotBugs is no longer used. Error Prone and NullAway cover its checks.
+
+### Java version
+
+The projects are compiled for Java 25:
+
+```xml
+<properties>
+    <maven.compiler.release>25</maven.compiler.release>
+    <errorprone.version>2.50.0</errorprone.version>
+    <nullaway.version>0.14.2</nullaway.version>
+    <pmd.version>7.28.0</pmd.version>
+</properties>
+```
+
+Error Prone needs access to internal packages of the compiler. The file `.mvn/jvm.config` of the project provides it:
+
+```text
+--add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
+--add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED
+--add-exports jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED
+--add-exports jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED
+--add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED
+--add-exports jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED
+--add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED
+--add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
+--add-opens jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED
+--add-opens jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED
+```
+
+### Null safety
+
+Every package is `@NullMarked`: parameters, fields and return values are non-null unless they are annotated with `org.jspecify.annotations.Nullable`. In a project with a `module-info.java` the module is annotated, otherwise every package in its `package-info.java`:
+
+```java
+import org.jspecify.annotations.NullMarked;
+
+@NullMarked
+module com.sitepark.ies.example {
+  requires static org.jspecify;
+}
+```
+
+The project depends on `org.jspecify:jspecify`. Builders whose fields are only set by fluent setters suppress the initialization check with `@SuppressWarnings("NullAway.Init")`.
+
+### Formatting
+
+Spotless formats the code locally in the phase `process-sources` and checks it in the phase `verify`. In CI the profile `ci` skips the formatting, so that unformatted code fails the build:
+
+```xml
+<profile>
+    <id>ci</id>
+    <activation>
+        <property>
+            <name>env.CI</name>
+        </property>
+    </activation>
+    <properties>
+        <spotless.apply.skip>true</spotless.apply.skip>
+    </properties>
+</profile>
+```
+
+### Test coverage
+
+JaCoCo requires 85 % line and 80 % branch coverage for the whole project. If a project does not reach these values yet, its measured values are set as minimum together with a comment. They may only be raised, never lowered.
+
+### Tests
+
+Surefire loads Mockito as a Java agent, because the JDK will block its dynamic self-attach. The goal `dependency:properties` provides the path of the agent as the property `${org.mockito:mockito-core:jar}`.
+
+### Complete build section
+
+??? example "`<build>` section of the `pom.xml`"
+
+    ```xml
     <build>
         <plugins>
             <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.16.0</version>
+                <configuration>
+                    <compilerArgs>
+                        <arg>-XDcompilePolicy=simple</arg>
+                        <arg>--should-stop=ifError=FLOW</arg>
+                        <arg>-Xplugin:ErrorProne -Xep:NullAway:ERROR -XepOpt:NullAway:JSpecifyMode=true -XepOpt:NullAway:AnnotatedPackages=com.sitepark</arg>
+                        <!-- Treat every Error Prone / javac warning as a build error. -->
+                        <arg>-Werror</arg>
+                    </compilerArgs>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>com.google.errorprone</groupId>
+                            <artifactId>error_prone_core</artifactId>
+                            <version>${errorprone.version}</version>
+                        </path>
+                        <path>
+                            <groupId>com.uber.nullaway</groupId>
+                            <artifactId>nullaway</artifactId>
+                            <version>${nullaway.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+                <executions>
+                    <!-- Test code: Error Prone on, NullAway off (tests pass null intentionally) -->
+                    <execution>
+                        <id>default-testCompile</id>
+                        <configuration>
+                            <compilerArgs combine.self="override">
+                                <arg>-XDcompilePolicy=simple</arg>
+                                <arg>--should-stop=ifError=FLOW</arg>
+                                <arg>-Xplugin:ErrorProne -Xep:NullAway:OFF</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.5.1</version>
+            </plugin>
+            <plugin>
+                <!-- Provides the property ${org.mockito:mockito-core:jar} for the Mockito agent -->
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>3.0.1</version>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.11.0</version>
                 <executions>
                     <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
                         <goals>
-                            <goal>sign</goal>
+                            <goal>properties</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
-        <plugins>
-    </build>
-</project>
-```
-
-Furthermore the following plugins should be configured as follows:
-
-```xml
-<project ...>
-    <build>
-        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <!-- Load Mockito as agent, the JDK blocks its dynamic self-attach in the future -->
+                    <argLine>@{argLine} -javaagent:${org.mockito:mockito-core:jar}</argLine>
+                    <consoleOutputReporter>
+                        <disable>true</disable>
+                    </consoleOutputReporter>
+                    <statelessTestsetInfoReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter">
+                        <hideResultsOnSuccess>true</hideResultsOnSuccess>
+                        <theme>UNICODE</theme>
+                    </statelessTestsetInfoReporter>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>me.fabriciorby</groupId>
+                        <artifactId>maven-surefire-junit5-tree-reporter</artifactId>
+                        <version>1.5.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.4.0</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
                         <goals>
-                            <goal>jar-no-fork</goal>
+                            <goal>jar</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -64,7 +225,10 @@ Furthermore the following plugins should be configured as follows:
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.4.0</version>
+                <version>3.12.0</version>
+                <configuration>
+                    <doclint>all,-missing</doclint>
+                </configuration>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -75,17 +239,208 @@ Furthermore the following plugins should be configured as follows:
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.2.8</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                        <phase>verify</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.3.1</version>
                 <configuration>
-                    <scmCommentPrefix>ci(release): </scmCommentPrefix>
+                    <scmCommentPrefix>ci(release):</scmCommentPrefix>
                     <tagNameFormat>@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
-        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.6.3</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.github.thefolle</groupId>
+                        <artifactId>glowing-waffle</artifactId>
+                        <version>1.2.0</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>enforce-maven</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <banDuplicatePomDependencyVersions/>
+                                <requireJavaVersion>
+                                    <version>25</version>
+                                </requireJavaVersion>
+                                <requireMavenVersion>
+                                    <version>3.8</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>verify-release</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <phase>none</phase>
+                        <configuration>
+                            <fail>true</fail>
+                            <rules>
+                                <requireReleaseDeps>
+                                    <failWhenParentIsSnapshot>false</failWhenParentIsSnapshot>
+                                    <message>No Snapshots Allowed!</message>
+                                </requireReleaseDeps>
+                                <requireReleaseDepsInPlugins implementation="org.apache.maven.enforcer.rule.requireReleaseDepsInPlugins"/>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.15</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.85</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>BRANCH</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.80</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-code-coverage-report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <phase>test</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>3.10.3</version>
+                <configuration>
+                    <java>
+                        <!-- apply a specific flavor of google-java-format and reflow long strings -->
+                        <googleJavaFormat>
+                            <version>1.36.1</version>
+                            <style>GOOGLE</style>
+                            <reflowLongStrings>true</reflowLongStrings>
+                            <formatJavadoc>false</formatJavadoc>
+                        </googleJavaFormat>
+                        <removeUnusedImports>
+                            <engine>google-java-format</engine>
+                        </removeUnusedImports>
+                    </java>
+                    <pom>
+                        <includes>
+                            <include>pom.xml</include>
+                        </includes>
+                        <sortPom>
+                            <!--  value of -1 indicates that a tab character should be used instead -->
+                            <nrOfIndentSpace>-1</nrOfIndentSpace>
+                        </sortPom>
+                    </pom>
+                </configuration>
+                <executions>
+                    <!-- Formats locally; skipped in the ci profile, so that the check below can fail -->
+                    <execution>
+                        <id>spotless-apply</id>
+                        <goals>
+                            <goal>apply</goal>
+                        </goals>
+                        <phase>process-sources</phase>
+                        <configuration>
+                            <skip>${spotless.apply.skip}</skip>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>spotless-check</id>
+                        <?m2e ignore?>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <phase>verify</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.28.0</version>
+                <configuration>
+                    <failOnViolation>true</failOnViolation>
+                    <failurePriority>5</failurePriority>
+                    <includeTests>true</includeTests>
+                    <linkXRef>false</linkXRef>
+                    <printFailingErrors>true</printFailingErrors>
+                    <rulesets>
+                        <ruleset>pmd-ruleset.xml</ruleset>
+                    </rulesets>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.sourceforge.pmd</groupId>
+                        <artifactId>pmd-core</artifactId>
+                        <version>${pmd.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>net.sourceforge.pmd</groupId>
+                        <artifactId>pmd-java</artifactId>
+                        <version>${pmd.version}</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>pmd</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <phase>verify</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
-</project>
-```
+    ```
+
+The execution `verify-release` of the enforcer is not bound to a phase. `mvn enforcer:enforce@verify-release` checks that a release does not depend on snapshots.
 
 ## Register to app.snyk.io
 
