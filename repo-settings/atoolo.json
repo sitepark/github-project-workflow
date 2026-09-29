@@ -1,0 +1,65 @@
+{
+  "owner": "sitepark",
+  "repoPattern": "^atoolo-",
+  "exclude": [],
+  "repository": {
+    "allow_squash_merge": true,
+    "allow_merge_commit": false,
+    "allow_rebase_merge": false,
+    "allow_auto_merge": true,
+    "allow_update_branch": false,
+    "delete_branch_on_merge": true,
+    "has_issues": true,
+    "has_projects": true,
+    "has_wiki": true,
+    "has_discussions": false,
+    "squash_merge_commit_title": "COMMIT_OR_PR_TITLE",
+    "squash_merge_commit_message": "COMMIT_MESSAGES",
+    "web_commit_signoff_required": false
+  },
+  "vulnerabilityAlerts": true,
+  "teams": {
+    "bots": "admin"
+  },
+  "branchProtection": {
+    "branch": "main",
+    "protection": {
+      "required_status_checks": {
+        "strict": false,
+        "checks": [
+          { "context": "verify / Composer Verify (PHP 8.2)", "app_id": 15368 },
+          { "context": "verify / Composer Verify (PHP 8.3)", "app_id": 15368 },
+          { "context": "verify / Composer Verify (PHP 8.4)", "app_id": 15368 }
+        ]
+      },
+      "enforce_admins": false,
+      "required_pull_request_reviews": {
+        "dismiss_stale_reviews": false,
+        "require_code_owner_reviews": false,
+        "require_last_push_approval": false,
+        "required_approving_review_count": 0,
+        "bypass_pull_request_allowances": {
+          "users": [],
+          "teams": ["bots"],
+          "apps": []
+        }
+      },
+      "restrictions": null,
+      "required_linear_history": false,
+      "allow_force_pushes": false,
+      "allow_deletions": false,
+      "block_creations": false,
+      "required_conversation_resolution": false,
+      "lock_branch": false,
+      "allow_fork_syncing": false
+    }
+  },
+  "overrides": {
+    "atoolo-docs": {
+      "branchProtection": { "protection": { "required_status_checks": null } }
+    },
+    "atoolo-e2e-test": {
+      "branchProtection": { "protection": { "required_status_checks": null } }
+    }
+  }
+}
