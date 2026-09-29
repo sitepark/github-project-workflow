@@ -20,7 +20,7 @@
   "vulnerabilityAlerts": true,
   "automatedSecurityFixes": true,
   "teams": {
-    "bots": "write"
+    "bots": "admin"
   },
   "branchProtection": {
     "branch": "main",
