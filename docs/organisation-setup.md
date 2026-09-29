@@ -69,7 +69,7 @@ MVN_REPO_RELEASE_SERVER_PASSWORD=[TOKEN]
 
 When all points are executed, the organization should contain the following actions secrets:
 
-![GitHub organisation actions secrets](assets/images/github-organisation-setup-secrets.png)
+![GitHub organisation actions secrets](assets/images/github-organisation-setup-secrets.png){ width="946" }
 
 ## Integrate Codecov GitHub App
 

@@ -32,9 +32,11 @@ The role is required for the following reasons:
 - The [settings check](#settings-check) runs with the token of the `sitepark-bot`. Reading the branch protection and the security settings requires the admin role.
 - For composer projects, the `sitepark-bot` manages the packagist.org webhook of the project, see [Setup for composer projects](project-setup-composer.md#manage-access).
 
+Do not add the `sitepark-bot` to the project directly. It gets all permissions through the team `bots`.
+
 _Settings → Collaborators and teams → Add teams_
 
-![GitHub manage access](assets/images/github-manage-access.png)
+![GitHub manage access](assets/images/github-manage-access.png){ width="932" }
 
 ## General settings
 
@@ -57,7 +59,7 @@ Pull requests are always merged with squash, so that each pull request results i
 
 "Allow auto-merge" is required for the action [(📡) Auto-Merge Dependabot Minor Updates](#auto-merge-dependabot-minor-updates).
 
-![GitHub pull requests settings](assets/images/github-pull-requests-settings.png)
+![GitHub pull requests settings](assets/images/github-pull-requests-settings.png){ width="930" }
 
 ## `main`-Branch protection
 
@@ -75,7 +77,7 @@ The `main` branch should not be committed to directly, but always via a pull req
     GitHub only accepts a team as a bypass actor if the team has at least write access to the project
     (see [Manage access](#manage-access)). Otherwise the entry is dropped silently when saving.
 
-![GitHub main branch protection](assets/images/github-main-branch-protection.png)
+![GitHub main branch protection](assets/images/github-main-branch-protection.png){ width="926" }
 
 ### Require status checks to pass before merging
 
@@ -93,7 +95,7 @@ The status checks to be added depend on the project type:
 
 A status check can only be added after the action has run at least once in the project.
 
-![GitHub main branch protection verify](assets/images/github-main-branch-protection-verify.png)
+![GitHub main branch protection verify](assets/images/github-main-branch-protection-verify.png){ width="926" }
 
 ### Further rules
 
