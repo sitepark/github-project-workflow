@@ -92,7 +92,7 @@ Hotfixes are in our interpretation not necessarily only fixes. They generally se
 
 To create a hotfix, a hotfix branch is created from an already released state. The release is identified via the Git tag with the corresponding version.
 
-The branch name of the hotifx is always in the form `hotfix/[major].[minor].x`. For example, for a `2.1.0` release, the hotfix branch would look like this: `2.1.x`.
+The branch name of the hotfix is always in the form `hotfix/[major].[minor].x`. For example, for a `2.1.0` release, the hotfix branch would look like this: `2.1.x`.
 
 ```sh
 git branch hotfix/2.1.x 2.1.0
@@ -104,7 +104,7 @@ After completion of the Hotifx release, the branch does **not** have to be delet
 
 All changes committed in a `hotfix` or `support` branch are **not** automatically applied to other branches such as the `main` branch, but must be applied with a `cherry-pick`.
 
-It is important that there is **no** merge from the `hotix` branch to the `main` branch, as it is provided in other branching models.
+It is important that there is **no** merge from the `hotfix` branch to the `main` branch, as it is provided in other branching models.
 
 ```mermaid
     gitGraph

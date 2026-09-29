@@ -63,5 +63,5 @@ The project [setup-npm-trusted-publish](https://github.com/azu/setup-npm-trusted
 
 [https://app.snyk.io/](https://app.snyk.io/){:target="\_blank"}
 
-Log in with a user who has administration rights for the Github Sitepark organization.
+Log in with a user who has administration rights for the GitHub organization sitepark.
 Add the project.

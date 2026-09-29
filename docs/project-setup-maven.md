@@ -91,7 +91,7 @@ Furthermore the following plugins should be configured as follows:
 
 [https://app.snyk.io/](https://app.snyk.io/){:target="\_blank"}
 
-Log in with a user who has administration rights for the Github Sitepark organization.
+Log in with a user who has administration rights for the GitHub organization sitepark.
 Add the project.
 
 ## GitHub Actions
