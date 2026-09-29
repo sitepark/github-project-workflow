@@ -140,6 +140,25 @@ check_vulnerability_alerts() {
   fi
 }
 
+# Dependabot security updates, requires enabled vulnerability alerts.
+check_automated_security_fixes() {
+  local repo=$1 target=$2 out actual
+  if ! out=$(gh api "repos/$owner/$repo/automated-security-fixes" --jq '.enabled' 2>&1); then
+    error "$repo: cannot read automated security fixes: $out"
+    return 0
+  fi
+  actual=$out
+  [[ "$actual" == "$target" ]] && return 0
+  report "$repo" automated-security-fixes enabled "$actual" "$target"
+  if $apply; then
+    if [[ "$target" == true ]]; then
+      gh api -X PUT "repos/$owner/$repo/automated-security-fixes" > /dev/null
+    else
+      gh api -X DELETE "repos/$owner/$repo/automated-security-fixes" > /dev/null
+    fi
+  fi
+}
+
 check_team() {
   local repo=$1 team=$2 target=$3 out actual
   if out=$(gh api "orgs/$owner/teams/$team/repos/$owner/$repo" \
@@ -248,6 +267,9 @@ for repo in "${repos[@]}"; do
   fi
   if [[ $(jq '.vulnerabilityAlerts != null' <<< "$config") == true ]]; then
     check_vulnerability_alerts "$repo" "$(jq '.vulnerabilityAlerts' <<< "$config")"
+  fi
+  if [[ $(jq '.automatedSecurityFixes != null' <<< "$config") == true ]]; then
+    check_automated_security_fixes "$repo" "$(jq '.automatedSecurityFixes' <<< "$config")"
   fi
   while IFS=$'\t' read -r team permission; do
     [[ -z "$team" ]] && continue
