@@ -24,9 +24,14 @@ If this concerns only a single project, follow the instructions under [Organizat
 
 ## Manage access
 
-For automated actions, the team [`bots`](https://github.com/orgs/sitepark/teams/bots){:target="\_blank"} must have the **admin** role on the project. The only member of this team is the [`sitepark-bot`](https://github.com/sitepark-bot){:target="\_blank"}.
+For automated actions, the team [`bots`](https://github.com/orgs/sitepark/teams/bots){:target="\_blank"} must have access to the project. The only member of this team is the [`sitepark-bot`](https://github.com/sitepark-bot){:target="\_blank"}.
 
-The admin role is required, because the release actions push to the protected `main` branch and, for composer projects, the `sitepark-bot` manages the packagist.org webhook of the project.
+| Project type | Role of team `bots` |
+| ------------ | ------------------- |
+| Maven, JS    | **write**           |
+| Composer     | **admin**           |
+
+The write role is required, because the release actions push to the protected `main` branch, for which the team is a [bypass actor](#require-a-pull-request-before-merging). Composer projects require the admin role, because the `sitepark-bot` manages the packagist.org webhook of the project, see [Setup for composer projects](project-setup-composer.md#manage-access).
 
 _Settings → Collaborators and teams → Add teams_
 
@@ -100,6 +105,8 @@ A status check can only be added after the action has run at least once in the p
 _Settings → Advanced Security_
 
 "Dependabot alerts" (vulnerability alerts) is **enabled**.
+
+"Dependabot security updates" creates pull requests for vulnerable dependencies automatically. It is **enabled** for the `ies-*` projects and **disabled** for the `atoolo-*` projects.
 
 See also [Dependabot](#dependabot).
 
@@ -201,11 +208,12 @@ The workflow [`(🔍) Check repository settings`](https://github.com/sitepark/gi
 | File                                                                                                                      | Projects                |
 | ------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
 | [`atoolo.json`](https://github.com/sitepark/github-project-workflow/blob/main/repo-settings/atoolo.json){:target="\_blank"} | all `atoolo-*` projects |
+| [`ies.json`](https://github.com/sitepark/github-project-workflow/blob/main/repo-settings/ies.json){:target="\_blank"}       | all `ies-*` projects    |
 
 A group covers new projects automatically as soon as their name matches the pattern of the group. The following settings are checked:
 
 - the options of the [General settings](#general-settings)
-- the vulnerability alerts ([Security](#security))
+- the vulnerability alerts and, if configured, the Dependabot security updates ([Security](#security))
 - the role of the team `bots` ([Manage access](#manage-access))
 - the complete [`main`-Branch protection](#main-branch-protection)
 
