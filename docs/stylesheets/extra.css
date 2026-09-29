@@ -34,3 +34,13 @@ https://mkdocs-material.github.io/examples/page-status/
 .md-nav--primary .md-nav__item .md-nav__link--active {
     color: var(--md-default-fg-color);
 }
+
+/* the modern theme renders a neutral header, keep the brand color instead */
+.md-header {
+    color: var(--md-primary-bg-color);
+    background-color: var(--md-primary-fg-color);
+}
+
+.md-header__button {
+    outline-color: var(--md-primary-bg-color);
+}
