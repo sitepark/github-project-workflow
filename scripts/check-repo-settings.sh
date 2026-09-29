@@ -9,7 +9,8 @@
 #
 # Exit codes: 0 = no deviations, 1 = deviations found, 2 = errors (e.g. missing token permissions)
 #
-# Requires: gh (authenticated via GH_TOKEN with scopes repo and admin:org), jq
+# Requires: gh (authenticated via GH_TOKEN with scopes repo and read:org;
+#           --apply additionally needs admin:org to change team roles), jq
 
 set -euo pipefail
 
@@ -223,11 +224,11 @@ write_summary() {
   } >> "$GITHUB_STEP_SUMMARY"
 }
 
-# Fail early if the token cannot read the configured teams (scope admin:org missing).
+# Fail early if the token cannot read the configured teams (scope read:org missing).
 while read -r team; do
   [[ -z "$team" ]] && continue
   if ! out=$(gh api "orgs/$owner/teams/$team" 2>&1); then
-    echo "ERROR: cannot read team $owner/$team, the token probably lacks the scope admin:org: $out" >&2
+    echo "ERROR: cannot read team $owner/$team, the token probably lacks the scope read:org: $out" >&2
     exit 2
   fi
 done < <(jq -r '.teams // {} | keys[]' "$config_file")
