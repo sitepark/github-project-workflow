@@ -1,0 +1,48 @@
+name: (🔍) Check repository settings
+
+on:
+  schedule:
+    - cron: "0 5 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "check: report deviations only, apply: correct them"
+        type: choice
+        options:
+          - check
+          - apply
+        default: check
+
+permissions:
+  contents: read
+
+jobs:
+  configs:
+    runs-on: ubuntu-latest
+    outputs:
+      configs: ${{ steps.list.outputs.configs }}
+    steps:
+      - uses: actions/checkout@v6
+      - id: list
+        run: echo "configs=$(printf '%s\n' repo-settings/*.json | jq -R . | jq -sc .)" >> "$GITHUB_OUTPUT"
+
+  check:
+    needs: configs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        config: ${{ fromJSON(needs.configs.outputs.configs) }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Check ${{ matrix.config }}
+        env:
+          GH_TOKEN: ${{ secrets.BOT_PAT }}
+          MODE: ${{ inputs.mode || 'check' }}
+          CONFIG: ${{ matrix.config }}
+        run: |
+          if [[ "$MODE" == apply ]]; then
+            scripts/check-repo-settings.sh "$CONFIG" --apply
+          else
+            scripts/check-repo-settings.sh "$CONFIG"
+          fi
