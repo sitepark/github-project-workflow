@@ -24,14 +24,13 @@ If this concerns only a single project, follow the instructions under [Organizat
 
 ## Manage access
 
-For automated actions, the team [`bots`](https://github.com/orgs/sitepark/teams/bots){:target="\_blank"} must have access to the project. The only member of this team is the [`sitepark-bot`](https://github.com/sitepark-bot){:target="\_blank"}.
+For automated actions, the team [`bots`](https://github.com/orgs/sitepark/teams/bots){:target="\_blank"} must have the **admin** role on the project. The only member of this team is the [`sitepark-bot`](https://github.com/sitepark-bot){:target="\_blank"}.
 
-| Project type | Role of team `bots` |
-| ------------ | ------------------- |
-| Maven, JS    | **write**           |
-| Composer     | **admin**           |
+The role is required for the following reasons:
 
-The write role is required, because the release actions push to the protected `main` branch, for which the team is a [bypass actor](#require-a-pull-request-before-merging). Composer projects require the admin role, because the `sitepark-bot` manages the packagist.org webhook of the project, see [Setup for composer projects](project-setup-composer.md#manage-access).
+- The release actions push to the protected `main` branch, for which the team is a [bypass actor](#require-a-pull-request-before-merging). This alone would only require the write role.
+- The [settings check](#settings-check) runs with the token of the `sitepark-bot`. Reading the branch protection and the security settings requires the admin role.
+- For composer projects, the `sitepark-bot` manages the packagist.org webhook of the project, see [Setup for composer projects](project-setup-composer.md#manage-access).
 
 _Settings → Collaborators and teams → Add teams_
 

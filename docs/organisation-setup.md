@@ -15,7 +15,7 @@ The `sitepark-bot` is the only member of the team [`bots`](https://github.com/or
 
 ### Personal access token `BOT_PAT`
 
-Create a [personal access token (classic)](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens){:target="\_blank"} for the `sitepark-bot` and store it as the organization secret `BOT_PAT`. It is used by the release actions and by the [settings check](project-setup.md#settings-check).
+Create a [personal access token (classic)](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens){:target="\_blank"} for the `sitepark-bot` and store it as the organization secret `BOT_PAT`. It is used by the release actions and by the [settings check](project-setup.md#settings-check). The settings check can only read the settings of projects on which the `sitepark-bot` has the admin role, see [Manage access](project-setup.md#manage-access).
 
 | Scope       | Required for                                                    |
 | ----------- | --------------------------------------------------------------- |
