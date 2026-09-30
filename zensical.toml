@@ -1,0 +1,86 @@
+[project]
+site_name = "Project Workflow"
+site_dir = "public"
+repo_url = "https://github.com/sitepark/github-project-workflow"
+extra_css = ["stylesheets/extra.css"]
+watch = ["includes"]
+
+nav = [
+  { "Home" = "index.md" },
+  { "Start hotfix" = "start-hotfix.md" },
+  { "Branching model" = "branching-model.md" },
+  { "Commit conventions" = "commit-conventions.md" },
+  { "Setup" = [
+    { "Organisation setup" = "organisation-setup.md" },
+    { "Project setup" = "project-setup.md" },
+    { "Maven-Project setup" = "project-setup-maven.md" },
+    { "Composer-Project setup" = "project-setup-composer.md" },
+    { "JS-Project setup" = "project-setup-js.md" },
+  ] },
+]
+
+[project.extra.status]
+draft = "Draft"
+
+# https://zensical.org/docs/setup/basics/
+[project.theme]
+variant = "modern"
+favicon = "images/favicon.ico"
+logo = "images/favicon.ico"
+features = [
+  "navigation.indexes",
+  "content.code.copy",
+  "content.code.select",
+  "content.code.annotate",
+]
+
+[project.theme.icon]
+admonition.note = "material/alert-circle-outline"
+repo = "fontawesome/brands/github"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme)"
+primary = "custom"
+accent = "amber"
+toggle.icon = "material/brightness-auto"
+toggle.name = "Switch to light mode"
+
+# Palette toggle for light mode
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+primary = "custom"
+accent = "amber"
+toggle.icon = "material/brightness-7"
+toggle.name = "Switch to dark mode"
+
+# Palette toggle for dark mode
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+primary = "custom"
+accent = "amber"
+toggle.icon = "material/brightness-4"
+toggle.name = "Switch to system preference"
+
+[project.markdown_extensions]
+toc.title = "On this page"
+toc.permalink = "#"
+pymdownx.inlinehilite = {}
+pymdownx.snippets.auto_append = ["includes/abbreviations.md"]
+pymdownx.highlight.extend_pygments_lang = [
+  { name = "php", lang = "php", options = { startinline = true } },
+]
+pymdownx.superfences.custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
+]
+pymdownx.tabbed.alternate_style = true
+pymdownx.tabbed.slugify = { object = "pymdownx.slugs.slugify", kwds = { case = "lower" } }
+attr_list = {}
+def_list = {}
+md_in_html = {}
+abbr = {}
+pymdownx.emoji.emoji_index = "zensical.extensions.emoji.twemoji"
+pymdownx.emoji.emoji_generator = "zensical.extensions.emoji.to_svg"
+admonition = {}
+pymdownx.details = {}
