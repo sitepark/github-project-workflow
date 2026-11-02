@@ -53,7 +53,7 @@ jobs:
            ref: ${{inputs.ref}}
 
       - name: Create hotifx branch
-        uses: peterjgrainger/action-create-branch@v2.2.0
+        uses: peterjgrainger/action-create-branch@v4.0.0
         env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -66,7 +66,7 @@ jobs:
 
       - name: Extract version from pom.xml
         id: extract_gav
-        uses: andreacomo/maven-gav-extractor@v1
+        uses: andreacomo/maven-gav-extractor@v2
 
       - name: Check if hotfix already started
         if: ${{ endsWith(steps.extract_gav.outputs.version, '-SNAPSHOT') }}
@@ -86,7 +86,7 @@ jobs:
         run: mvn versions:set -DgenerateBackupPoms=false -DnewVersion=${{ steps.semver.outputs.inc-patch }}-SNAPSHOT
 
       - name: Commit pom.xml
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v11
         with:
            message: "ci(release): set next hotfix version"
 

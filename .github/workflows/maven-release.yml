@@ -65,13 +65,13 @@ jobs:
 
       - name: Extract version from pom.xml
         id: extract_gav
-        uses: andreacomo/maven-gav-extractor@v1
+        uses: andreacomo/maven-gav-extractor@v2
 
       - name: Parse semver string
         id: semver_parser
-        uses: booxmedialtd/ws-action-parse-semver@v1
+        uses: madhead/semver-utils@latest
         with:
-          input_string: ${{ steps.extract_gav.outputs.version }}
+          version: ${{ steps.extract_gav.outputs.version }}
 
       #
       # Release without qcastel/github-actions-maven-release (uncomplete)
