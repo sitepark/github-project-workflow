@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Checkout release
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           ref: ${{inputs.ref}}
 
@@ -32,7 +32,7 @@ jobs:
           extensions: :redis # exclude redis: don't work with phplint 9.7.1
 
       - name: Cache Composer dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v6
         with:
           path: "${{ runner.temp }}/.composer/cache"
           key: ${{ runner.os }}-${{ hashFiles('composer.lock', 'composer.json') }}
