@@ -80,7 +80,7 @@ jobs:
           MAVEN_PASSWORD: ${{ secrets.MVN_REPO_SNAPSHOT_SERVER_PASSWORD }}
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         if: always()
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
