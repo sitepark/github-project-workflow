@@ -59,7 +59,7 @@ jobs:
         if: github.event_name == 'pull_request'
 
       - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action/composite@v1
+        uses: EnricoMi/publish-unit-test-result-action/linux@v2
         if: always()
         with:
           files: "target/surefire-reports/**/*.xml"
@@ -69,18 +69,3 @@ jobs:
         if: always()
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-
-      - uses: jwgmeligmeyling/pmd-github-action@master
-        if: always()
-        with:
-          path: "target/pmd.xml"
-
-      - uses: jwgmeligmeyling/checkstyle-github-action@master
-        if: always()
-        with:
-          path: "target/checkstyle-result.xml"
-
-      - uses: jwgmeligmeyling/spotbugs-github-action@master
-        if: always()
-        with:
-          path: "target/spotbugsXml.xml"
