@@ -75,7 +75,7 @@ jobs:
           $JS_PROJECT_BIN release --package-manager pnpm
 
       - name: Upload to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: build/coverage/cobertura-coverage.xml
