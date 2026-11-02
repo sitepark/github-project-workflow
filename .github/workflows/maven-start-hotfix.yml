@@ -39,7 +39,7 @@ jobs:
         id: get-version
         run: |
           version=$(echo ${{inputs.ref}} | cut -d/ -f3)
-          echo "::set-output name=version::$version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
 
       - name: Parse semver string
         uses: madhead/semver-utils@latest
@@ -48,7 +48,7 @@ jobs:
            version: ${{ steps.get-version.outputs.version }}
 
       - name: Checkout release
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
            ref: ${{inputs.ref}}
 
@@ -60,7 +60,7 @@ jobs:
            branch: "hotfix/${{ steps.semver.outputs.major }}.${{ steps.semver.outputs.minor }}.x"
 
       - name: Checkout hotifx branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
            ref: hotfix/${{ steps.semver.outputs.major }}.${{ steps.semver.outputs.minor }}.x
 
@@ -76,10 +76,10 @@ jobs:
 
 
       - name: Setup java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v5
         with:
           java-version: '11'
-          distribution: 'adopt'
+          distribution: 'temurin'
           cache: 'maven'
 
       - name: Set next hotfix version
